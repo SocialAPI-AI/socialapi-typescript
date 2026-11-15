@@ -531,7 +531,7 @@ export const postFeedback = <ThrowOnError extends boolean = false>(options: Opti
 /**
  * List commented posts
  *
- * Returns inbox posts that have comments, ordered by most-recently-commented. Supports filtering by account, platform, minimum comment count, and date range. Uses cursor-based pagination. YouTube commented posts only appear when the request is scoped with account_id (they are absent from the unfiltered aggregate), and that list returns a single page (no cursor).
+ * Returns the connected accounts' posts with their comment counts, newest published first. Add min_comments=1 to keep only posts that have comments. Filter by account, brand, platform, minimum comment count, and publish date. Uses cursor-based pagination.
  */
 export const getInboxComments = <ThrowOnError extends boolean = false>(options?: Options<GetInboxCommentsData, ThrowOnError>): RequestResult<GetInboxCommentsResponses, GetInboxCommentsErrors, ThrowOnError> => (options?.client ?? client).get<GetInboxCommentsResponses, GetInboxCommentsErrors, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
@@ -605,7 +605,7 @@ export const postInboxCommentsByPostIdByCommentIdHide = <ThrowOnError extends bo
 /**
  * Unlike a comment
  *
- * Removes a like from a comment on the platform. Supported on Facebook, LinkedIn Pages, and Instagram accounts connected with Facebook Login. Check the can_like capability flag.
+ * Removes a like from a comment on the platform. Supported on Facebook, LinkedIn (company Pages and member profiles), TikTok (default connection), and Instagram accounts connected with Facebook Login. Check the can_like capability flag.
  */
 export const deleteInboxCommentsByPostIdByCommentIdLike = <ThrowOnError extends boolean = false>(options: Options<DeleteInboxCommentsByPostIdByCommentIdLikeData, ThrowOnError>): RequestResult<DeleteInboxCommentsByPostIdByCommentIdLikeResponses, DeleteInboxCommentsByPostIdByCommentIdLikeErrors, ThrowOnError> => (options.client ?? client).delete<DeleteInboxCommentsByPostIdByCommentIdLikeResponses, DeleteInboxCommentsByPostIdByCommentIdLikeErrors, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
@@ -616,7 +616,7 @@ export const deleteInboxCommentsByPostIdByCommentIdLike = <ThrowOnError extends 
 /**
  * Like a comment
  *
- * Likes a comment on the platform as the connected account. Supported on Facebook, LinkedIn Pages, and Instagram accounts connected with Facebook Login. Instagram accounts connected with Instagram Login cannot like comments. Check the can_like capability flag.
+ * Likes a comment on the platform as the connected account. Supported on Facebook, LinkedIn (company Pages and member profiles), TikTok (default connection), and Instagram accounts connected with Facebook Login. Instagram accounts connected with Instagram Login cannot like comments. Check the can_like capability flag.
  */
 export const postInboxCommentsByPostIdByCommentIdLike = <ThrowOnError extends boolean = false>(options: Options<PostInboxCommentsByPostIdByCommentIdLikeData, ThrowOnError>): RequestResult<PostInboxCommentsByPostIdByCommentIdLikeResponses, PostInboxCommentsByPostIdByCommentIdLikeErrors, ThrowOnError> => (options.client ?? client).post<PostInboxCommentsByPostIdByCommentIdLikeResponses, PostInboxCommentsByPostIdByCommentIdLikeErrors, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
@@ -631,7 +631,7 @@ export const postInboxCommentsByPostIdByCommentIdLike = <ThrowOnError extends bo
 /**
  * Send a private reply to a commenter
  *
- * Sends a direct message to the author of a comment. Only supported on Instagram and Facebook. Meta allows one private reply per comment, within 7 days of the comment; a second attempt or an expired window returns HTTP 400 with error code platform.instagram.private_reply_ineligible or platform.facebook.private_reply_ineligible. Once a comment has spent its one reply, or the comment is older than 7 days, further attempts are refused and do not count against your outbound message rate; the error carries a reason of already_replied, platform_refused or window_expired. The 400 is terminal: retrying it will never succeed. Set buttons (1 to 3) to send the reply as a button template with text as its body; a tap on a postback button arrives as a dm.postback event. Set attachment instead of text to send one image, video, audio or file: a private reply is a single message, so it carries either text (with optional buttons) or one attachment, never both. You cannot message the commenter again until they respond; once they do, the conversation continues within the standard 24-hour messaging window. Check the can_private_reply capability flag.
+ * Sends a direct message to the author of a comment. Only supported on Instagram and Facebook. Meta allows one private reply per comment, within 7 days of the comment; a second attempt or an expired window returns HTTP 400 with error code platform.instagram.private_reply_ineligible or platform.facebook.private_reply_ineligible. When the comment is already known to be ineligible, the error carries blocked_locally true and a reason of already_replied, platform_refused or window_expired. When blocked_locally is true, or the reply was text only, the 400 is final. When the platform refuses a reply that carried buttons or an attachment, the refusal can come from that content: send it once more as text only. Set buttons (1 to 3) to send the reply as a button template with text as its body; a tap on a postback button arrives as a dm.postback event. Set attachment instead of text to send one image, video, audio or file: a private reply is a single message, so it carries either text (with optional buttons) or one attachment, never both. You cannot message the commenter again until they respond; once they do, the conversation continues within the standard 24-hour messaging window. Check the can_private_reply capability flag.
  */
 export const postInboxCommentsByPostIdByCommentIdPrivateReply = <ThrowOnError extends boolean = false>(options: Options<PostInboxCommentsByPostIdByCommentIdPrivateReplyData, ThrowOnError>): RequestResult<PostInboxCommentsByPostIdByCommentIdPrivateReplyResponses, PostInboxCommentsByPostIdByCommentIdPrivateReplyErrors, ThrowOnError> => (options.client ?? client).post<PostInboxCommentsByPostIdByCommentIdPrivateReplyResponses, PostInboxCommentsByPostIdByCommentIdPrivateReplyErrors, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
@@ -760,8 +760,6 @@ export const postInboxConversationsByIdRead = <ThrowOnError extends boolean = fa
  * Shows the other participant a typing indicator, or marks their messages as seen, without sending a message. Free: no interaction credit is used.
  *
  * Supported on Instagram, Facebook Messenger and WhatsApp. On Instagram and Messenger the typing indicator clears after 20 seconds or when you send a message. On WhatsApp, typing_on also marks the contact's latest message as read, clears after 25 seconds or when you reply, and needs at least one message from the contact. WhatsApp has no typing_off and returns 400. Marking a message seen on WhatsApp also marks every earlier message in the chat as read.
- *
- * Instagram and Messenger only accept these actions within 24 hours of the person's last message.
  */
 export const postInboxConversationsByIdSenderAction = <ThrowOnError extends boolean = false>(options: Options<PostInboxConversationsByIdSenderActionData, ThrowOnError>): RequestResult<PostInboxConversationsByIdSenderActionResponses, PostInboxConversationsByIdSenderActionErrors, ThrowOnError> => (options.client ?? client).post<PostInboxConversationsByIdSenderActionResponses, PostInboxConversationsByIdSenderActionErrors, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
@@ -1119,7 +1117,7 @@ export const getPlatformsFacebookAccountsByIdSummary = <ThrowOnError extends boo
 /**
  * List a Facebook login's Pages
  *
- * Lists every Page this login can manage, live from Meta, merged with assignment state. Pages granted after the last OAuth exchange appear here without re-authenticating. assignable reflects ownership only; the 5-page-per-brand cap is enforced when assigning.
+ * Lists every Page this login can manage, with the brand that holds each. assignable reflects ownership only. When facebook_page_selection is true, assigning can still fail on the per-brand Page allowance.
  */
 export const getPlatformsFacebookLoginsByLoginIdPages = <ThrowOnError extends boolean = false>(options: Options<GetPlatformsFacebookLoginsByLoginIdPagesData, ThrowOnError>): RequestResult<GetPlatformsFacebookLoginsByLoginIdPagesResponses, GetPlatformsFacebookLoginsByLoginIdPagesErrors, ThrowOnError> => (options.client ?? client).get<GetPlatformsFacebookLoginsByLoginIdPagesResponses, GetPlatformsFacebookLoginsByLoginIdPagesErrors, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
@@ -1130,7 +1128,7 @@ export const getPlatformsFacebookLoginsByLoginIdPages = <ThrowOnError extends bo
 /**
  * Assign a Facebook Page to a brand
  *
- * Assigns one Page from this login to the given brand. Each Page belongs to exactly one brand, so a Page currently held by another brand of yours is moved to the target brand. Each brand can connect up to 5 Facebook Pages, a hard cap. Assigning beyond that limit is refused.
+ * Assigns one Page from this login to the given brand. Each Page belongs to exactly one brand, so a Page another of your brands holds moves to the target brand. When facebook_page_selection is true, assigning beyond your plan's Facebook Pages per brand returns 403 platform.facebook.page_cap.
  */
 export const postPlatformsFacebookLoginsByLoginIdPagesByPageIdAssign = <ThrowOnError extends boolean = false>(options: Options<PostPlatformsFacebookLoginsByLoginIdPagesByPageIdAssignData, ThrowOnError>): RequestResult<PostPlatformsFacebookLoginsByLoginIdPagesByPageIdAssignResponses, PostPlatformsFacebookLoginsByLoginIdPagesByPageIdAssignErrors, ThrowOnError> => (options.client ?? client).post<PostPlatformsFacebookLoginsByLoginIdPagesByPageIdAssignResponses, PostPlatformsFacebookLoginsByLoginIdPagesByPageIdAssignErrors, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
@@ -1718,7 +1716,7 @@ export const getPlatformsWhatsappTemplatesById = <ThrowOnError extends boolean =
 /**
  * Edit a message template
  *
- * Updates the components of an existing message template by its WhatsApp template ID. Only APPROVED templates can be edited, and editing resets the template to PENDING for re-review. APPROVED templates are limited to one edit per day.
+ * Updates the components of an existing message template by its WhatsApp template ID. Only APPROVED, REJECTED or PAUSED templates can be edited. Meta reviews the edit again: an edited APPROVED or PAUSED template returns to APPROVED unless it fails review. Meta allows an approved template 1 edit per 24 hours and 10 per 30 days.
  */
 export const putPlatformsWhatsappTemplatesById = <ThrowOnError extends boolean = false>(options: Options<PutPlatformsWhatsappTemplatesByIdData, ThrowOnError>): RequestResult<PutPlatformsWhatsappTemplatesByIdResponses, PutPlatformsWhatsappTemplatesByIdErrors, ThrowOnError> => (options.client ?? client).put<PutPlatformsWhatsappTemplatesByIdResponses, PutPlatformsWhatsappTemplatesByIdErrors, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],

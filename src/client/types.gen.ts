@@ -1731,7 +1731,7 @@ export type ApiEndpointsSendMessageRequest = {
      */
     list_sections?: Array<ApiEndpointsMessageListSection>;
     /**
-     * Optional. Only `HUMAN_AGENT` is accepted, on Instagram accounts connected with Instagram Login, for replies a person types between 24 hours and 7 days after the person's last message. It must not be used by workflows, automations, bots, AI agents acting on their own, broadcasts, promotions or re-engagement. It needs to be enabled for your account by support. Inside 24 hours the message is sent without the tag. Misuse pauses or revokes access and can get the account restricted by Meta.
+     * Optional. Only `HUMAN_AGENT` is accepted, on Instagram accounts connected with Instagram Login, for replies a member of your team types between 24 hours and 7 days after the person's last message. Workflows, automations, bots and AI agents acting on their own send without it, so they reply within 24 hours of the person's last message. Ask support to enable it for your account. Inside 24 hours the message is sent without the tag.
      */
     message_tag?: string;
     /**
@@ -5997,7 +5997,7 @@ export type GetInboxCommentsData = {
          */
         min_comments?: number;
         /**
-         * Only return posts commented after this timestamp (RFC3339)
+         * Only return posts published at or after this timestamp (RFC3339)
          */
         since?: string;
         /**
@@ -6072,7 +6072,7 @@ export type GetInboxCommentsByPostIdData = {
          */
         order?: string;
         /**
-         * Keyword search across comment text (max 256 chars). YouTube only; other platforms do not filter by it.
+         * Keyword search across comment text (max 256 bytes). YouTube only; other platforms do not filter by it.
          */
         q?: string;
     };
@@ -6470,7 +6470,7 @@ export type PostInboxCommentsByPostIdByCommentIdPrivateReplyErrors = {
      */
     401: ApiEndpointsErrorResponse;
     /**
-     * The key's scopes do not include inbox:write
+     * The key's scopes do not include inbox:write, or the account lacks the messages.write permission (account.permission_missing)
      */
     403: ApiEndpointsErrorResponse;
     /**
@@ -6762,7 +6762,7 @@ export type PostInboxConversationsByIdMessagesErrors = {
      */
     422: ApiEndpointsErrorResponse;
     /**
-     * Platform rate limit exceeded, or human agent tagging is paused for this account (messaging.tag_rate_limited): replies that need the tag cannot be sent until the pause ends; retry after retry_after_seconds when it is present. Replies inside 24 hours of the person's last message still work.
+     * Plan interaction allowance used up (validation.interaction_limit_exhausted), sending too fast (messaging.velocity_limit), too many different recipients this calendar day in UTC (messaging.recipient_limit), calls paused after the platform's own rate limit (platform.{platform}.throttled), or the platform's own rate limit (platform.{platform}.rate_limit). Wait for the Retry-After header when it is present.
      */
     429: ApiEndpointsErrorResponse;
     /**
@@ -8063,6 +8063,10 @@ export type GetPlatformsFacebookLoginsByLoginIdPagesErrors = {
      */
     401: ApiEndpointsErrorResponse;
     /**
+     * The API key lacks the accounts:read scope (auth.insufficient_scope)
+     */
+    403: ApiEndpointsErrorResponse;
+    /**
      * Unknown login
      */
     404: ApiEndpointsErrorResponse;
@@ -8100,7 +8104,11 @@ export type PostPlatformsFacebookLoginsByLoginIdPagesByPageIdAssignData = {
 
 export type PostPlatformsFacebookLoginsByLoginIdPagesByPageIdAssignErrors = {
     /**
-     * Brand already holds as many Facebook Pages as the plan allows (platform.facebook.page_cap)
+     * brand_id is missing (validation.field_required), the body is not valid JSON (validation.body_invalid), or the login cannot access the Page (validation.page_not_granted)
+     */
+    400: ApiEndpointsErrorResponse;
+    /**
+     * The API key lacks the accounts:manage scope (auth.insufficient_scope), or the brand already holds as many Facebook Pages as the plan allows (platform.facebook.page_cap)
      */
     403: ApiEndpointsErrorResponse;
     /**
@@ -9791,7 +9799,7 @@ export type GetPlatformsWhatsappAccountsByIdTemplatesData = {
     };
     query?: {
         /**
-         * Maximum number of templates to return (1-100)
+         * Maximum number of templates to return. Meta sets the page size and the maximum
          */
         limit?: number;
         /**
