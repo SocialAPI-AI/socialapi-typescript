@@ -1,0 +1,80 @@
+name: Release
+
+# The api repo's CI commits openapi.json on every api release tag. This
+# workflow regenerates the SDK from it, runs the tests, and releases when the
+# package changed. Nothing here is edited by hand per release.
+on:
+  push:
+    branches: [main]
+    paths: [openapi.json]
+  workflow_dispatch:
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+  id-token: write # npm trusted publishing
+
+env:
+  FIRST_VERSION: 0.1.0
+  OASDIFF_VERSION: 1.38.0
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      - run: npm install -g npm@11.6.2 # OIDC trusted publishing requires npm >= 11.5.1
+
+      - name: Install oasdiff
+        run: |
+          curl -sSfL "https://github.com/oasdiff/oasdiff/releases/download/v${OASDIFF_VERSION}/oasdiff_${OASDIFF_VERSION}_linux_amd64.tar.gz" | tar -xz -C /usr/local/bin oasdiff
+
+      - run: npm ci
+
+      - name: Generate
+        run: bash scripts/generate.sh
+
+      - name: Build and test
+        run: |
+          npm run build
+          npm test
+
+      - name: Next version
+        id: version
+        run: echo "version=$(bash scripts/next-version.sh "$FIRST_VERSION" src)" >> "$GITHUB_OUTPUT"
+
+      # Publish before committing: if the upload fails nothing is committed,
+      # so re-running the workflow retries the same release.
+      - name: Publish to npm
+        if: steps.version.outputs.version != '' && vars.PUBLISH == 'true'
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          npm version "$VERSION" --no-git-tag-version
+          npm publish --provenance --access public
+
+      - name: Commit, tag and release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+          PUBLISH: ${{ vars.PUBLISH }}
+        run: bash scripts/commit-release.sh
+
+      - name: Report failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash scripts/report-failure.sh
