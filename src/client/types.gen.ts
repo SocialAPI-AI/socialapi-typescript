@@ -4,2637 +4,7 @@ export type ClientOptions = {
     baseUrl: 'https://api.social-api.ai/v1' | (string & {});
 };
 
-export type ApiEndpointsAccountPageResponse = {
-    about?: string;
-    category?: string;
-    cover_photo_url?: string;
-    enriched_at?: string;
-    followers_count?: number;
-    id?: string;
-    is_active?: boolean;
-    is_default?: boolean;
-    link?: string;
-    name?: string;
-    platform_page_id?: string;
-    profile_picture_url?: string;
-    username?: string;
-    verification_status?: string;
-};
-
-export type ApiEndpointsAccountPostsSyncResponse = {
-    data?: ApiEndpointsAccountPostsSyncStatus;
-};
-
-export type ApiEndpointsAccountPostsSyncStatus = {
-    /**
-     * Error says why the last sync failed. Empty unless State is "failed".
-     */
-    error?: string;
-    finished_at?: string;
-    last_synced_at?: string;
-    started_at?: string;
-    /**
-     * State is "idle", "syncing", or "failed". A finished sync is idle with a
-     * newer LastSyncedAt.
-     */
-    state?: 'idle' | 'syncing' | 'failed';
-};
-
-export type ApiEndpointsAccountsListResponse = {
-    count?: number;
-    data?: Array<SocialApiAiCoreApiConnectorsBaseAccount>;
-};
-
-export type ApiEndpointsAnalyticsOverviewResponseWrapper = {
-    data?: SocialApiAiCoreApiServiceAnalyticsOverview;
-};
-
-export type ApiEndpointsAnalyticsResponseWrapper = {
-    data?: SocialApiAiCoreApiServiceAnalyticsResponse;
-};
-
-export type ApiEndpointsAnnouncementItem = {
-    body?: string;
-    id?: string;
-    kind?: string;
-    link_label?: string;
-    link_url?: string;
-    seen?: boolean;
-    title?: string;
-    window_end?: string;
-    window_start?: string;
-};
-
-export type ApiEndpointsAnnouncementsListResponse = {
-    count?: number;
-    data?: Array<ApiEndpointsAnnouncementItem>;
-};
-
-export type ApiEndpointsAssignLinkedInProfileRequest = {
-    brand_id?: string;
-};
-
-export type ApiEndpointsAssignLocationRequest = {
-    brand_id?: string;
-};
-
-export type ApiEndpointsAssignLocationResponse = {
-    account_id?: string;
-    brand_id?: string;
-    platform_account_id?: string;
-};
-
-export type ApiEndpointsAssignPageRequest = {
-    brand_id?: string;
-};
-
-export type ApiEndpointsAssignPageResponse = {
-    account_id?: string;
-    brand_id?: string;
-    platform_page_id?: string;
-};
-
-export type ApiEndpointsAutomationListResponse = {
-    count?: number;
-    data?: Array<SocialApiAiCoreApiServiceAutomation>;
-};
-
-export type ApiEndpointsBillingPlan = {
-    annual_price_eur?: number;
-    annual_price_usd?: number;
-    limits?: ApiEndpointsBillingPlanLimits;
-    monthly_price_eur?: number;
-    monthly_price_usd?: number;
-    name?: string;
-    popular?: boolean;
-    tagline?: string;
-    tier?: string;
-};
-
-export type ApiEndpointsBillingPlanLimits = {
-    event_retention_days?: number;
-    exports_per_month?: number;
-    interactions_per_month?: number;
-    posts_per_month?: number;
-    profiles?: number;
-    storage_bytes?: number;
-};
-
-export type ApiEndpointsBillingPlansResponse = {
-    plans?: Array<ApiEndpointsBillingPlan>;
-};
-
-export type ApiEndpointsBrandListItem = {
-    accounts_count?: number;
-    created_at?: string;
-    id?: string;
-    name?: string;
-    updated_at?: string;
-};
-
-export type ApiEndpointsBrandResponse = {
-    accounts_count?: number;
-    created_at?: string;
-    id?: string;
-    name?: string;
-    updated_at?: string;
-};
-
-export type ApiEndpointsBrandsListResponse = {
-    count?: number;
-    data?: Array<ApiEndpointsBrandListItem>;
-};
-
-export type ApiEndpointsCommentCapabilities = {
-    can_delete?: boolean;
-    can_hide?: boolean;
-    can_like?: boolean;
-    can_private_reply?: boolean;
-    can_reply?: boolean;
-};
-
-export type ApiEndpointsCommentWithCapabilities = {
-    author_headline?: string;
-    author_id?: string;
-    author_name?: string;
-    author_picture?: string;
-    author_profile_url?: string;
-    author_username?: string;
-    capabilities?: ApiEndpointsCommentCapabilities;
-    created_at?: string;
-    has_replies?: boolean;
-    /**
-     * ID is the canonical SocialAPI interaction id (sapi_cmt_…). Prefer it over
-     * platform_id, which is retained for backward compatibility.
-     */
-    id?: string;
-    is_hidden?: boolean;
-    is_owner?: boolean;
-    like_count?: number;
-    /**
-     * LikedByViewer is true when the connected account has liked this comment.
-     * LinkedIn reports it directly. Instagram and Facebook do not report it on
-     * the comment read, so there it means "liked through SocialAPI": a like made
-     * in the platform's own app is not reflected.
-     */
-    liked_by_viewer?: boolean;
-    /**
-     * ModerationStatus is the platform's moderation state for this comment, when
-     * exposed: "published", "held_for_review", "likely_spam", or "rejected".
-     * Empty when unknown or not applicable. [platform: youtube]
-     */
-    moderation_status?: string;
-    parent_id?: string;
-    platform?: string;
-    platform_id?: string;
-    /**
-     * ReplyCount is kept for backward compatibility but deprecated: prefer
-     * HasReplies. Not all platforms report an exact count.
-     */
-    reply_count?: number;
-    text?: string;
-};
-
-export type ApiEndpointsCommentedPostsListResponse = {
-    data?: Array<SocialApiAiCoreApiServiceInboxPostRow>;
-    pagination?: ApiEndpointsInboxPaginationOpt;
-};
-
-export type ApiEndpointsCommentsWithCapsListResponse = {
-    data?: Array<ApiEndpointsCommentWithCapabilities>;
-    pagination?: ApiEndpointsInboxPagination;
-};
-
-export type ApiEndpointsConnectAccountResponse = {
-    account_id?: string;
-    /**
-     * BrandID is the brand the account was connected to. When the connect request named no brand, this is the brand created for it.
-     */
-    brand_id?: string;
-    display_name?: string;
-    platform?: string;
-    username?: string;
-};
-
-export type ApiEndpointsConnectOAuthResponse = {
-    auth_url?: string;
-    message?: string;
-    metadata?: {
-        [key: string]: unknown;
-    };
-    state?: string;
-};
-
-export type ApiEndpointsConnectRequest = {
-    /**
-     * BrandID optionally specifies which brand to attach the account to. If omitted, a new brand is auto-created.
-     */
-    brand_id?: string;
-    /**
-     * Metadata contains platform-specific connection data. For tiktok, connection_type "creator" connects through TikTok's Content Posting API instead of the default Business API ("business"). For linkedin, connection_type "profile" or "organization" limits the connect to the member profile or to company Pages; without it, one authorization offers both, and the user picks one when there are several.
-     */
-    metadata?: {
-        [key: string]: unknown;
-    };
-    /**
-     * Onboarding applies to WhatsApp only. cloud_api (default) connects the number for use through the API alone. business_app connects a number that stays in use on the WhatsApp Business app, and imports its recent chats.
-     */
-    onboarding?: 'cloud_api' | 'business_app';
-    /**
-     * Permissions are the permissions to request for this account. If omitted, the brand's existing selection for this platform applies, and a brand with none gets every permission. Valid values: posts.read, posts.write, comments.read, comments.write, messages.read, messages.write, reviews.read, reviews.write, analytics.read.
-     */
-    permissions?: Array<string>;
-    /**
-     * Platform identifies the social platform to connect (e.g. instagram, facebook, google, threads, tiktok, linkedin).
-     */
-    platform?: string;
-    /**
-     * RedirectURI is the customer's URL to redirect the user to after OAuth completes.
-     * If you have registered redirect URIs in the dashboard, the value must match one of them.
-     * If you have none registered, any valid https URI is accepted. If omitted, the default HTML success page is shown.
-     */
-    redirect_uri?: string;
-    /**
-     * CustomerState is an opaque value echoed back to the customer's redirect URI. Max 512 chars.
-     */
-    state?: string;
-};
-
-export type ApiEndpointsConversationResponse = {
-    data?: SocialApiAiCoreApiServiceConversationRow;
-};
-
-export type ApiEndpointsConversationsListResponse = {
-    data?: Array<SocialApiAiCoreApiServiceConversationRow>;
-    last_synced_at?: string;
-    pagination?: ApiEndpointsInboxPagination;
-    /**
-     * SyncState is "idle", "syncing", or "failed" for this account's
-     * conversation-list sync. Reading it never triggers a sync, and a client
-     * that ignores it sees exactly the previous response.
-     */
-    sync_state?: 'idle' | 'syncing' | 'failed';
-};
-
-export type ApiEndpointsCreateBoardRequest = {
-    description?: string;
-    name?: string;
-    privacy?: 'PUBLIC' | 'PROTECTED' | 'SECRET';
-};
-
-export type ApiEndpointsCreateBrandRequest = {
-    name: string;
-};
-
-export type ApiEndpointsCreateExportRequest = {
-    include_transcript?: boolean;
-    include_vision?: boolean;
-};
-
-export type ApiEndpointsCreateGoogleMediaRequest = {
-    category?: 'COVER' | 'PROFILE' | 'LOGO' | 'EXTERIOR' | 'INTERIOR' | 'PRODUCT' | 'AT_WORK' | 'FOOD_AND_DRINK' | 'MENU' | 'COMMON_AREA' | 'ROOMS' | 'TEAMS' | 'ADDITIONAL';
-    description?: string;
-    media?: Array<ApiEndpointsMediaInput>;
-};
-
-export type ApiEndpointsCreateInviteRequest = {
-    brand_id?: string;
-    expires_in_days?: number;
-    /**
-     * The permissions the connected account gets, which are the only ones the invited person is asked to grant. Omit it to keep the brand's current permissions for this platform, or to give every permission if it has none. Valid values: posts.read, posts.write, comments.read, comments.write, messages.read, messages.write, reviews.read, reviews.write, analytics.read.
-     */
-    permissions?: Array<string>;
-    platform?: string;
-};
-
-export type ApiEndpointsCreateKeyRequest = {
-    /**
-     * BrandIDs restricts the key to specific brands. Empty means all brands.
-     */
-    brand_ids?: Array<string>;
-    name?: string;
-    /**
-     * Scopes restricts the key to specific actions. Empty means full access.
-     */
-    scopes?: Array<string>;
-};
-
-export type ApiEndpointsCreateKeyResponse = {
-    brand_ids?: Array<string>;
-    id?: string;
-    message?: string;
-    name?: string;
-    raw_key?: string;
-    scopes?: Array<string>;
-};
-
-export type ApiEndpointsCreatePostRequest = {
-    /**
-     * FirstComment is auto-posted as the first comment after publishing (Instagram, Facebook, YouTube). Ignored by every other platform, and by Facebook Page Stories.
-     */
-    first_comment?: string;
-    /**
-     * Media is the ordered, agnostic media list. Each item is a url, a media_id,
-     * or a platform_attachment_id; order and mixing are preserved. Supersedes media_ids.
-     */
-    media?: Array<ApiEndpointsMediaInput>;
-    /**
-     * MediaIDs are previously uploaded media file IDs to attach.
-     *
-     * Deprecated: use Media with source_type "media_id". Ignored when media is set.
-     */
-    media_ids?: Array<string>;
-    /**
-     * PlatformData passes platform-specific fields keyed by platform name (e.g. {"instagram": {"content_type": "feed"}}). Folded into each matching target; a target's own platform_data wins on conflicts.
-     */
-    platform_data?: {
-        [key: string]: unknown;
-    };
-    /**
-     * PublishNow publishes immediately when targets are provided (ignores scheduled_at). Without this flag (and without scheduled_at) the post is saved as a draft; publish it later with POST /posts/{pid}/publish.
-     */
-    publish_now?: boolean;
-    /**
-     * QueueID puts the post in a Queue: it takes the Queue's earliest free time and is scheduled. Send a Queue ID, or "default" for the default Queue of the targets' Brand. Requires targets, all in one Brand. Cannot be combined with scheduled_at, publish_now or a target's scheduled_at.
-     */
-    queue_id?: string;
-    /**
-     * ScheduledAt queues the post for future publication (RFC3339). When set, the post is scheduled rather than drafted.
-     */
-    scheduled_at?: string;
-    /**
-     * Segments are continuation posts that publish as a native thread on X. Threads chaining is temporarily unavailable.
-     */
-    segments?: Array<ApiEndpointsSegmentRequest>;
-    /**
-     * SkipDuplicateCheck bypasses the duplicate content detection.
-     */
-    skip_duplicate_check?: boolean;
-    /**
-     * SkipValidation bypasses pre-publish validation. The post is scheduled/published as-is and may fail at the platform.
-     */
-    skip_validation?: boolean;
-    /**
-     * Stagger spreads the targets out in time instead of publishing them all at once. Requires scheduled_at or publish_now. See StaggerRequest.
-     */
-    stagger?: ApiEndpointsStaggerRequest;
-    /**
-     * Targets specifies which connected accounts to publish to, with optional per-target overrides.
-     */
-    targets?: Array<ApiEndpointsTargetRequest>;
-    /**
-     * Text is the post body content. Required, unless every target supplies a
-     * body of its own through text or a platform_data field the connector uses
-     * as the body (e.g. Pinterest's platform_data.description IS the pin body).
-     */
-    text?: string;
-    /**
-     * Title is an optional post title (used by LinkedIn, Google).
-     */
-    title?: string;
-    /**
-     * Visibility controls who can see the post. Platform-dependent values: public, private, connections_only, logged_in.
-     */
-    visibility?: 'public' | 'private' | 'connections_only' | 'logged_in';
-};
-
-export type ApiEndpointsCreateRedirectUriRequest = {
-    /**
-     * Label is an optional human-readable label for this URI.
-     */
-    label?: string;
-    /**
-     * URI is the redirect URI to whitelist (must be https, or http for localhost).
-     */
-    uri?: string;
-};
-
-export type ApiEndpointsCreateWebhookRequest = {
-    /**
-     * Events is the list of event types to subscribe to.
-     */
-    events: Array<'post.scheduled' | 'post.published' | 'post.failed' | 'post.partial' | 'post.updated' | 'post.deleted' | 'post.unpublished' | 'post.retried' | 'comment.received' | 'dm.received' | 'dm.sent' | 'dm.referral' | 'dm.postback' | 'dm.deleted' | 'dm.status.sent' | 'dm.status.delivered' | 'dm.status.read' | 'dm.status.failed' | 'review.received' | 'review.updated' | 'mention.received' | 'account.connected' | 'account.disconnected' | 'account.updated' | 'page.removed'>;
-    /**
-     * URL is the HTTPS endpoint that will receive webhook POST requests.
-     */
-    url?: string;
-};
-
-export type ApiEndpointsCreateWebhookResponse = {
-    events?: Array<string>;
-    id?: string;
-    message?: string;
-    secret?: string;
-    url?: string;
-};
-
-export type ApiEndpointsCreatorInfoResponse = {
-    /**
-     * [platform: tiktok] Empty on other platforms
-     */
-    avatar_url?: string;
-    /**
-     * [platform: tiktok] Always false on other platforms
-     */
-    can_post?: boolean;
-    /**
-     * [platform: tiktok] Nil on other platforms
-     */
-    interaction_settings?: SocialApiAiCoreApiConnectorsBaseInteractionSettings;
-    /**
-     * [platform: tiktok] Zero on other platforms
-     */
-    max_video_duration_sec?: number;
-    /**
-     * [platform: tiktok] Empty on other platforms
-     */
-    nickname?: string;
-    /**
-     * [always]
-     */
-    platform?: string;
-    /**
-     * [platform: tiktok] Nil on other platforms
-     */
-    privacy_level_options?: Array<string>;
-};
-
-export type ApiEndpointsDmAttachmentInput = {
-    /**
-     * Caption is text shown with this attachment instead of as a separate message.
-     * Supported on WhatsApp (not on audio) and Telegram; ignored on platforms whose
-     * Send API has no caption, where an attachment is always a bare bubble.
-     */
-    caption?: string;
-    /**
-     * Source is the attachment reference; its meaning is given by source_type.
-     */
-    source?: string;
-    /**
-     * SourceType selects how Source is interpreted:
-     * - "url": Source is a publicly reachable media URL the platform fetches directly.
-     * - "media_id": Source is a file id in your SocialAPI media library
-     * (GET /v1/media).
-     * - "platform_attachment_id": Source is an id of media already uploaded to the
-     * target platform (for example a Meta attachment_id) to reuse without re-upload.
-     */
-    source_type?: 'url' | 'media_id' | 'platform_attachment_id';
-    /**
-     * Type is the media kind. Optional for url and media_id sources (inferred from
-     * the file), required for platform_attachment_id (the platform exposes no URL
-     * to infer from).
-     */
-    type?: 'image' | 'video' | 'audio' | 'file';
-    /**
-     * Voice sends an audio attachment as a native voice note (waveform and
-     * playback-speed controls) instead of a file bubble. WhatsApp only, and only
-     * for audio whose file is Ogg encoded with the OPUS codec; WhatsApp rejects
-     * any other container or codec. Ignored on other platforms.
-     */
-    voice?: boolean;
-};
-
-export type ApiEndpointsDeletePostResponse = {
-    deleted?: boolean;
-    results?: Array<ApiEndpointsTargetDeleteOutcomeResponse>;
-    success?: boolean;
-};
-
-export type ApiEndpointsDeleteQueueResponse = {
-    deleted?: boolean;
-    id?: string;
-    /**
-     * Number of posts that were in the Queue. They keep their scheduled times and are no longer queued.
-     */
-    released_count?: number;
-};
-
-export type ApiEndpointsDeliveryDetailResponse = {
-    attempt_count?: number;
-    attempts?: Array<SocialApiAiCoreApiServiceDeliveryAttempt>;
-    created_at?: string;
-    description?: string;
-    endpoint_id?: string;
-    event_type?: string;
-    id?: string;
-    payload?: Array<number>;
-    response_duration_ms?: number;
-    response_status_code?: number;
-    status?: string;
-};
-
-export type ApiEndpointsDeliveryListResponse = {
-    count?: number;
-    data?: Array<SocialApiAiCoreApiServiceDeliveryListItem>;
-    next_cursor?: string;
-};
-
-export type ApiEndpointsEditYouTubeCommentRequest = {
-    account_id?: string;
-    post_id?: string;
-    text?: string;
-};
-
-export type ApiEndpointsErrorBody = {
-    code?: string;
-    message?: string;
-    meta?: {
-        [key: string]: unknown;
-    };
-};
-
-export type ApiEndpointsErrorResponse = {
-    error?: ApiEndpointsErrorBody;
-    /**
-     * RequestID matches the X-Request-ID response header. Include it when contacting support.
-     */
-    request_id?: string;
-};
-
-export type ApiEndpointsEventResponse = {
-    account_id?: string;
-    action?: string;
-    category?: string;
-    created_at?: string;
-    duration_ms?: number;
-    error_category?: string;
-    error_message?: string;
-    id?: string;
-    metadata?: {
-        [key: string]: unknown;
-    };
-    platform?: string;
-    resource_id?: string;
-    status?: string;
-    status_code?: number;
-    summary?: string;
-};
-
-export type ApiEndpointsEventsListResponse = {
-    events?: Array<ApiEndpointsEventResponse>;
-    pagination?: ApiEndpointsPaginationInfo;
-    retention_days?: number;
-};
-
-export type ApiEndpointsEventsSummaryResponse = {
-    by_category?: {
-        [key: string]: number;
-    };
-    by_error_category?: {
-        [key: string]: number;
-    };
-    failed?: number;
-    inbox_breakdown?: {
-        [key: string]: number;
-    };
-    retention_days?: number;
-    total?: number;
-    total_previous?: number;
-};
-
-export type ApiEndpointsExchangeRequest = {
-    /**
-     * Code is the authorization code received from the platform callback.
-     */
-    code?: string;
-    /**
-     * Metadata must include redirect_uri and state for CSRF validation.
-     */
-    metadata?: {
-        [key: string]: unknown;
-    };
-    /**
-     * Platform identifies the social platform (must match the connect call).
-     */
-    platform?: string;
-};
-
-export type ApiEndpointsExportAcceptedResponse = {
-    account_id?: string;
-    created_at?: string;
-    id?: string;
-    platform?: string;
-    status?: string;
-};
-
-export type ApiEndpointsExportItem = {
-    account_id?: string;
-    completed_at?: string;
-    created_at?: string;
-    error?: string;
-    expires_at?: string;
-    id?: string;
-    platform?: string;
-    processed_videos?: number;
-    status?: string;
-    total_videos?: number;
-};
-
-export type ApiEndpointsExportResultUrls = {
-    excel_url?: string;
-    report_url?: string;
-};
-
-export type ApiEndpointsExportStatusResponse = {
-    account_id?: string;
-    completed_at?: string;
-    created_at?: string;
-    error?: string;
-    expires_at?: string;
-    id?: string;
-    platform?: string;
-    processed_videos?: number;
-    result?: ApiEndpointsExportResultUrls;
-    status?: string;
-    total_videos?: number;
-};
-
-export type ApiEndpointsExportVideoItem = {
-    comment_count?: number;
-    cover_image_url?: string;
-    create_time?: string;
-    description?: string;
-    duration_seconds?: number;
-    height?: number;
-    like_count?: number;
-    platform?: string;
-    platform_video_id?: string;
-    share_count?: number;
-    share_url?: string;
-    title?: string;
-    transcript?: string;
-    transcript_lang?: string;
-    view_count?: number;
-    vision_category?: string;
-    vision_elements?: Array<string>;
-    vision_summary?: string;
-    width?: number;
-};
-
-export type ApiEndpointsExportVideosResponse = {
-    account_id?: string;
-    platform?: string;
-    videos?: Array<ApiEndpointsExportVideoItem>;
-};
-
-export type ApiEndpointsExportsListResponse = {
-    exports?: Array<ApiEndpointsExportItem>;
-};
-
-export type ApiEndpointsFacebookAccountSummaryResponse = {
-    follower_count?: number;
-    interactions?: number;
-    net_follows?: number;
-    period_end?: string;
-    period_start?: string;
-    reach?: number;
-    views?: number;
-};
-
-export type ApiEndpointsFacebookDailyInsightsResponse = {
-    data?: Array<SocialApiAiCoreApiConnectorsBaseDailyInsight>;
-};
-
-export type ApiEndpointsFacebookLoginPagesResponse = {
-    count?: number;
-    login_id?: string;
-    pages?: Array<ApiEndpointsPendingPage>;
-};
-
-export type ApiEndpointsFiringListResponse = {
-    data?: Array<SocialApiAiCoreApiServiceFiring>;
-    /**
-     * Pass as cursor to fetch the next page. Empty on the last page
-     */
-    next_cursor?: string;
-};
-
-export type ApiEndpointsGoogleAttributesResponse = {
-    data?: Array<SocialApiAiCoreApiConnectorsBaseGbpAttribute>;
-};
-
-export type ApiEndpointsGoogleAvailableAttributesResponse = {
-    data?: Array<SocialApiAiCoreApiConnectorsBaseGbpAttributeMetadata>;
-};
-
-export type ApiEndpointsGoogleFoodMenusResponse = {
-    data?: SocialApiAiCoreApiConnectorsBaseGbpFoodMenus;
-};
-
-export type ApiEndpointsGoogleInsightsResponse = {
-    data?: SocialApiAiCoreApiConnectorsBaseGbpInsights;
-};
-
-export type ApiEndpointsGoogleLocation = {
-    assignable?: boolean;
-    assigned_account_id?: string;
-    assigned_brand_id?: string;
-    assigned_brand_name?: string;
-    bio?: string;
-    /**
-     * Category is the location's primary Google category, localized.
-     */
-    category?: string;
-    /**
-     * Details is the rest of what Google publishes about the location: address,
-     * phone numbers, categories, opening hours, service area, and the Maps and
-     * review links. Fields are omitted when Google returns no value, so a
-     * service-area business has no storefront_address rather than an empty one.
-     */
-    details?: SocialApiAiCoreApiConnectorsBaseGbpLocationDetails;
-    /**
-     * MapsURI is the location's page on Google Maps.
-     */
-    maps_uri?: string;
-    name?: string;
-    platform_account_id?: string;
-};
-
-export type ApiEndpointsGoogleLoginLocationsResponse = {
-    count?: number;
-    locations?: Array<ApiEndpointsGoogleLocation>;
-    login_email?: string;
-    login_id?: string;
-    login_name?: string;
-};
-
-export type ApiEndpointsGoogleMediaAttribution = {
-    profile_name?: string;
-    profile_photo_url?: string;
-    profile_url?: string;
-    takedown_url?: string;
-};
-
-export type ApiEndpointsGoogleMediaItem = {
-    attribution?: ApiEndpointsGoogleMediaAttribution;
-    category?: string;
-    created_at?: string;
-    description?: string;
-    height_pixels?: number;
-    id?: string;
-    media?: ApiEndpointsMediaRef;
-    thumbnail_url?: string;
-    width_pixels?: number;
-};
-
-export type ApiEndpointsGoogleMediaListResponse = {
-    count?: number;
-    items?: Array<ApiEndpointsGoogleMediaItem>;
-    next_cursor?: string;
-    /**
-     * TotalCount is the total number of media items on the location, across all
-     * pages. Zero means an empty gallery.
-     */
-    total_count?: number;
-};
-
-export type ApiEndpointsGooglePlaceActionLinkResponse = {
-    data?: SocialApiAiCoreApiConnectorsBaseGbpPlaceActionLink;
-};
-
-export type ApiEndpointsGooglePlaceActionLinksResponse = {
-    data?: Array<SocialApiAiCoreApiConnectorsBaseGbpPlaceActionLink>;
-};
-
-export type ApiEndpointsGooglePlaceActionTypesResponse = {
-    data?: Array<SocialApiAiCoreApiConnectorsBaseGbpPlaceActionType>;
-};
-
-export type ApiEndpointsGoogleSearchKeywordsResponse = {
-    data?: SocialApiAiCoreApiConnectorsBaseGbpKeywordsPage;
-};
-
-export type ApiEndpointsImportPostsResponse = {
-    created?: number;
-    errors?: Array<ApiEndpointsImportRowError>;
-    failed?: number;
-    posts?: Array<ApiEndpointsPostResponse>;
-    total_rows?: number;
-};
-
-export type ApiEndpointsImportRowError = {
-    message?: string;
-    row?: number;
-};
-
-export type ApiEndpointsInboxPagination = {
-    has_more?: boolean;
-    next_cursor?: string;
-};
-
-export type ApiEndpointsInboxPaginationOpt = {
-    has_more?: boolean;
-    next_cursor?: string;
-};
-
-export type ApiEndpointsInboxSyncRequest = {
-    account_id?: string;
-    conversation_id?: string;
-};
-
-export type ApiEndpointsInboxSyncResponse = {
-    data?: ApiEndpointsInboxSyncStatus;
-};
-
-export type ApiEndpointsInboxSyncStatus = {
-    error?: string;
-    finished_at?: string;
-    last_synced_at?: string;
-    started_at?: string;
-    /**
-     * State is "idle", "syncing", or "failed". A finished sync is idle with a
-     * fresher LastSyncedAt; there is no terminal "done".
-     */
-    state?: 'idle' | 'syncing' | 'failed';
-    /**
-     * Synced is how many items the last completed sync brought in. Display only.
-     */
-    synced?: number;
-};
-
-export type ApiEndpointsInstagramAccountSummaryResponse = {
-    accounts_engaged?: number;
-    display_name?: string;
-    follower_count?: number;
-    following_count?: number;
-    interactions?: number;
-    media_count?: number;
-    net_follows?: number;
-    period_end?: string;
-    period_start?: string;
-    picture_url?: string;
-    reach?: number;
-    username?: string;
-    views?: number;
-};
-
-export type ApiEndpointsInstagramCollaboratorsResponse = {
-    count?: number;
-    data?: Array<SocialApiAiCoreApiConnectorsBaseCollaborator>;
-};
-
-export type ApiEndpointsInstagramParticipantProfileResponse = {
-    follower_count?: number;
-    id?: string;
-    is_business_follow_user?: boolean;
-    is_user_follow_business?: boolean;
-    is_verified_user?: boolean;
-    name?: string;
-    /**
-     * ProfilePic URLs expire after a few days; never persist one as durable.
-     */
-    profile_pic?: string;
-    username?: string;
-};
-
-export type ApiEndpointsInstagramStoriesResponse = {
-    count?: number;
-    data?: Array<SocialApiAiCoreApiConnectorsBasePost>;
-    next_cursor?: string;
-};
-
-export type ApiEndpointsInviteListItem = {
-    created_at?: string;
-    expires_at?: string;
-    id?: string;
-    is_active?: boolean;
-    /**
-     * The permissions chosen when the invite was created. null means the brand's current permissions for this platform apply when the invite is used, or every permission if it has none.
-     */
-    permissions?: Array<string>;
-    platform?: string;
-    token?: string;
-    url?: string;
-};
-
-export type ApiEndpointsInviteListResponse = {
-    count?: number;
-    data?: Array<ApiEndpointsInviteListItem>;
-};
-
-export type ApiEndpointsInviteResponse = {
-    expires_at?: string;
-    id?: string;
-    /**
-     * The permissions chosen when the invite was created. null means the brand's current permissions for this platform apply when the invite is used, or every permission if it has none.
-     */
-    permissions?: Array<string>;
-    platform?: string;
-    token?: string;
-    url?: string;
-};
-
-export type ApiEndpointsKeyListItem = {
-    brand_ids?: Array<string>;
-    created_at?: string;
-    id?: string;
-    is_active?: boolean;
-    last_used_at?: string;
-    name?: string;
-    preview?: string;
-    scopes?: Array<string>;
-};
-
-export type ApiEndpointsKeyScopeItem = {
-    description?: string;
-    group?: string;
-    name?: string;
-};
-
-export type ApiEndpointsKeyScopesResponse = {
-    count?: number;
-    data?: Array<ApiEndpointsKeyScopeItem>;
-};
-
-export type ApiEndpointsKeysListResponse = {
-    count?: number;
-    data?: Array<ApiEndpointsKeyListItem>;
-};
-
-export type ApiEndpointsLinkedInInsightsResponse = {
-    data?: SocialApiAiCoreApiConnectorsBasePageInsights;
-};
-
-export type ApiEndpointsLinkedInLoginProfile = {
-    assignable?: boolean;
-    assigned_account_id?: string;
-    assigned_brand_id?: string;
-    assigned_brand_name?: string;
-    /**
-     * ConnectionType is "profile" for the member, "organization" for a company Page.
-     */
-    connection_type?: 'profile' | 'organization';
-    name?: string;
-    picture_url?: string;
-    platform_account_id?: string;
-    username?: string;
-};
-
-export type ApiEndpointsLinkedInLoginProfilesResponse = {
-    count?: number;
-    login_id?: string;
-    /**
-     * LoginName is the name of the LinkedIn member who authorized the login.
-     */
-    login_name?: string;
-    profiles?: Array<ApiEndpointsLinkedInLoginProfile>;
-};
-
-export type ApiEndpointsListWebhookEventsResponse = {
-    count?: number;
-    data?: Array<SocialApiAiCoreApiServiceWebhookEventInfo>;
-};
-
-export type ApiEndpointsLostPageAccess = {
-    brand_id?: string;
-    brand_name?: string;
-    name?: string;
-    platform_page_id?: string;
-};
-
-export type ApiEndpointsMediaInput = {
-    source?: string;
-    source_type?: 'url' | 'media_id' | 'platform_attachment_id';
-    type?: 'image' | 'video' | 'audio' | 'file';
-};
-
-export type ApiEndpointsMediaItemResponse = {
-    content_type?: string;
-    created_at?: string;
-    filename?: string;
-    id?: string;
-    size_bytes?: number;
-    status?: string;
-    url?: string;
-};
-
-export type ApiEndpointsMediaListResponse = {
-    count?: number;
-    data?: Array<ApiEndpointsMediaItemResponse>;
-    next_cursor?: string;
-};
-
-export type ApiEndpointsMediaRef = {
-    type?: 'image' | 'video';
-    url?: string;
-};
-
-export type ApiEndpointsMediaUploadInfoResponse = {
-    expires_at?: string;
-    media_id?: string;
-    upload_url?: string;
-};
-
-export type ApiEndpointsMediaUploadResponse = {
-    media_id?: string;
-};
-
-export type ApiEndpointsMentionsListResponse = {
-    count?: number;
-    data?: Array<SocialApiAiCoreApiConnectorsBaseInteraction>;
-    next_cursor?: string;
-};
-
-export type ApiEndpointsMessageButton = {
-    payload?: string;
-    title?: string;
-    type?: 'url' | 'postback';
-    url?: string;
-};
-
-export type ApiEndpointsMessageCard = {
-    buttons?: Array<ApiEndpointsMessageButton>;
-    image_url?: string;
-    subtitle?: string;
-    title?: string;
-};
-
-export type ApiEndpointsMessageListRow = {
-    description?: string;
-    id?: string;
-    title?: string;
-};
-
-export type ApiEndpointsMessageListSection = {
-    rows?: Array<ApiEndpointsMessageListRow>;
-    title?: string;
-};
-
-export type ApiEndpointsMessageQuickReply = {
-    payload?: string;
-    title?: string;
-};
-
-export type ApiEndpointsMessagesListResponse = {
-    data?: Array<SocialApiAiCoreApiServiceMessageRow>;
-    last_synced_at?: string;
-    pagination?: ApiEndpointsInboxPagination;
-    /**
-     * SyncState is "idle", "syncing", or "failed" for this thread's message sync.
-     */
-    sync_state?: 'idle' | 'syncing' | 'failed';
-};
-
-export type ApiEndpointsMetricsResponse = {
-    post_id?: string;
-    targets?: Array<ApiEndpointsPostTargetResponse>;
-};
-
-export type ApiEndpointsMetricsResponseWrapper = {
-    data?: ApiEndpointsMetricsResponse;
-};
-
-export type ApiEndpointsMigrationAssessment = {
-    /**
-     * Brands needed across all profiles.
-     */
-    brands?: number;
-    /**
-     * Most Pages any one Brand needs on a single platform.
-     */
-    pages_per_brand?: number;
-    /**
-     * One entry per profile at your provider.
-     */
-    profiles?: Array<ApiEndpointsMigrationProfile>;
-    /**
-     * Cheapest plan that fits.
-     */
-    recommended_plan?: ApiEndpointsMigrationPlan;
-    /**
-     * Accounts SocialAPI can serve.
-     */
-    servable_accounts?: number;
-    /**
-     * Accounts that stay with your provider, by platform.
-     */
-    stays_with_provider?: Array<ApiEndpointsMigrationUnsupported>;
-};
-
-export type ApiEndpointsMigrationAuthorisation = {
-    text?: string;
-    version?: string;
-};
-
-export type ApiEndpointsMigrationPlan = {
-    brands_limit?: number;
-    name?: string;
-    pages_per_brand?: number;
-    tier?: string;
-};
-
-export type ApiEndpointsMigrationProfile = {
-    brands?: number;
-    id?: string;
-    name?: string;
-    pages_per_brand?: number;
-    servable_accounts?: number;
-    /**
-     * Why the profile needs more than one Brand, one line per reason.
-     */
-    splits?: Array<string>;
-};
-
-export type ApiEndpointsMigrationResponse = {
-    /**
-     * When the accounts were last read, RFC 3339. Null until the first read succeeds.
-     */
-    assessed_at?: string;
-    /**
-     * Your accounts and how they map to SocialAPI. Null until started, or when your provider could not be read.
-     */
-    assessment?: ApiEndpointsMigrationAssessment;
-    /**
-     * Why `assessment` is null on a started migration: `migration.key_invalid`, `migration.key_restricted` or `migration.source_unavailable`.
-     */
-    assessment_error?: string;
-    /**
-     * Text to accept before starting, and its version.
-     */
-    authorisation?: ApiEndpointsMigrationAuthorisation;
-    /**
-     * Version of the authorisation text accepted. Null until started.
-     */
-    authorisation_version?: string;
-    /**
-     * When the authorisation was accepted, RFC 3339. Null until started.
-     */
-    authorised_at?: string;
-    /**
-     * Base URL to set in your existing client. Null until started.
-     */
-    base_url?: string;
-    /**
-     * When the migration started, RFC 3339. Null until started.
-     */
-    created_at?: string;
-    /**
-     * Accounts already reconnected to SocialAPI.
-     */
-    cut_over?: number;
-    /**
-     * Requests sent through the base URL since the migration started.
-     */
-    forwarded_calls?: number;
-    /**
-     * Start and end of the key in use. Null until started.
-     */
-    key_hint?: string;
-    /**
-     * True once a migration has started.
-     */
-    started?: boolean;
-};
-
-export type ApiEndpointsMigrationUnsupported = {
-    count?: number;
-    /**
-     * Platform name as your provider reports it.
-     */
-    platform?: string;
-    /**
-     * Why the accounts stay: "unserved platform", "ads", "telephony", "commerce", "unknown platform" or "linked to another account".
-     */
-    reason?: string;
-};
-
-export type ApiEndpointsModerateYouTubeCommentRequest = {
-    account_id?: string;
-    ban_author?: boolean;
-    post_id?: string;
-    status?: string;
-};
-
-export type ApiEndpointsOkResponse = {
-    ok?: boolean;
-};
-
-export type ApiEndpointsPagesListResponse = {
-    data?: Array<SocialApiAiCoreApiServiceAccountPage>;
-};
-
-export type ApiEndpointsPaginationInfo = {
-    has_more?: boolean;
-    limit?: number;
-    next_cursor?: string;
-};
-
-export type ApiEndpointsPatchMeRequest = {
-    /**
-     * JobRole records what best describes the user. Surrounding whitespace is
-     * trimmed, an empty value leaves the current one unchanged, and values
-     * longer than 120 characters are truncated.
-     */
-    job_role?: string;
-    /**
-     * LockAccountsToBrand toggles whether a social account already connected to
-     * one brand may be re-connected (moved) to a different brand. When true, such
-     * a connect attempt is rejected with 409 account.already_linked.
-     */
-    lock_accounts_to_brand?: boolean;
-    onboarding?: boolean;
-    referral?: string;
-    /**
-     * SignupMetadata adds keys to the signup answers on record: a shallow
-     * merge, so keys sent replace the same keys and others are kept. At most
-     * 4096 bytes once encoded.
-     */
-    signup_metadata?: {
-        [key: string]: unknown;
-    };
-    use_case?: string;
-};
-
-export type ApiEndpointsPendingConnectionDetailResponse = {
-    connection_id?: string;
-    expires_at?: string;
-    /**
-     * login_id identifies the login and is set for Facebook, Google and LinkedIn.
-     * pages and lost_access are Facebook page-selection only.
-     */
-    login_id?: string;
-    lost_access?: Array<ApiEndpointsLostPageAccess>;
-    pages?: Array<ApiEndpointsPendingPage>;
-    platform?: string;
-    profiles?: Array<ApiEndpointsPendingProfile>;
-};
-
-export type ApiEndpointsPendingConnectionResponse = {
-    connection_id?: string;
-    /**
-     * login_id identifies the login and is set for Facebook, Google and LinkedIn.
-     * pages and lost_access are Facebook page-selection only.
-     */
-    login_id?: string;
-    lost_access?: Array<ApiEndpointsLostPageAccess>;
-    pages?: Array<ApiEndpointsPendingPage>;
-    platform?: string;
-    profiles?: Array<ApiEndpointsPendingProfile>;
-    status?: string;
-};
-
-export type ApiEndpointsPendingPage = {
-    assignable?: boolean;
-    assigned_account_id?: string;
-    assigned_brand_id?: string;
-    assigned_brand_name?: string;
-    category?: string;
-    name?: string;
-    picture_url?: string;
-    platform_page_id?: string;
-};
-
-export type ApiEndpointsPendingProfile = {
-    bio?: string;
-    display_name?: string;
-    platform_account_id?: string;
-    profile_picture_url?: string;
-    username?: string;
-};
-
-export type ApiEndpointsPinterestBoardItem = {
-    board_id?: string;
-    id?: string;
-    name?: string;
-    privacy?: 'PUBLIC' | 'PROTECTED' | 'SECRET';
-};
-
-export type ApiEndpointsPinterestBoardsResponse = {
-    data?: Array<ApiEndpointsPinterestBoardItem>;
-};
-
-export type ApiEndpointsPinterestPinItem = {
-    board_id?: string;
-    created_at?: string;
-    id?: string;
-    media_url?: string;
-    permalink?: string;
-    /**
-     * Title carries the pin's description, not Pinterest's separate title field.
-     */
-    title?: string;
-};
-
-export type ApiEndpointsPinterestPinsResponse = {
-    data?: Array<ApiEndpointsPinterestPinItem>;
-};
-
-export type ApiEndpointsPinterestSummaryResponse = {
-    board_count?: number;
-    follower_count?: number;
-    monthly_views?: number;
-    pin_count?: number;
-    profile_image?: string;
-    username?: string;
-};
-
-export type ApiEndpointsPlatformConstraintsResponse = {
-    data?: {
-        [key: string]: SocialApiAiCoreApiServicePlatformConstraints;
-    };
-};
-
-export type ApiEndpointsPostResponse = {
-    created_at?: string;
-    hidden?: boolean;
-    id?: string;
-    media?: Array<ApiEndpointsMediaInput>;
-    /**
-     * Deprecated: use media.
-     */
-    media_ids?: Array<string>;
-    published_at?: string;
-    /**
-     * ID of the Queue the post is in. null when the post is not queued.
-     */
-    queue_id?: string;
-    retry_count?: number;
-    scheduled_at?: string;
-    status?: 'draft' | 'scheduled' | 'publishing' | 'published' | 'partial' | 'failed' | 'cancelled';
-    targets?: Array<ApiEndpointsPostTargetResponse>;
-    text?: string;
-    title?: string;
-    updated_at?: string;
-    visibility?: 'public' | 'private' | 'connections_only' | 'logged_in';
-};
-
-export type ApiEndpointsPostTargetErrorResponse = {
-    category?: 'validation' | 'auth' | 'rate_limit' | 'platform' | 'system';
-    caused_by?: 'user' | 'platform' | 'system';
-    code?: string;
-    message?: string;
-};
-
-export type ApiEndpointsPostTargetMetricsResponse = {
-    /**
-     * Average time a viewer spent watching the video, in milliseconds.
-     */
-    avg_watch_time_ms?: number;
-    /**
-     * Taps on the profile's call button.
-     */
-    calls?: number;
-    comments?: number;
-    /**
-     * Views of the copy shared to another network, for a post shared there too.
-     */
-    crossposted_views?: number;
-    /**
-     * Taps on the profile's directions button.
-     */
-    directions?: number;
-    /**
-     * Taps on the profile's email button.
-     */
-    emails?: number;
-    extra?: {
-        [key: string]: unknown;
-    };
-    /**
-     * Accounts that followed after seeing the post.
-     */
-    follows?: number;
-    /**
-     * Likes, comments, saves and shares combined, as the platform counts them.
-     */
-    interactions?: number;
-    likes?: number;
-    /**
-     * Actions taken on the account's profile after visiting it from the post. website_clicks, calls, directions, emails and texts break it down.
-     */
-    profile_actions?: number;
-    /**
-     * Visits to the account's profile from the post.
-     */
-    profile_visits?: number;
-    /**
-     * Unique accounts that saw the post.
-     */
-    reach?: number;
-    /**
-     * Times other accounts reposted the post.
-     */
-    reposts?: number;
-    saves?: number;
-    shares?: number;
-    /**
-     * Percentage of viewers who skipped the video near its start.
-     */
-    skip_rate?: number;
-    /**
-     * Taps on the profile's text message button.
-     */
-    texts?: number;
-    /**
-     * Total time all viewers spent watching the video, in milliseconds.
-     */
-    total_watch_time_ms?: number;
-    /**
-     * Times the post was shown or played.
-     */
-    views?: number;
-    /**
-     * Clicks on the profile's website link.
-     */
-    website_clicks?: number;
-};
-
-export type ApiEndpointsPostTargetResponse = {
-    account_id?: string;
-    board_id?: string;
-    error?: ApiEndpointsPostTargetErrorResponse;
-    first_comment?: string;
-    media?: Array<ApiEndpointsMediaInput>;
-    /**
-     * Deprecated: use media.
-     */
-    media_ids?: Array<string>;
-    media_type?: 'feed' | 'reel' | 'stories' | 'carousel';
-    metadata?: {
-        [key: string]: unknown;
-    };
-    metrics?: ApiEndpointsPostTargetMetricsResponse;
-    metrics_synced_at?: string;
-    page_id?: string;
-    permalink?: string;
-    platform?: 'instagram' | 'facebook' | 'threads' | 'tiktok' | 'linkedin' | 'google' | 'zalo' | 'youtube' | 'twitter' | 'bluesky' | 'whatsapp' | 'pinterest';
-    /**
-     * The platform-specific options set on this target, as sent in platform_data when the post was created or last updated. Chain continuation posts are returned in segments, not here.
-     */
-    platform_data?: {
-        [key: string]: unknown;
-    };
-    /**
-     * Every image and video Instagram or Facebook reports on the published post: carousel slides or album photos in order, with a cover image for each video. The links are temporary: download the files rather than keeping the links, and call POST /v1/accounts/{id}/sync to get fresh ones. Absent on Facebook link and share posts and on other platforms.
-     */
-    platform_media?: Array<SocialApiAiCoreApiConnectorsBasePlatformMediaItem>;
-    platform_post_id?: string;
-    published_at?: string;
-    scheduled_at?: string;
-    /**
-     * Publish settings Instagram or Facebook reports for the published post, such as the AI info label, alt text, tagged place or audience targeting. Absent when the platform reported none.
-     */
-    settings?: SocialApiAiCoreApiConnectorsBasePostSettings;
-    status?: 'pending' | 'publishing' | 'published' | 'failed';
-    text?: string;
-    title?: string;
-    visibility?: string;
-};
-
-export type ApiEndpointsPostsListResponse = {
-    data?: Array<ApiEndpointsPostResponse>;
-    pagination?: ApiEndpointsPaginationInfo;
-};
-
-export type ApiEndpointsPostsMetricsItem = {
-    /**
-     * Set when this post could not be read: not found, or a platform post ID that matches several posts.
-     */
-    error?: ApiEndpointsPostTargetErrorResponse;
-    /**
-     * The post ID as given in post_ids.
-     */
-    post_id?: string;
-    /**
-     * Same targets as GET /v1/posts/{pid}/metrics. Empty when error is set.
-     */
-    targets?: Array<ApiEndpointsPostTargetResponse>;
-};
-
-export type ApiEndpointsPostsMetricsResponse = {
-    /**
-     * One item per distinct post ID, in request order.
-     */
-    data?: Array<ApiEndpointsPostsMetricsItem>;
-};
-
-export type ApiEndpointsPrivateReplyAttachmentInput = {
-    /**
-     * Source is the attachment reference; its meaning is given by source_type.
-     */
-    source?: string;
-    /**
-     * SourceType selects how Source is interpreted:
-     * - "url": Source is a publicly reachable media URL the platform fetches directly.
-     * - "media_id": Source is a file id in your SocialAPI media library
-     * (GET /v1/media).
-     * - "platform_attachment_id": Source is an id of media already uploaded to the
-     * target platform (for example a Meta attachment_id).
-     */
-    source_type?: 'url' | 'media_id' | 'platform_attachment_id';
-    /**
-     * Type is the media kind. Optional for url and media_id sources (inferred from
-     * the file), required for platform_attachment_id.
-     */
-    type?: 'image' | 'video' | 'audio' | 'file';
-};
-
-export type ApiEndpointsPrivateReplyRequest = {
-    account_id?: string;
-    /**
-     * Attachment sends one image, video, audio or file as the private reply,
-     * instead of text. Leave text and buttons empty when you set it.
-     */
-    attachment?: ApiEndpointsPrivateReplyAttachmentInput;
-    /**
-     * Buttons renders a button template (1-3 buttons); uses text as the bubble body.
-     */
-    buttons?: Array<ApiEndpointsMessageButton>;
-    text?: string;
-};
-
-export type ApiEndpointsQueueListResponse = {
-    count?: number;
-    data?: Array<SocialApiAiCoreApiServiceQueue>;
-};
-
-export type ApiEndpointsQueuePreviewResponse = {
-    data?: Array<SocialApiAiCoreApiServiceQueuedTime>;
-};
-
-export type ApiEndpointsReactToMessageRequest = {
-    account_id?: string;
-    reaction?: string;
-};
-
-export type ApiEndpointsRedirectUriListResponse = {
-    count?: number;
-    data?: Array<ApiEndpointsRedirectUriResponse>;
-};
-
-export type ApiEndpointsRedirectUriResponse = {
-    created_at?: string;
-    id?: string;
-    label?: string;
-    uri?: string;
-};
-
-export type ApiEndpointsReplyReviewRequest = {
-    account_id?: string;
-    text?: string;
-};
-
-export type ApiEndpointsReplyToCommentSuccessResponse = {
-    comment_id?: string;
-    success?: boolean;
-};
-
-export type ApiEndpointsReplyToReviewResponse = {
-    reply_id?: string;
-    state?: string;
-    success?: boolean;
-};
-
-export type ApiEndpointsReviewAccountRow = {
-    account_id?: string;
-    average_rating?: number;
-    last_review_at?: string;
-    name?: string;
-    platform?: string;
-    status?: 'ok' | 'reconnection_required' | 'error';
-    total_count?: number;
-};
-
-export type ApiEndpointsReviewAccountsResponse = {
-    data?: Array<ApiEndpointsReviewAccountRow>;
-};
-
-export type ApiEndpointsReviewItem = {
-    author?: SocialApiAiCoreApiConnectorsBaseAuthor;
-    created_at?: string;
-    id?: string;
-    media?: Array<ApiEndpointsReviewMediaDto>;
-    rating?: number;
-    reply?: ApiEndpointsReviewReplyDto;
-    /**
-     * ReplyURL is the platform-hosted page for replying to this review, when
-     * the platform exposes one (Google). Empty elsewhere.
-     */
-    reply_url?: string;
-    text?: string;
-    /**
-     * Title is the review's headline, on platforms whose reviews have one (App Store Connect).
-     */
-    title?: string;
-    updated_at?: string;
-};
-
-export type ApiEndpointsReviewMediaDto = {
-    thumbnail_label?: string;
-    thumbnail_url?: string;
-    video_url?: string;
-};
-
-export type ApiEndpointsReviewReplyDto = {
-    /**
-     * PolicyViolation explains a REJECTED reply, passed through verbatim from
-     * the platform. Absent otherwise.
-     */
-    policy_violation?: {
-        [key: string]: unknown;
-    };
-    /**
-     * State is the moderation outcome: PENDING, APPROVED, or REJECTED.
-     * Omitted on platforms that report no moderation state (App Store Connect).
-     */
-    state?: string;
-    text?: string;
-    updated_at?: string;
-};
-
-export type ApiEndpointsReviewSummaryResponse = {
-    average_rating?: number;
-    total_count?: number;
-};
-
-export type ApiEndpointsReviewsListResponse = {
-    data?: Array<ApiEndpointsReviewItem>;
-    pagination?: ApiEndpointsInboxPagination;
-    summary?: ApiEndpointsReviewSummaryResponse;
-};
-
-export type ApiEndpointsSegmentRequest = {
-    /**
-     * Media is the ordered, agnostic media list. Each item is a url, a media_id,
-     * or a platform_attachment_id; order and mixing are preserved. Supersedes media_ids.
-     * Currently ignored: X drops segment media, and Threads chaining is temporarily unavailable.
-     */
-    media?: Array<ApiEndpointsMediaInput>;
-    /**
-     * MediaIDs attach media to this segment.
-     *
-     * Deprecated: use Media with source_type "media_id". Ignored when media is set.
-     */
-    media_ids?: Array<string>;
-    /**
-     * Text is the post body for this segment. Required.
-     */
-    text?: string;
-};
-
-export type ApiEndpointsSelectProfileRequest = {
-    /**
-     * PageIDs selects the Facebook Pages to assign to the brand (Facebook pending connections only).
-     */
-    page_ids?: Array<string>;
-    /**
-     * PlatformAccountID selects the Google Business Profile to connect (Google
-     * pending connections only).
-     */
-    platform_account_id?: string;
-};
-
-export type ApiEndpointsSendFeedbackRequest = {
-    /**
-     * Message is the feedback content.
-     */
-    message?: string;
-    /**
-     * Type is one of: bug, feature_request, general.
-     */
-    type?: string;
-};
-
-export type ApiEndpointsSendMessageRequest = {
-    account_id: string;
-    /**
-     * AttachmentURL is a single-attachment shorthand. Ignored when attachments is
-     * non-empty; its type is inferred from the URL extension.
-     *
-     * Deprecated: use Attachments instead, which supersedes it and supports one or
-     * many items.
-     */
-    attachment_url?: string;
-    /**
-     * Attachments sends one or more media items, each as its own message bubble.
-     */
-    attachments?: Array<ApiEndpointsDmAttachmentInput>;
-    /**
-     * Buttons renders a button template (1-3 buttons); uses text as the bubble body.
-     * On WhatsApp send up to 3 postback buttons with unique payloads, or a single
-     * url button that opens its url.
-     */
-    buttons?: Array<ApiEndpointsMessageButton>;
-    /**
-     * Cards renders a generic/carousel template (up to 10 cards).
-     */
-    cards?: Array<ApiEndpointsMessageCard>;
-    /**
-     * ListButton is the label on the button that opens the list. Required with
-     * list_sections, max 20 characters.
-     */
-    list_button?: string;
-    /**
-     * ListSections renders a tappable list behind a single button, for menus wider
-     * than the 3 buttons a reply-button message allows (up to 10 rows in total,
-     * across up to 10 sections). WhatsApp only; requires text and list_button.
-     */
-    list_sections?: Array<ApiEndpointsMessageListSection>;
-    /**
-     * Optional. Only `HUMAN_AGENT` is accepted, on Instagram accounts connected with Instagram Login, for replies a member of your team types between 24 hours and 7 days after the person's last message. Workflows, automations, bots and AI agents acting on their own send without it, so they reply within 24 hours of the person's last message. Ask support to enable it for your account. Inside 24 hours the message is sent without the tag.
-     */
-    message_tag?: string;
-    /**
-     * QuickReplies renders up to 13 tappable chips above the keyboard; requires text.
-     */
-    quick_replies?: Array<ApiEndpointsMessageQuickReply>;
-    /**
-     * ReplyToMessageID makes the first sent bubble a reply to a specific prior
-     * message (Meta reply_to.mid). Instagram/Facebook only.
-     */
-    reply_to_message_id?: string;
-    text?: string;
-};
-
-export type ApiEndpointsSendMessageResponse = {
-    /**
-     * MessageID is the first sent message's ID; for a multi-attachment send it is
-     * only the first of several IDs.
-     *
-     * Deprecated: use MessageIDs instead.
-     */
-    message_id?: string;
-    /**
-     * MessageIDs holds every sent message's ID, in send order.
-     */
-    message_ids?: Array<string>;
-    success?: boolean;
-};
-
-export type ApiEndpointsSenderActionRequest = {
-    /**
-     * Connected account ID that owns the conversation.
-     */
-    account_id: string;
-    /**
-     * What to show the other participant: typing_on, typing_off, or mark_seen.
-     */
-    action: 'typing_on' | 'typing_off' | 'mark_seen';
-};
-
-export type ApiEndpointsStaggerRequest = {
-    /**
-     * MaxSeconds is the longest delay between two consecutive targets. Must be at least min_seconds and at most 86400 (24 hours).
-     */
-    max_seconds?: number;
-    /**
-     * MinSeconds is the shortest delay between two consecutive targets. Must be 0 or more.
-     */
-    min_seconds?: number;
-};
-
-export type ApiEndpointsStartMigrationRequest = {
-    /**
-     * Version of the authorisation text you accepted, as returned in `authorisation.version`.
-     */
-    authorisation_version: string;
-    /**
-     * API key from your account with that provider. It needs read access to profiles and accounts.
-     */
-    key: string;
-    /**
-     * Identifier of the provider you are moving from.
-     */
-    provider: string;
-};
-
-export type ApiEndpointsStorageUsageResponse = {
-    count?: number;
-    limit_bytes?: number;
-    used_bytes?: number;
-};
-
-export type ApiEndpointsSuccessResponse = {
-    success?: boolean;
-};
-
-export type ApiEndpointsTargetDeleteOutcomeResponse = {
-    account_id?: string;
-    message?: string;
-    outcome?: 'deleted' | 'not_supported' | 'failed';
-    platform?: string;
-};
-
-export type ApiEndpointsTargetRequest = {
-    /**
-     * AccountID is the connected account to publish to. Required.
-     */
-    account_id?: string;
-    /**
-     * BoardID targets a specific board within a Pinterest account. Pinterest
-     * targets use board_id; page_id is also accepted as an alias, but supplying
-     * both is an error.
-     */
-    board_id?: string;
-    /**
-     * FirstComment overrides the post-level first comment for this target.
-     */
-    first_comment?: string;
-    /**
-     * Media is the ordered, agnostic media list. Each item is a url, a media_id,
-     * or a platform_attachment_id; order and mixing are preserved. Supersedes media_ids.
-     */
-    media?: Array<ApiEndpointsMediaInput>;
-    /**
-     * MediaIDs overrides the post-level media for this target.
-     *
-     * Deprecated: use Media with source_type "media_id". Ignored when media is set.
-     */
-    media_ids?: Array<string>;
-    /**
-     * PageID optionally targets a specific page within the account (e.g. Facebook Page).
-     */
-    page_id?: string;
-    /**
-     * PlatformData passes platform-specific fields (e.g. TikTok privacy settings, LinkedIn article metadata).
-     */
-    platform_data?: {
-        [key: string]: unknown;
-    };
-    /**
-     * ScheduledAt overrides the post-level schedule time for this target.
-     */
-    scheduled_at?: string;
-    /**
-     * Text overrides the post-level text for this target.
-     */
-    text?: string;
-    /**
-     * Title overrides the post-level title for this target.
-     */
-    title?: string;
-    /**
-     * Visibility overrides the post-level visibility for this target.
-     */
-    visibility?: 'public' | 'private' | 'connections_only' | 'logged_in';
-};
-
-export type ApiEndpointsTestDeliveryResponse = {
-    delivery_id?: string;
-    response_body?: string;
-    response_duration_ms?: number;
-    response_status_code?: number;
-    status?: string;
-};
-
-export type ApiEndpointsTestWebhookRequest = {
-    event_type?: string;
-    payload?: Array<number>;
-};
-
-export type ApiEndpointsThreadsInsightsResponse = {
-    data?: SocialApiAiCoreApiConnectorsBaseThreadsInsights;
-};
-
-export type ApiEndpointsThreadsProfileResponse = {
-    data?: SocialApiAiCoreApiConnectorsBaseThreadsPublicProfile;
-};
-
-export type ApiEndpointsTikTokAccountSummaryResponse = {
-    avatar_url?: string;
-    bio_description?: string;
-    display_name?: string;
-    follower_count?: number;
-    following_count?: number;
-    is_verified?: boolean;
-    likes_count?: number;
-    profile_deep_link?: string;
-    username?: string;
-    video_count?: number;
-};
-
-export type ApiEndpointsTwitterByokRequest = {
-    client_id?: string;
-    client_secret?: string;
-};
-
-export type ApiEndpointsTwitterByokItem = {
-    /**
-     * Brand these credentials apply to. null for the default credentials, which apply to every brand without its own entry.
-     */
-    brand_id?: string | null;
-    client_id_hint?: string;
-    created_at?: string;
-    updated_at?: string;
-};
-
-export type ApiEndpointsTwitterByokListResponse = {
-    count?: number;
-    data?: Array<ApiEndpointsTwitterByokItem>;
-};
-
-export type ApiEndpointsTwitterByokTestResponse = {
-    reason?: string;
-    valid?: boolean;
-};
-
-export type ApiEndpointsUnpublishRequest = {
-    /**
-     * AccountID optionally scopes the unpublish to a single platform target.
-     */
-    account_id?: string;
-};
-
-export type ApiEndpointsUpdateAccountPermissionsRequest = {
-    /**
-     * Permissions replaces the account's permissions and is required. Send null to give the account every permission, including ones added later. An empty list is rejected. Removing a permission immediately deletes the comments, messages, analytics and posts not published through SocialAPI that it covers; posts published through SocialAPI are kept. Valid values: posts.read, posts.write, comments.read, comments.write, messages.read, messages.write, reviews.read, reviews.write, analytics.read.
-     */
-    permissions?: Array<string> | null;
-};
-
-export type ApiEndpointsUpdateBoardRequest = {
-    description?: string;
-    name?: string;
-    privacy?: 'PUBLIC' | 'SECRET';
-};
-
-export type ApiEndpointsUpdateBrandRequest = {
-    name: string;
-};
-
-export type ApiEndpointsUpdateConversationRequest = {
-    /**
-     * Status must be "active" or "archived".
-     */
-    status?: 'active' | 'archived';
-};
-
-export type ApiEndpointsUpdateGoogleAttributesRequest = {
-    /**
-     * Attributes to write. Each one replaces that attribute's value; one sent
-     * with no value field is removed. Attributes not listed are left as they are.
-     */
-    attributes?: Array<SocialApiAiCoreApiConnectorsBaseGbpAttribute>;
-};
-
-export type ApiEndpointsUpdateGoogleLocationResponse = {
-    data?: SocialApiAiCoreApiConnectorsBaseGbpLocationDetails;
-    /**
-     * Validated is true when the request ran with validate_only, meaning Google
-     * accepted the change as valid and wrote nothing. Data is empty in that case.
-     */
-    validated?: boolean;
-};
-
-export type ApiEndpointsUpdateKeyRequest = {
-    /**
-     * BrandIDs restricts the key to specific brands. Empty means all brands.
-     */
-    brand_ids?: Array<string>;
-    name?: string;
-    /**
-     * Scopes restricts the key to specific actions. Empty means full access.
-     */
-    scopes?: Array<string>;
-};
-
-export type ApiEndpointsUpdateKeyResponse = {
-    brand_ids?: Array<string>;
-    id?: string;
-    name?: string;
-    scopes?: Array<string>;
-};
-
-export type ApiEndpointsUpdatePageRequest = {
-    is_active?: boolean;
-    is_default?: boolean;
-};
-
-export type ApiEndpointsUpdatePostRequest = {
-    /**
-     * FirstComment replaces the auto-first-comment.
-     */
-    first_comment?: string;
-    /**
-     * Hidden archives the post from default list views when true.
-     */
-    hidden?: boolean;
-    /**
-     * Media is the ordered, agnostic media list. Each item is a url, a media_id,
-     * or a platform_attachment_id; order and mixing are preserved. Supersedes media_ids.
-     */
-    media?: Array<ApiEndpointsMediaInput>;
-    /**
-     * MediaIDs replaces the attached media files.
-     *
-     * Deprecated: use Media with source_type "media_id". Ignored when media is set.
-     */
-    media_ids?: Array<string>;
-    /**
-     * PlatformData passes platform-specific fields keyed by platform name (e.g. {"instagram": {"content_type": "feed"}}). Folded into each matching target; a target's own platform_data wins on conflicts.
-     */
-    platform_data?: {
-        [key: string]: unknown;
-    };
-    /**
-     * QueueID moves the post to another Queue, which gives it that Queue's earliest free time and frees its old one. Send null to take the post out of its Queue and keep its time. Send "default" for the Brand's default Queue.
-     */
-    queue_id?: string;
-    /**
-     * ScheduledAt changes the scheduled publication time (RFC3339).
-     */
-    scheduled_at?: string;
-    /**
-     * Segments are continuation posts that publish as a native thread on X. Threads chaining is temporarily unavailable.
-     */
-    segments?: Array<ApiEndpointsSegmentRequest>;
-    /**
-     * SkipValidation bypasses pre-publish validation. The post is scheduled/published as-is and may fail at the platform.
-     */
-    skip_validation?: boolean;
-    /**
-     * Targets replaces or updates per-platform target configuration.
-     */
-    targets?: Array<ApiEndpointsTargetRequest>;
-    /**
-     * Text replaces the post body. Only for draft/scheduled/failed posts.
-     */
-    text?: string;
-    /**
-     * Title replaces the post title.
-     */
-    title?: string;
-    /**
-     * Visibility changes who can see the post.
-     */
-    visibility?: 'public' | 'private' | 'connections_only' | 'logged_in';
-};
-
-export type ApiEndpointsUpdateQueueResponse = {
-    /**
-     * False when the Queue is paused: no new post can join it.
-     */
-    active?: boolean;
-    /**
-     * ID of the Brand the Queue belongs to.
-     */
-    brand_id?: string;
-    /**
-     * When the Queue was created.
-     */
-    created_at?: string;
-    /**
-     * Queue ID.
-     */
-    id?: string;
-    /**
-     * True for the Brand's default Queue, the one queue_id "default" refers to.
-     */
-    is_default?: boolean;
-    /**
-     * Queue name.
-     */
-    name?: string;
-    /**
-     * Number of queued posts moved to the new times. Present only when the request sent reshuffle_existing: true.
-     */
-    reshuffled_count?: number;
-    /**
-     * Weekly posting times, sorted by day (Monday first) then time.
-     */
-    slots?: Array<SocialApiAiCoreApiServiceSlot>;
-    /**
-     * IANA timezone the slots are expressed in.
-     */
-    timezone?: string;
-    /**
-     * When the Queue was last changed.
-     */
-    updated_at?: string;
-};
-
-export type ApiEndpointsUpdateWebhookRequest = {
-    /**
-     * Events replaces the subscribed event types.
-     */
-    events?: Array<'post.scheduled' | 'post.published' | 'post.failed' | 'post.partial' | 'post.updated' | 'post.deleted' | 'post.unpublished' | 'post.retried' | 'comment.received' | 'dm.received' | 'dm.sent' | 'dm.referral' | 'dm.postback' | 'dm.deleted' | 'dm.status.sent' | 'dm.status.delivered' | 'dm.status.read' | 'dm.status.failed' | 'review.received' | 'review.updated' | 'mention.received' | 'account.connected' | 'account.disconnected' | 'account.updated' | 'page.removed'>;
-    /**
-     * IsActive enables or disables delivery to this endpoint.
-     */
-    is_active?: boolean;
-    /**
-     * URL changes the webhook delivery endpoint. Must be HTTPS.
-     */
-    url?: string;
-};
-
-export type ApiEndpointsUpdateYouTubeVideoRequest = {
-    /**
-     * Public URL of a JPG or PNG image (50 MB max) to set as the video's custom thumbnail. The channel must be verified to use custom thumbnails, otherwise the request fails with 403 platform.youtube.custom_thumbnail_forbidden. If the thumbnail is refused, no other field in the request is applied.
-     */
-    cover_url?: string;
-    description?: string;
-    tags?: Array<string>;
-    title?: string;
-    /**
-     * public | unlisted | private
-     */
-    visibility?: string;
-};
-
-export type ApiEndpointsUsageLimitsResponse = {
-    [key: string]: number;
-};
-
-export type ApiEndpointsUsageResponse = {
-    brands_limit?: number;
-    brands_used?: number;
-    interactions_limit?: number;
-    interactions_used?: number;
-    page_allowance?: number;
-    page_billing_exempt?: boolean;
-    period_end?: string;
-    period_start?: string;
-    posts_limit?: number;
-    posts_used?: number;
-    profile_units_limit?: number;
-    profile_units_used?: number;
-};
-
-export type ApiEndpointsUserMeResponse = {
-    allowed_platforms?: Array<string>;
-    avatar_url?: string;
-    beta_tester?: boolean;
-    /**
-     * BillingBlockReason is why access is paused, empty when it is not.
-     * "past_due": a payment failed, and settling it restores access.
-     * "ban": the account was suspended for a Terms of Service violation.
-     * Paying does not lift it, and every route except this one returns
-     * 403 auth.suspended. Contact support to appeal.
-     */
-    billing_block_reason?: string;
-    /**
-     * BillingBlocked is true when API access and webhook delivery are paused.
-     * Read BillingBlockReason to tell why and whether paying lifts it.
-     */
-    billing_blocked?: boolean;
-    /**
-     * BillingBlockedAt is when the block began, or null when not blocked.
-     */
-    billing_blocked_at?: string;
-    /**
-     * BillingCurrency is the currency your subscription is billed in: "usd"
-     * or "eur". A subscription never changes currency, so plan changes are
-     * priced in it. Kept after a cancellation; "" when you never subscribed.
-     */
-    billing_currency?: string;
-    email?: string;
-    /**
-     * ExperimentEnrolled is true only when ExperimentVariant was assigned by
-     * the experiment itself. False means the "control" above is a fallback
-     * (not enrolled, flag off, or evaluation failed) and must not be recorded
-     * as the caller's arm.
-     */
-    experiment_enrolled?: boolean;
-    /**
-     * ExperimentVariant is the caller's variant for staged feature rollouts:
-     * "control" or "treatment". "control" unless the caller is enrolled.
-     */
-    experiment_variant?: string;
-    /**
-     * FacebookPageSelection, when true, makes a Facebook connection (and an
-     * Instagram connection through Facebook Login) end with
-     * status=selection_required so you choose the Pages. Read-only.
-     */
-    facebook_page_selection?: boolean;
-    id?: string;
-    /**
-     * JobRole is what best describes the user, as answered during
-     * onboarding. Null until answered.
-     */
-    job_role?: string;
-    /**
-     * LockAccountsToBrand, when true, rejects connecting a social account that is
-     * already connected to another of your brands (409 account.already_linked)
-     * instead of moving it. Default false.
-     */
-    lock_accounts_to_brand?: boolean;
-    onboarding?: boolean;
-    plan?: string;
-    /**
-     * Role is the caller's team role: "admin", "developer", or "" for the
-     * account Owner, who holds no Role. An API key and an OAuth token both
-     * read "".
-     */
-    role?: string;
-    /**
-     * SignupMetadata holds open-ended answers recorded at signup, such as
-     * referral_source and search_query. An empty object until answered.
-     */
-    signup_metadata?: {
-        [key: string]: unknown;
-    };
-    use_case?: string;
-};
-
-export type ApiEndpointsValidatePostRequest = {
-    /**
-     * AccountIDs lists connected account IDs - their platforms are resolved automatically.
-     */
-    account_ids?: Array<string>;
-    /**
-     * Media is the ordered, agnostic media list. Each item is a url, a media_id,
-     * or a platform_attachment_id; order and mixing are preserved. Supersedes media_ids.
-     */
-    media?: Array<ApiEndpointsMediaInput>;
-    /**
-     * MediaIDs are media file IDs to validate (checks count and type limits).
-     *
-     * Deprecated: use Media with source_type "media_id". Ignored when media is set.
-     */
-    media_ids?: Array<string>;
-    /**
-     * PlatformData passes platform-specific fields keyed by platform name (e.g. {"instagram": {"content_type": "feed"}}). Folded into each matching target; a target's own platform_data wins on conflicts.
-     */
-    platform_data?: {
-        [key: string]: unknown;
-    };
-    /**
-     * Platforms lists platform names to validate against (e.g. ["instagram", "linkedin"]).
-     */
-    platforms?: Array<string>;
-    /**
-     * ScheduledAt validates the schedule time (must be in the future, within platform limits).
-     */
-    scheduled_at?: string;
-    /**
-     * Segments are continuation posts that publish as a native thread on X. Threads chaining is temporarily unavailable.
-     */
-    segments?: Array<ApiEndpointsSegmentRequest>;
-    /**
-     * Targets validates per-target overrides if provided.
-     */
-    targets?: Array<ApiEndpointsTargetRequest>;
-    /**
-     * Text is the post content to validate against platform constraints.
-     */
-    text?: string;
-};
-
-export type ApiEndpointsValidatePostResponse = {
-    errors?: Array<ApiEndpointsValidationIssue>;
-    valid?: boolean;
-    warnings?: Array<ApiEndpointsValidationIssue>;
-};
-
-export type ApiEndpointsValidationIssue = {
-    field?: string;
-    message?: string;
-    platform?: string;
-    /**
-     * SegmentIndex pins the issue to a continuation segment (0-based); nil for the main post.
-     */
-    segment_index?: number;
-    target?: string;
-};
-
-export type ApiEndpointsWebhookDetailResponse = {
-    created_at?: string;
-    events?: Array<string>;
-    id?: string;
-    is_active?: boolean;
-    secret_hint?: string;
-    stats?: SocialApiAiCoreApiServiceWebhookStats;
-    url?: string;
-};
-
-export type ApiEndpointsWebhookEndpointItem = {
-    created_at?: string;
-    events?: Array<string>;
-    id?: string;
-    is_active?: boolean;
-    url?: string;
-};
-
-export type ApiEndpointsWebhooksListResponse = {
-    count?: number;
-    data?: Array<ApiEndpointsWebhookEndpointItem>;
-};
-
-export type ApiEndpointsWhatsAppBusinessProfile = {
-    /**
-     * About is the profile tagline shown in the chat header.
-     */
-    about?: string;
-    /**
-     * Address is the business address (max 256 characters).
-     */
-    address?: string;
-    /**
-     * Description is the business description.
-     */
-    description?: string;
-    /**
-     * Email is the contact email.
-     */
-    email?: string;
-    /**
-     * MessagingProduct is always "whatsapp".
-     */
-    messaging_product?: string;
-    /**
-     * ProfilePictureURL is the public URL of the current profile picture (read-only; use profile_picture_handle to update).
-     */
-    profile_picture_url?: string;
-    /**
-     * Vertical is the business category.
-     */
-    vertical?: 'OTHER' | 'AUTO' | 'BEAUTY' | 'APPAREL' | 'EDU' | 'ENTERTAIN' | 'EVENT_PLAN' | 'FINANCE' | 'GROCERY' | 'GOVT' | 'HOTEL' | 'HEALTH' | 'NONPROFIT' | 'PROF_SERVICES' | 'RETAIL' | 'TRAVEL' | 'RESTAURANT' | 'ALCOHOL';
-    /**
-     * Websites lists the business websites (max 2).
-     */
-    websites?: Array<string>;
-};
-
-export type ApiEndpointsWhatsAppContact = {
-    input?: string;
-    wa_id?: string;
-};
-
-export type ApiEndpointsWhatsAppCreateTemplateRequest = {
-    /**
-     * Category is the message category. Marketing intent in a UTILITY template triggers automatic rejection.
-     */
-    category?: 'MARKETING' | 'UTILITY' | 'AUTHENTICATION';
-    /**
-     * Components define the template body, optional header, optional footer, and optional buttons.
-     * At minimum one BODY component is required.
-     */
-    components?: Array<ApiEndpointsWhatsAppTemplateComponentDef>;
-    /**
-     * Language is the BCP-47 language code (e.g. en_US, fr_FR, pt_BR).
-     */
-    language?: string;
-    /**
-     * Name is the template identifier. Lowercase letters, digits, underscores only; no spaces.
-     */
-    name?: string;
-};
-
-export type ApiEndpointsWhatsAppCursors = {
-    after?: string;
-    before?: string;
-};
-
-export type ApiEndpointsWhatsAppEditTemplateRequest = {
-    /**
-     * Components replaces the template's components.
-     */
-    components?: Array<ApiEndpointsWhatsAppTemplateComponentDef>;
-};
-
-export type ApiEndpointsWhatsAppMessageRef = {
-    id?: string;
-    message_status?: string;
-};
-
-export type ApiEndpointsWhatsAppRegisterRequest = {
-    /**
-     * PIN is the 6-digit two-step verification PIN to set on the phone number.
-     * This PIN is required for future re-registration and must be stored securely.
-     */
-    pin?: string;
-};
-
-export type ApiEndpointsWhatsAppRequestCodeRequest = {
-    /**
-     * Language is the BCP-47 locale used for the verification message (e.g. en_US, fr_FR).
-     */
-    language?: string;
-    /**
-     * Method is the verification channel. WhatsApp Business API requires SMS or VOICE.
-     */
-    method?: 'SMS' | 'VOICE';
-};
-
-export type ApiEndpointsWhatsAppSendTemplateRequest = {
-    /**
-     * Components carries header/body/button variable substitutions.
-     * Each component matches WhatsApp's template component schema (type + parameters).
-     */
-    components?: Array<ApiEndpointsWhatsAppTemplateComponent>;
-    /**
-     * Language is the BCP-47 code matching the template's approved language (e.g. en_US, fr_FR).
-     */
-    language?: string;
-    /**
-     * TemplateName is the approved template name to send.
-     */
-    template_name?: string;
-    /**
-     * To is the recipient phone number in E.164 format without the leading "+".
-     */
-    to?: string;
-};
-
-export type ApiEndpointsWhatsAppSendTemplateResponse = {
-    /**
-     * Contacts maps the input phone number to its canonical WhatsApp ID.
-     */
-    contacts?: Array<ApiEndpointsWhatsAppContact>;
-    /**
-     * MessageID is the SocialAPI message ID for the send, matching the "id"
-     * field on the dm.status.* webhooks for this message. Empty when WhatsApp
-     * returned no wamid or no canonical wa_id, since an ID built from half the
-     * pair would collide across conversations.
-     */
-    message_id?: string;
-    /**
-     * Messages contains one entry per delivered message, with its platform ID.
-     */
-    messages?: Array<ApiEndpointsWhatsAppMessageRef>;
-    /**
-     * MessagingProduct is always "whatsapp".
-     */
-    messaging_product?: string;
-};
-
-export type ApiEndpointsWhatsAppTemplateButtonDef = {
-    /**
-     * Example carries the button's sample value(s), forwarded verbatim: a dynamic
-     * URL example (["https://..."]) or a COPY_CODE sample ("250FF").
-     */
-    example?: {
-        [key: string]: unknown;
-    };
-    /**
-     * PhoneNumber is required when Type is PHONE_NUMBER. E.164 format with leading "+".
-     */
-    phone_number?: string;
-    /**
-     * Text is the button label. Not required for COPY_CODE (WhatsApp auto-labels it).
-     */
-    text?: string;
-    /**
-     * Type is the button kind.
-     */
-    type?: 'QUICK_REPLY' | 'URL' | 'PHONE_NUMBER' | 'COPY_CODE';
-    /**
-     * URL is required when Type is URL. May contain a single {{1}} placeholder.
-     */
-    url?: string;
-};
-
-export type ApiEndpointsWhatsAppTemplateComponent = {
-    /**
-     * Parameters lists variable substitutions for this component.
-     */
-    parameters?: Array<ApiEndpointsWhatsAppTemplateParameter>;
-    /**
-     * Type is the component slot: header, body, or button.
-     */
-    type?: 'header' | 'body' | 'button';
-};
-
-export type ApiEndpointsWhatsAppTemplateComponentDef = {
-    /**
-     * Buttons populate a BUTTONS component (one of QUICK_REPLY, URL, PHONE_NUMBER, COPY_CODE).
-     */
-    buttons?: Array<ApiEndpointsWhatsAppTemplateButtonDef>;
-    /**
-     * Example carries WhatsApp's sample values, forwarded verbatim. For a TEXT
-     * BODY/HEADER it is {"body_text":[["v1","v2"]]} / {"header_text":["v1"]}; for
-     * a media HEADER it is {"header_handle":["<url-or-handle>"]}. Required for
-     * approval when the component contains variables.
-     */
-    example?: {
-        [key: string]: unknown;
-    };
-    /**
-     * Format is required for HEADER components.
-     */
-    format?: 'TEXT' | 'IMAGE' | 'VIDEO' | 'DOCUMENT';
-    /**
-     * Text is the literal text for HEADER (when Format is TEXT), BODY, or FOOTER components.
-     * May contain 1-indexed placeholders such as {{1}}, {{2}}.
-     */
-    text?: string;
-    /**
-     * Type is the component slot.
-     */
-    type?: 'HEADER' | 'BODY' | 'FOOTER' | 'BUTTONS';
-};
-
-export type ApiEndpointsWhatsAppTemplateCreateResponse = {
-    category?: 'AUTHENTICATION' | 'MARKETING' | 'UTILITY';
-    id?: string;
-    status?: 'APPROVED' | 'PENDING' | 'REJECTED';
-};
-
-export type ApiEndpointsWhatsAppTemplateInfo = {
-    category?: 'AUTHENTICATION' | 'MARKETING' | 'UTILITY';
-    /**
-     * Components is the raw WhatsApp template component definition.
-     */
-    components?: unknown;
-    id?: string;
-    language?: string;
-    name?: string;
-    status?: 'APPROVED' | 'PENDING' | 'REJECTED' | 'PAUSED' | 'DISABLED';
-};
-
-export type ApiEndpointsWhatsAppTemplateListPaging = {
-    cursors?: ApiEndpointsWhatsAppCursors;
-    next?: string;
-};
-
-export type ApiEndpointsWhatsAppTemplateListResponse = {
-    data?: Array<ApiEndpointsWhatsAppTemplateInfo>;
-    paging?: ApiEndpointsWhatsAppTemplateListPaging;
-};
-
-export type ApiEndpointsWhatsAppTemplateParameter = {
-    /**
-     * Text is the substituted value when Type is "text".
-     */
-    text?: string;
-    /**
-     * Type is the parameter type. Only "text" is supported today.
-     */
-    type?: 'text';
-};
-
-export type ApiEndpointsWhatsAppTemplateValidationIssue = {
-    /**
-     * ComponentIndex pins the issue to a components[] entry (0-based); nil for
-     * top-level fields such as name, category, or language.
-     */
-    component_index?: number;
-    /**
-     * Field is the offending request field (e.g. "name", "components.format",
-     * "components.buttons[0].url").
-     */
-    field?: string;
-    /**
-     * Message is a developer-facing description of the problem.
-     */
-    message?: string;
-};
-
-export type ApiEndpointsWhatsAppUpdateBusinessProfileRequest = {
-    /**
-     * About is the profile tagline (max 139 characters).
-     */
-    about?: string;
-    /**
-     * Address is the business address (max 256 characters).
-     */
-    address?: string;
-    /**
-     * Description is the business description.
-     */
-    description?: string;
-    /**
-     * Email is the contact email.
-     */
-    email?: string;
-    /**
-     * ProfilePictureHandle is a handle returned by the Resumable Upload API.
-     * Use this to change the profile picture; the picture URL is read-only.
-     */
-    profile_picture_handle?: string;
-    /**
-     * Vertical is the business category.
-     */
-    vertical?: 'OTHER' | 'AUTO' | 'BEAUTY' | 'APPAREL' | 'EDU' | 'ENTERTAIN' | 'EVENT_PLAN' | 'FINANCE' | 'GROCERY' | 'GOVT' | 'HOTEL' | 'HEALTH' | 'NONPROFIT' | 'PROF_SERVICES' | 'RETAIL' | 'TRAVEL' | 'RESTAURANT' | 'ALCOHOL';
-    /**
-     * Websites lists the business websites (max 2).
-     */
-    websites?: Array<string>;
-};
-
-export type ApiEndpointsWhatsAppValidateTemplateResponse = {
-    /**
-     * Errors are hard violations WhatsApp would reject at submission.
-     */
-    errors?: Array<ApiEndpointsWhatsAppTemplateValidationIssue>;
-    /**
-     * Valid is true when there are no errors (warnings do not affect validity).
-     */
-    valid?: boolean;
-    /**
-     * Warnings are best-practice issues or items that cannot be fully verified offline.
-     */
-    warnings?: Array<ApiEndpointsWhatsAppTemplateValidationIssue>;
-};
-
-export type ApiEndpointsWhatsAppVerifyCodeRequest = {
-    /**
-     * Code is the 6-digit verification code received via SMS or voice.
-     */
-    code?: string;
-};
-
-export type ApiEndpointsYouTubeChannelSummaryResponse = {
-    handle?: string;
-    subscriber_count?: number;
-    thumbnail_url?: string;
-    title?: string;
-    video_count?: number;
-    view_count?: number;
-};
-
-export type SocialApiAiCoreApiConnectorsBaseAccount = {
+export type Account = {
     /**
      * [optional] Profile biography or description
      */
@@ -2642,19 +12,19 @@ export type SocialApiAiCoreApiConnectorsBaseAccount = {
     /**
      * [always] SocialAPI brand ID this account belongs to
      */
-    brand_id?: string;
+    brand_id: string;
     /**
      * [optional] LinkedIn only: "profile" for a member profile, "organization" for a company Page. Absent for every other account
      */
-    connection_type?: 'profile' | 'organization';
+    connection_type?: ConnectionType;
     /**
      * [always] The permissions this account can use right now: the requested permissions the platform supports, minus any the platform did not grant or has since refused. Uses the same names as permissions. An empty list when none apply
      */
-    effective_permissions?: Array<string>;
+    effective_permissions: Array<string> | null;
     /**
      * [always]
      */
-    id?: string;
+    id: string;
     /**
      * [optional] Login id shared by accounts connected in the same authorization (facebook, google, linkedin)
      */
@@ -2668,7 +38,7 @@ export type SocialApiAiCoreApiConnectorsBaseAccount = {
     /**
      * [always] Display name of the account or page
      */
-    name?: string;
+    name: string;
     /**
      * [optional] Name of the single active page bound to this account; set only when exactly one page is active (e.g. facebook), so clients can label the tile with the page instead of the login identity
      */
@@ -2676,11 +46,11 @@ export type SocialApiAiCoreApiConnectorsBaseAccount = {
     /**
      * [always] The permissions requested for this account: one or more of posts.read, posts.write, comments.read, comments.write, messages.read, messages.write, reviews.read, reviews.write, analytics.read. null means every permission, including ones added later
      */
-    permissions?: Array<string>;
+    permissions: Array<string> | null;
     /**
      * [always]
      */
-    platform?: string;
+    platform: Platform;
     /**
      * [optional] Profile picture URL
      */
@@ -2692,43 +62,1066 @@ export type SocialApiAiCoreApiConnectorsBaseAccount = {
     /**
      * [always] One of: active, reconnect_required
      */
-    status?: string;
+    status: string;
     /**
      * [always] May equal Name on platforms without a distinct handle
      */
-    username?: string;
+    username: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseAuthor = {
+export type AccountPage = {
+    about?: string;
+    category?: string;
+    cover_photo_url?: string;
+    enriched_at?: string;
+    followers_count?: number;
+    id: string;
+    is_active: boolean;
+    is_default: boolean;
+    link?: string;
+    name: string;
+    platform_page_id: string;
+    profile_picture_url?: string;
+    username?: string;
+    verification_status?: string;
+};
+
+export type AccountPageResponse = {
+    about?: string;
+    category?: string;
+    cover_photo_url?: string;
+    enriched_at?: string;
+    followers_count?: number;
+    id: string;
+    is_active: boolean;
+    is_default: boolean;
+    link?: string;
+    name: string;
+    platform_page_id: string;
+    profile_picture_url?: string;
+    username?: string;
+    verification_status?: string;
+};
+
+export type AccountPostsSyncResponse = {
+    data: AccountPostsSyncStatus;
+};
+
+export type AccountPostsSyncStatus = {
+    /**
+     * Error says why the last sync failed. Empty unless State is "failed".
+     */
+    error: string;
+    finished_at: string | null;
+    last_synced_at: string | null;
+    started_at: string | null;
+    /**
+     * State is "idle", "syncing", or "failed". A finished sync is idle with a
+     * newer LastSyncedAt.
+     */
+    state: SyncState;
+};
+
+export type AccountsListResponse = {
+    count: number;
+    data: Array<Account>;
+};
+
+export type Action = {
+    /**
+     * DM to the comment's author. Free
+     */
+    private_reply?: TextAction;
+    /**
+     * Public reply to the comment. Costs 1 credit
+     */
+    reply_comment?: TextAction;
+    /**
+     * DM in the conversation. Costs 1 credit
+     */
+    send_dm?: TextAction;
+    type: ActionType;
+};
+
+export type ActionOutcome = {
+    action: string;
+    /**
+     * The error code the same API call would have returned
+     */
+    error_code?: string;
+    status: ActionOutcomeStatus;
+};
+
+export type ActionOutcomeStatus = 'sent' | 'failed';
+
+export type ActionType = 'hide_comment' | 'reply_comment' | 'private_reply' | 'send_dm';
+
+export type AnalyticsOverview = {
+    /**
+     * AccountsExcluded is how many accounts in scope were left out because
+     * they lack the analytics.read permission.
+     */
+    accounts_excluded: number;
+    /**
+     * Activity is the daily count of replies, DMs and moderation SocialAPI
+     * performed for the accounts in scope, the same series shape as the
+     * history routes.
+     */
+    activity: Array<MetricSeries>;
+    best_times: OverviewBestTimes;
+    by_day: Array<OverviewDay>;
+    by_format: Array<OverviewFormat>;
+    by_platform: Array<OverviewPlatform>;
+    from: string;
+    /**
+     * MetricsSyncedAt is the most recent counter refresh among the posts in
+     * range. Absent when none has been refreshed yet.
+     */
+    metrics_synced_at?: string;
+    /**
+     * Previous is the same figures for the window of equal length that ends
+     * the day before from.
+     */
+    previous: OverviewTotals;
+    to: string;
+    top_posts: Array<OverviewTopPost>;
+    totals: OverviewTotals;
+    tz: string;
+};
+
+export type AnalyticsOverviewResponseWrapper = {
+    data: AnalyticsOverview;
+};
+
+export type AnalyticsPoint = {
+    /**
+     * Change is the difference from the previous point in this series. Present
+     * on gauges only, and absent on the first point of a range, which has no
+     * predecessor to diff against.
+     */
+    change?: number;
+    /**
+     * Day is YYYY-MM-DD, cut on the boundary named by the series' day_tz.
+     */
+    day: string;
+    /**
+     * DaysSpanned is how many days Change covers. It is 1 in the normal case
+     * and larger when a day is missing from the series. A chart must divide by
+     * it and style the segment as interpolated: otherwise a gap draws a spike
+     * that never happened.
+     */
+    days_spanned?: number;
+    /**
+     * SubjectsCounted is how many Subjects contributed to this point's summed
+     * value. Always at least 1. Read it before charting: a day on which not
+     * every Subject reported sums lower, and without the count that reads as a
+     * decline instead of a gap.
+     */
+    subjects_counted: number;
+    /**
+     * Value is the figure for that day, verbatim from the platform for a
+     * reported point.
+     */
+    value: number;
+};
+
+export type AnalyticsResponse = {
+    /**
+     * From and To are the resolved range, echoed so a caller that named neither
+     * knows what it got.
+     */
+    from: string;
+    series: Array<MetricSeries>;
+    to: string;
+};
+
+export type AnalyticsResponseWrapper = {
+    data: AnalyticsResponse;
+};
+
+export type AnnouncementItem = {
+    body: string;
+    id: string;
+    kind: string;
+    link_label?: string;
+    link_url?: string;
+    seen: boolean;
+    title: string;
+    window_end?: string;
+    window_start?: string;
+};
+
+export type AnnouncementsListResponse = {
+    count: number;
+    data: Array<AnnouncementItem>;
+};
+
+export type AssignLinkedInProfileRequest = {
+    brand_id: string;
+};
+
+export type AssignLocationRequest = {
+    brand_id: string;
+};
+
+export type AssignLocationResponse = {
+    account_id: string;
+    brand_id: string;
+    platform_account_id: string;
+};
+
+export type AssignPageRequest = {
+    brand_id: string;
+};
+
+export type AssignPageResponse = {
+    account_id: string;
+    brand_id: string;
+    platform_page_id: string;
+};
+
+export type Author = {
     avatar_url?: string;
     id?: string;
     name?: string;
     username?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseCollaborator = {
+export type Automation = {
+    account_id: string;
+    created_at: string;
+    /**
+     * Actions that failed
+     */
+    failed_count: number;
+    /**
+     * Events the Automation ran against
+     */
+    fired_count: number;
+    id: string;
+    name: string;
+    /**
+     * Reach each person at most once. A run in which every action failed does not count
+     */
+    once_per_person: boolean;
+    /**
+     * Up to 100 platform post ids, each 1 to 100 characters, a comment must be on. Omitted means every post. Comment trigger only
+     */
+    post_ids?: Array<string>;
+    /**
+     * Actions carried out successfully
+     */
+    sent_count: number;
+    status: AutomationStatus;
+    /**
+     * Up to 10 Steps forming a graph. One must have the key "start"
+     */
+    steps: Array<Step>;
+    /**
+     * The kind of inbound event that fires the Automation
+     */
+    trigger: AutomationTrigger;
+    updated_at: string;
+};
+
+export type AutomationListResponse = {
+    count: number;
+    data: Array<Automation>;
+};
+
+export type AutomationStatus = 'active' | 'paused';
+
+export type AutomationTrigger = 'comment' | 'dm';
+
+export type BillingPlan = {
+    annual_price_eur: number;
+    annual_price_usd: number;
+    limits: BillingPlanLimits;
+    monthly_price_eur: number;
+    monthly_price_usd: number;
+    name: string;
+    popular: boolean;
+    tagline: string;
+    tier: string;
+};
+
+export type BillingPlanLimits = {
+    event_retention_days: number;
+    exports_per_month: number;
+    interactions_per_month: number;
+    posts_per_month: number;
+    profiles: number;
+    storage_bytes: number;
+};
+
+export type BillingPlansResponse = {
+    plans: Array<BillingPlan>;
+};
+
+export type BrandListItem = {
+    accounts_count: number;
+    created_at: string;
+    id: string;
+    name: string;
+    updated_at: string;
+};
+
+export type BrandResponse = {
+    accounts_count: number;
+    created_at: string;
+    id: string;
+    name: string;
+    updated_at: string;
+};
+
+export type BrandsListResponse = {
+    count: number;
+    data: Array<BrandListItem>;
+};
+
+export type CarouselConstraints = {
+    /**
+     * can carousel include video items
+     */
+    allow_video: boolean;
+    /**
+     * only image items allowed
+     */
+    images_only: boolean;
+    max_items: number;
+    min_items: number;
+    /**
+     * only photo items (no video, no gif - stricter than ImagesOnly)
+     */
+    photos_only: boolean;
+    supported: boolean;
+};
+
+export type Collaborator = {
     id?: string;
     status?: string;
     username?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseContent = {
-    media?: Array<SocialApiAiCoreApiConnectorsBaseMedia>;
-    text?: string;
+export type CommentCapabilities = {
+    can_delete: boolean;
+    can_hide: boolean;
+    can_like: boolean;
+    can_private_reply: boolean;
+    can_reply: boolean;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseDailyInsight = {
+export type CommentWithCapabilities = {
+    author_headline?: string;
+    author_id: string;
+    author_name: string;
+    author_picture: string;
+    author_profile_url?: string;
+    author_username: string;
+    capabilities: CommentCapabilities;
+    created_at: string;
+    has_replies: boolean;
+    /**
+     * ID is the canonical SocialAPI interaction id (sapi_cmt_…). Prefer it over
+     * platform_id, which is retained for backward compatibility.
+     */
+    id: string;
+    is_hidden: boolean;
+    is_owner: boolean;
+    like_count: number;
+    /**
+     * LikedByViewer is true when the connected account has liked this comment.
+     * LinkedIn reports it directly. Instagram and Facebook do not report it on
+     * the comment read, so there it means "liked through SocialAPI": a like made
+     * in the platform's own app is not reflected.
+     */
+    liked_by_viewer: boolean;
+    /**
+     * ModerationStatus is the platform's moderation state for this comment, when
+     * exposed: "published", "held_for_review", "likely_spam", or "rejected".
+     * Empty when unknown or not applicable. [platform: youtube]
+     */
+    moderation_status?: string;
+    parent_id: string | null;
+    platform: Platform;
+    platform_id: string;
+    /**
+     * ReplyCount is kept for backward compatibility but deprecated: prefer
+     * HasReplies. Not all platforms report an exact count.
+     */
+    reply_count: number;
+    text: string;
+};
+
+export type CommentedPostsListResponse = {
+    data: Array<InboxPost> | null;
+    pagination: InboxPaginationOpt;
+};
+
+export type CommentsWithCapsListResponse = {
+    data: Array<CommentWithCapabilities>;
+    pagination: InboxPagination;
+};
+
+export type ConnectAccountResponse = {
+    account_id: string;
+    /**
+     * BrandID is the brand the account was connected to. When the connect request named no brand, this is the brand created for it.
+     */
+    brand_id: string;
+    display_name: string;
+    platform: Platform;
+    username: string;
+};
+
+export type ConnectOAuthResponse = {
+    auth_url: string;
+    message: string;
+    metadata?: {
+        [key: string]: unknown;
+    };
+    state: string;
+};
+
+export type ConnectRequest = {
+    /**
+     * BrandID optionally specifies which brand to attach the account to. If omitted, a new brand is auto-created.
+     */
+    brand_id?: string;
+    /**
+     * Metadata contains platform-specific connection data. For tiktok, connection_type "creator" connects through TikTok's Content Posting API instead of the default Business API ("business"). For linkedin, connection_type "profile" or "organization" limits the connect to the member profile or to company Pages; without it, one authorization offers both, and the user picks one when there are several.
+     */
+    metadata?: {
+        [key: string]: unknown;
+    };
+    /**
+     * Onboarding applies to WhatsApp only. cloud_api (default) connects the number for use through the API alone. business_app connects a number that stays in use on the WhatsApp Business app, and imports its recent chats.
+     */
+    onboarding?: WhatsAppOnboarding;
+    /**
+     * Permissions are the permissions to request for this account. If omitted, the brand's existing selection for this platform applies, and a brand with none gets every permission. Valid values: posts.read, posts.write, comments.read, comments.write, messages.read, messages.write, reviews.read, reviews.write, analytics.read.
+     */
+    permissions?: Array<string>;
+    /**
+     * Platform identifies the social platform to connect (e.g. instagram, facebook, google, threads, tiktok, linkedin).
+     */
+    platform: Platform;
+    /**
+     * RedirectURI is the customer's URL to redirect the user to after OAuth completes.
+     * If you have registered redirect URIs in the dashboard, the value must match one of them.
+     * If you have none registered, any valid https URI is accepted. If omitted, the default HTML success page is shown.
+     */
+    redirect_uri?: string;
+    /**
+     * CustomerState is an opaque value echoed back to the customer's redirect URI. Max 512 chars.
+     */
+    state?: string;
+};
+
+export type ConnectionType = 'profile' | 'organization';
+
+export type Content = {
+    media?: Array<Media>;
+    text: string;
+};
+
+export type ConversationResponse = {
+    data: InboxConversation;
+};
+
+export type ConversationStatus = 'active' | 'archived';
+
+export type ConversationsListResponse = {
+    data: Array<InboxConversation> | null;
+    last_synced_at: string | null;
+    pagination: InboxPagination;
+    /**
+     * The state of this account's conversation list sync: idle, syncing or
+     * failed. Empty when the list is not filtered to one account with
+     * account_id, or when no state is available.
+     */
+    sync_state: SyncState;
+};
+
+export type CreateAutomationParams = {
+    account_id: string;
+    /**
+     * Builds the three-step Follow gate. Instagram, comment trigger only. Send instead of steps
+     */
+    follow_gate?: FollowGate;
+    /**
+     * 1 to 100 characters
+     */
+    name: string;
+    /**
+     * Reach each person at most once. A run in which every action failed does not count. Defaults to false
+     */
+    once_per_person?: boolean;
+    /**
+     * Up to 100 platform post ids, each 1 to 100 characters, a comment must be on. Omitted means every post. Comment trigger only
+     */
+    post_ids?: Array<string>;
+    steps?: Array<Step>;
+    trigger: AutomationTrigger;
+};
+
+export type CreateBoardRequest = {
+    description?: string;
+    name: string;
+    privacy?: PinterestBoardPrivacy;
+};
+
+export type CreateBrandRequest = {
+    name: string;
+};
+
+export type CreateExportRequest = {
+    include_transcript?: boolean;
+    include_vision?: boolean;
+};
+
+export type CreateGoogleMediaRequest = {
+    category: GoogleMediaCategory;
+    description?: string;
+    media: Array<MediaInput>;
+};
+
+export type CreateInviteRequest = {
+    brand_id: string;
+    expires_in_days: number;
+    /**
+     * The permissions the connected account gets, which are the only ones the invited person is asked to grant. Omit it to keep the brand's current permissions for this platform, or to give every permission if it has none. Valid values: posts.read, posts.write, comments.read, comments.write, messages.read, messages.write, reviews.read, reviews.write, analytics.read.
+     */
+    permissions?: Array<string>;
+    platform: Platform;
+};
+
+export type CreateKeyRequest = {
+    /**
+     * BrandIDs restricts the key to specific brands. Empty means all brands.
+     */
+    brand_ids?: Array<string>;
+    name: string;
+    /**
+     * Scopes restricts the key to specific actions. Empty means full access.
+     */
+    scopes?: Array<string>;
+};
+
+export type CreateKeyResponse = {
+    brand_ids: Array<string> | null;
+    id: string;
+    message: string;
+    name: string;
+    raw_key: string;
+    scopes: Array<string> | null;
+};
+
+export type CreatePostRequest = {
+    /**
+     * FirstComment is auto-posted as the first comment after publishing (Instagram, Facebook, YouTube). Ignored by every other platform, and by Facebook Page Stories.
+     */
+    first_comment?: string;
+    /**
+     * Media is the ordered, agnostic media list. Each item is a url, a media_id,
+     * or a platform_attachment_id; order and mixing are preserved. Supersedes media_ids.
+     */
+    media?: Array<MediaInput>;
+    /**
+     * MediaIDs are previously uploaded media file IDs to attach.
+     *
+     * Deprecated: use Media with source_type "media_id". Ignored when media is set.
+     */
+    media_ids?: Array<string>;
+    /**
+     * PlatformData passes platform-specific fields keyed by platform name (e.g. {"instagram": {"content_type": "feed"}}). Folded into each matching target; a target's own platform_data wins on conflicts.
+     */
+    platform_data?: {
+        [key: string]: unknown;
+    };
+    /**
+     * PublishNow publishes immediately when targets are provided (ignores scheduled_at). Without this flag (and without scheduled_at) the post is saved as a draft; publish it later with POST /posts/{post_id}/publish.
+     */
+    publish_now?: boolean;
+    /**
+     * QueueID puts the post in a Queue: it takes the Queue's earliest free time and is scheduled. Send a Queue ID, or "default" for the default Queue of the targets' Brand. Requires targets, all in one Brand. Cannot be combined with scheduled_at, publish_now or a target's scheduled_at.
+     */
+    queue_id?: string;
+    /**
+     * ScheduledAt queues the post for future publication (RFC3339). When set, the post is scheduled rather than drafted.
+     */
+    scheduled_at?: string;
+    /**
+     * Segments are continuation posts that publish as a native thread on X. Threads chaining is temporarily unavailable.
+     */
+    segments?: Array<SegmentRequest>;
+    /**
+     * SkipDuplicateCheck bypasses the duplicate content detection.
+     */
+    skip_duplicate_check?: boolean;
+    /**
+     * SkipValidation bypasses pre-publish validation. The post is scheduled/published as-is and may fail at the platform.
+     */
+    skip_validation?: boolean;
+    /**
+     * Stagger spreads the targets out in time instead of publishing them all at once. Requires scheduled_at or publish_now. See StaggerRequest.
+     */
+    stagger?: StaggerRequest;
+    /**
+     * Targets specifies which connected accounts to publish to, with optional per-target overrides.
+     */
+    targets?: Array<TargetRequest>;
+    /**
+     * Text is the post body content. Required, unless every target supplies a
+     * body of its own through text or a platform_data field the connector uses
+     * as the body (e.g. Pinterest's platform_data.description IS the pin body).
+     */
+    text?: string;
+    /**
+     * Title is an optional post title (used by LinkedIn, Google).
+     */
+    title?: string;
+    /**
+     * Visibility controls who can see the post. Platform-dependent values: public, private, connections_only, logged_in.
+     */
+    visibility?: PostVisibility;
+};
+
+export type CreateQueueParams = {
+    /**
+     * Set false to create the Queue paused. Defaults to true.
+     */
+    active?: boolean;
+    /**
+     * ID of the Brand to create the Queue on. Required.
+     */
+    brand_id: string;
+    /**
+     * Set true to make this the Brand's default Queue. The Brand's first Queue is always the default.
+     */
+    is_default?: boolean;
+    /**
+     * Queue name. Required.
+     */
+    name: string;
+    /**
+     * Weekly posting times, 1 to 100. Required.
+     */
+    slots: Array<Slot>;
+    /**
+     * IANA timezone the slots are expressed in. Required.
+     */
+    timezone: string;
+};
+
+export type CreateRedirectUriRequest = {
+    /**
+     * Label is an optional human-readable label for this URI.
+     */
+    label?: string;
+    /**
+     * URI is the redirect URI to whitelist (must be https, or http for localhost).
+     */
+    uri: string;
+};
+
+export type CreateWebhookRequest = {
+    /**
+     * Events is the list of event types to subscribe to.
+     */
+    events: Array<WebhookEventType>;
+    /**
+     * URL is the HTTPS endpoint that will receive webhook POST requests.
+     */
+    url: string;
+};
+
+export type CreateWebhookResponse = {
+    events: Array<string> | null;
+    id: string;
+    message: string;
+    secret: string;
+    url: string;
+};
+
+export type CreatorInfoResponse = {
+    /**
+     * [platform: tiktok] Empty on other platforms
+     */
+    avatar_url: string;
+    /**
+     * [platform: tiktok] Always false on other platforms
+     */
+    can_post: boolean;
+    /**
+     * [platform: tiktok] Nil on other platforms
+     */
+    interaction_settings?: InteractionSettings;
+    /**
+     * [platform: tiktok] Zero on other platforms
+     */
+    max_video_duration_sec?: number;
+    /**
+     * [platform: tiktok] Empty on other platforms
+     */
+    nickname: string;
+    /**
+     * [always]
+     */
+    platform: Platform;
+    /**
+     * [platform: tiktok] Nil on other platforms
+     */
+    privacy_level_options?: Array<string>;
+};
+
+export type DmAttachmentInput = {
+    /**
+     * Caption is text shown with this attachment instead of as a separate message.
+     * Supported on WhatsApp (not on audio) and Telegram; ignored on platforms whose
+     * Send API has no caption, where an attachment is always a bare bubble.
+     */
+    caption?: string;
+    /**
+     * Source is the attachment reference; its meaning is given by source_type.
+     */
+    source: string;
+    /**
+     * SourceType selects how Source is interpreted:
+     * - "url": Source is a publicly reachable media URL the platform fetches directly.
+     * - "media_id": Source is a file id in your SocialAPI media library
+     * (GET /v1/media).
+     * - "platform_attachment_id": Source is an id of media already uploaded to the
+     * target platform (for example a Meta attachment_id) to reuse without re-upload.
+     */
+    source_type: MediaSourceType;
+    /**
+     * Type is the media kind. Optional for url and media_id sources (inferred from
+     * the file), required for platform_attachment_id (the platform exposes no URL
+     * to infer from).
+     */
+    type?: MediaFileType;
+    /**
+     * Voice sends an audio attachment as a native voice note (waveform and
+     * playback-speed controls) instead of a file bubble. WhatsApp only, and only
+     * for audio whose file is Ogg encoded with the OPUS codec; WhatsApp rejects
+     * any other container or codec. Ignored on other platforms.
+     */
+    voice?: boolean;
+};
+
+export type DailyInsight = {
     /**
      * Day in YYYY-MM-DD.
      */
-    date?: string;
-    followers?: number;
-    interactions?: number;
-    reach?: number;
-    views?: number;
+    date: string;
+    followers: number;
+    interactions: number;
+    reach: number;
+    views: number;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpAddressUpdate = {
+export type DeletePostResponse = {
+    deleted: boolean;
+    results?: Array<TargetDeleteOutcomeResponse>;
+    success: boolean;
+};
+
+export type DeleteQueueResponse = {
+    deleted: boolean;
+    id: string;
+    /**
+     * Number of posts that were in the Queue. They keep their scheduled times and are no longer queued.
+     */
+    released_count: number;
+};
+
+export type DeliveryAttempt = {
+    attempt_number: number;
+    created_at: string;
+    duration_ms: number;
+    error_message?: string;
+    response_body: string;
+    status_code: number | null;
+};
+
+export type DeliveryDetailResponse = {
+    attempt_count: number;
+    attempts: Array<DeliveryAttempt>;
+    created_at: string;
+    description: string;
+    endpoint_id: string;
+    event_type: string;
+    id: string;
+    payload: {
+        [key: string]: unknown;
+    } | null;
+    response_duration_ms: number | null;
+    response_status_code: number | null;
+    status: string;
+};
+
+export type DeliveryListItem = {
+    attempt_count: number;
+    created_at: string;
+    description: string;
+    event_type: string;
+    id: string;
+    response_duration_ms: number | null;
+    response_status_code: number | null;
+    status: string;
+};
+
+export type DeliveryListResponse = {
+    count: number;
+    data: Array<DeliveryListItem>;
+    next_cursor?: string;
+};
+
+export type DeliveryStatBucket = {
+    delivered: number;
+    failed: number;
+};
+
+export type EditYouTubeCommentRequest = {
+    account_id: string;
+    post_id: string;
+    text: string;
+};
+
+export type ErrorBody = {
+    code: string;
+    message: string;
+    meta?: {
+        [key: string]: unknown;
+    };
+};
+
+export type ErrorResponse = {
+    error: ErrorBody;
+    /**
+     * RequestID matches the X-Request-ID response header. Include it when contacting support.
+     */
+    request_id: string;
+};
+
+export type EventResponse = {
+    account_id?: string;
+    action: string;
+    category: string;
+    created_at: string;
+    duration_ms?: number;
+    error_category?: string;
+    error_message?: string;
+    id: string;
+    metadata: {
+        [key: string]: unknown;
+    } | null;
+    platform?: Platform;
+    resource_id?: string;
+    status: string;
+    status_code?: number;
+    summary: string;
+};
+
+export type EventsListResponse = {
+    events: Array<EventResponse>;
+    pagination: PaginationInfo;
+    retention_days: number;
+};
+
+export type EventsSummaryResponse = {
+    by_category: {
+        [key: string]: number;
+    };
+    by_error_category: {
+        [key: string]: number;
+    };
+    failed: number;
+    inbox_breakdown: {
+        [key: string]: number;
+    };
+    retention_days: number;
+    total: number;
+    total_previous?: number;
+};
+
+export type ExchangeRequest = {
+    /**
+     * Code is the authorization code received from the platform callback.
+     */
+    code: string;
+    /**
+     * Metadata must include redirect_uri and state for CSRF validation.
+     */
+    metadata: {
+        [key: string]: unknown;
+    };
+    /**
+     * Platform identifies the social platform (must match the connect call).
+     */
+    platform: Platform;
+};
+
+export type ExportAcceptedResponse = {
+    account_id: string;
+    created_at: string;
+    id: string;
+    platform: Platform;
+    status: string;
+};
+
+export type ExportItem = {
+    account_id: string;
+    completed_at?: string;
+    created_at: string;
+    error?: string;
+    expires_at: string;
+    id: string;
+    platform: Platform;
+    processed_videos: number;
+    status: string;
+    total_videos: number;
+};
+
+export type ExportResultUrls = {
+    excel_url?: string;
+    report_url?: string;
+};
+
+export type ExportStatusResponse = {
+    account_id: string;
+    completed_at?: string;
+    created_at: string;
+    error?: string;
+    expires_at: string;
+    id: string;
+    platform: Platform;
+    processed_videos: number;
+    result?: ExportResultUrls;
+    status: string;
+    total_videos: number;
+};
+
+export type ExportVideoItem = {
+    comment_count: number;
+    cover_image_url: string;
+    create_time?: string;
+    description: string;
+    duration_seconds: number;
+    height: number;
+    like_count: number;
+    platform: Platform;
+    platform_video_id: string;
+    share_count: number;
+    share_url: string;
+    title: string;
+    transcript?: string;
+    transcript_lang?: string;
+    view_count: number;
+    vision_category?: string;
+    vision_elements?: Array<string>;
+    vision_summary?: string;
+    width: number;
+};
+
+export type ExportVideosResponse = {
+    account_id: string;
+    platform: Platform;
+    videos: Array<ExportVideoItem> | null;
+};
+
+export type ExportsListResponse = {
+    exports: Array<ExportItem>;
+};
+
+export type FacebookAccountSummaryResponse = {
+    follower_count: number;
+    interactions: number;
+    net_follows: number;
+    period_end: string;
+    period_start: string;
+    reach: number;
+    views: number;
+};
+
+export type FacebookDailyInsightsResponse = {
+    data: Array<DailyInsight> | null;
+};
+
+export type FacebookLoginPagesResponse = {
+    count: number;
+    login_id: string;
+    pages: Array<PendingPage>;
+};
+
+export type Filter = {
+    /**
+     * Required when type is keyword
+     */
+    keyword?: KeywordFilter;
+    /**
+     * follows_account is available on Instagram only and not on the start step
+     */
+    type: FilterType;
+};
+
+export type FilterType = 'keyword' | 'follows_account';
+
+export type Firing = {
+    created_at: string;
+    /**
+     * Platform id of the comment or message
+     */
+    event_id: string;
+    id: string;
+    outcomes: Array<ActionOutcome> | null;
+    /**
+     * Platform id of the person who commented or messaged
+     */
+    person_id: string;
+    /**
+     * Key of the step whose actions ran, or the step the event entered at when no step's filters passed
+     */
+    step_key: string;
+};
+
+export type FiringListResponse = {
+    data: Array<Firing>;
+    /**
+     * Pass as cursor to fetch the next page. Empty on the last page
+     */
+    next_cursor: string;
+};
+
+export type FollowGate = {
+    /**
+     * Up to 20 characters
+     */
+    button_title: string;
+    /**
+     * Comment keywords that open the gate
+     */
+    keywords: Array<string>;
+    /**
+     * Sent once the person follows
+     */
+    link_texts: Array<string>;
+    /**
+     * Sent when the person does not follow the account yet
+     */
+    not_following_texts: Array<string>;
+    /**
+     * Private reply sent to the commenter
+     */
+    opening_texts: Array<string>;
+    /**
+     * Up to 20 characters
+     */
+    retry_button_title: string;
+};
+
+export type GbpAddressUpdate = {
     address_lines?: Array<string>;
     administrative_area?: string;
     locality?: string;
@@ -2739,7 +1132,7 @@ export type SocialApiAiCoreApiConnectorsBaseGbpAddressUpdate = {
     sublocality?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpAttribute = {
+export type GbpAttribute = {
     /**
      * BoolValue is set for a BOOL attribute. False is a real answer.
      */
@@ -2751,11 +1144,11 @@ export type SocialApiAiCoreApiConnectorsBaseGbpAttribute = {
     /**
      * Name is the attribute id, as listed by the available-attributes endpoint.
      */
-    name?: string;
+    name: string;
     /**
      * RepeatedEnumValue is set for a REPEATED_ENUM attribute.
      */
-    repeated_enum_value?: SocialApiAiCoreApiConnectorsBaseGbpRepeatedEnumValue;
+    repeated_enum_value?: GbpRepeatedEnumValue;
     /**
      * URIValues is set for a URL attribute.
      */
@@ -2766,39 +1159,39 @@ export type SocialApiAiCoreApiConnectorsBaseGbpAttribute = {
     value_type?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpAttributeMetadata = {
+export type GbpAttributeMetadata = {
     /**
      * Deprecated attributes still read but should no longer be written.
      */
     deprecated?: boolean;
-    display_name?: string;
+    display_name: string;
     group_display_name?: string;
-    name?: string;
+    name: string;
     /**
      * Repeatable is true when the attribute accepts more than one value.
      */
     repeatable?: boolean;
-    value_type?: string;
+    value_type: string;
     /**
      * Values lists the accepted values of an ENUM or REPEATED_ENUM attribute,
      * and true/false for a BOOL one.
      */
-    values?: Array<SocialApiAiCoreApiConnectorsBaseGbpAttributeValueMetadata>;
+    values?: Array<GbpAttributeValueMetadata>;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpAttributeValueMetadata = {
+export type GbpAttributeValueMetadata = {
     bool_value?: boolean;
-    display_name?: string;
+    display_name: string;
     enum_value?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpCaloriesFact = {
+export type GbpCaloriesFact = {
     lower_amount?: number;
     unit?: string;
     upper_amount?: number;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpCategoriesUpdate = {
+export type GbpCategoriesUpdate = {
     /**
      * AdditionalCategories replaces the whole list: Google has no way to add or
      * remove a single category, so a partial list drops the rest.
@@ -2807,32 +1200,32 @@ export type SocialApiAiCoreApiConnectorsBaseGbpCategoriesUpdate = {
     primary_category?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpCategory = {
+export type GbpCategory = {
     display_name?: string;
     name?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpFoodMenu = {
+export type GbpFoodMenu = {
     /**
      * Cuisines are Google's Cuisine values, for example ITALIAN or PIZZA.
      */
     cuisines?: Array<string>;
-    labels?: Array<SocialApiAiCoreApiConnectorsBaseGbpMenuLabel>;
-    sections?: Array<SocialApiAiCoreApiConnectorsBaseGbpFoodMenuSection>;
+    labels: Array<GbpMenuLabel> | null;
+    sections: Array<GbpFoodMenuSection> | null;
     source_url?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpFoodMenuItem = {
-    attributes?: SocialApiAiCoreApiConnectorsBaseGbpFoodMenuItemAttribute;
-    labels?: Array<SocialApiAiCoreApiConnectorsBaseGbpMenuLabel>;
+export type GbpFoodMenuItem = {
+    attributes: GbpFoodMenuItemAttribute;
+    labels: Array<GbpMenuLabel> | null;
     /**
      * Options are variants of the dish (sizes, fillings). An option's unset
      * attributes are taken from the dish.
      */
-    options?: Array<SocialApiAiCoreApiConnectorsBaseGbpFoodMenuItemOption>;
+    options?: Array<GbpFoodMenuItemOption>;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpFoodMenuItemAttribute = {
+export type GbpFoodMenuItemAttribute = {
     /**
      * Allergen lists Google's Allergen values, for example DAIRY or PEANUT.
      */
@@ -2841,19 +1234,19 @@ export type SocialApiAiCoreApiConnectorsBaseGbpFoodMenuItemAttribute = {
      * DietaryRestriction lists Google's values, for example VEGAN or HALAL.
      */
     dietary_restriction?: Array<string>;
-    ingredients?: Array<SocialApiAiCoreApiConnectorsBaseGbpMenuIngredient>;
+    ingredients?: Array<GbpMenuIngredient>;
     /**
      * MediaKeys reference photos of the dish from the location's photo gallery.
      */
     media_keys?: Array<string>;
-    nutrition_facts?: SocialApiAiCoreApiConnectorsBaseGbpNutritionFacts;
-    portion_size?: SocialApiAiCoreApiConnectorsBaseGbpMenuPortionSize;
+    nutrition_facts?: GbpNutritionFacts;
+    portion_size?: GbpMenuPortionSize;
     preparation_methods?: Array<string>;
     /**
      * Price is required on a dish. On an option it may be omitted to keep the
      * dish's price.
      */
-    price?: SocialApiAiCoreApiConnectorsBaseGbpMoney;
+    price?: GbpMoney;
     serves_num_people?: number;
     /**
      * Spiciness is MILD, MEDIUM or HOT.
@@ -2861,62 +1254,62 @@ export type SocialApiAiCoreApiConnectorsBaseGbpFoodMenuItemAttribute = {
     spiciness?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpFoodMenuItemOption = {
-    attributes?: SocialApiAiCoreApiConnectorsBaseGbpFoodMenuItemAttribute;
-    labels?: Array<SocialApiAiCoreApiConnectorsBaseGbpMenuLabel>;
+export type GbpFoodMenuItemOption = {
+    attributes?: GbpFoodMenuItemAttribute;
+    labels: Array<GbpMenuLabel> | null;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpFoodMenuSection = {
-    items?: Array<SocialApiAiCoreApiConnectorsBaseGbpFoodMenuItem>;
-    labels?: Array<SocialApiAiCoreApiConnectorsBaseGbpMenuLabel>;
+export type GbpFoodMenuSection = {
+    items: Array<GbpFoodMenuItem> | null;
+    labels: Array<GbpMenuLabel> | null;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpFoodMenus = {
-    menus?: Array<SocialApiAiCoreApiConnectorsBaseGbpFoodMenu>;
+export type GbpFoodMenus = {
+    menus?: Array<GbpFoodMenu> | null;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpFreeFormService = {
+export type GbpFreeFormService = {
     category?: string;
-    label?: SocialApiAiCoreApiConnectorsBaseGbpLabel;
+    label?: GbpLabel;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpHoursUpdate = {
-    periods?: Array<SocialApiAiCoreApiConnectorsBaseGbpTimePeriod>;
+export type GbpHoursUpdate = {
+    periods?: Array<GbpTimePeriod>;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpInsights = {
-    end_date?: string;
-    metrics?: Array<SocialApiAiCoreApiConnectorsBaseGbpMetricSeries>;
-    start_date?: string;
+export type GbpInsights = {
+    end_date: string;
+    metrics: Array<GbpMetricSeries> | null;
+    start_date: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpInsightsPoint = {
-    date?: string;
-    value?: number;
+export type GbpInsightsPoint = {
+    date: string;
+    value: number;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpKeywordsPage = {
-    keywords?: Array<SocialApiAiCoreApiConnectorsBaseGbpSearchKeyword>;
+export type GbpKeywordsPage = {
+    keywords: Array<GbpSearchKeyword> | null;
     next_cursor?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpLabel = {
+export type GbpLabel = {
     description?: string;
     display_name?: string;
     language_code?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpLatLng = {
+export type GbpLatLng = {
     latitude?: number;
     longitude?: number;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpLocationDetails = {
+export type GbpLocationDetails = {
     /**
      * AdPhone is the alternate number shown on Google Ads extensions.
      */
     ad_phone?: string;
-    additional_categories?: Array<SocialApiAiCoreApiConnectorsBaseGbpCategory>;
+    additional_categories?: Array<GbpCategory>;
     additional_phones?: Array<string>;
     /**
      * CanDelete reports whether the location can be deleted. Absent when Google
@@ -2948,12 +1341,12 @@ export type SocialApiAiCoreApiConnectorsBaseGbpLocationDetails = {
     is_particularly_personal_place?: boolean;
     labels?: Array<string>;
     language_code?: string;
-    latlng?: SocialApiAiCoreApiConnectorsBaseGbpLatLng;
+    latlng?: GbpLatLng;
     /**
      * MapsURI is the location's Google Maps page.
      */
     maps_uri?: string;
-    more_hours?: Array<SocialApiAiCoreApiConnectorsBaseGbpMoreHours>;
+    more_hours?: Array<GbpMoreHours>;
     /**
      * NewReviewURI is the short link that opens the review form for this
      * location, for review-request campaigns.
@@ -2972,73 +1365,73 @@ export type SocialApiAiCoreApiConnectorsBaseGbpLocationDetails = {
      * joined to Places, Maps and Geocoding results.
      */
     place_id?: string;
-    primary_category?: SocialApiAiCoreApiConnectorsBaseGbpCategory;
+    primary_category?: GbpCategory;
     primary_phone?: string;
-    regular_hours?: Array<SocialApiAiCoreApiConnectorsBaseGbpTimePeriod>;
-    relationship_data?: SocialApiAiCoreApiConnectorsBaseGbpRelationshipData;
-    service_area?: SocialApiAiCoreApiConnectorsBaseGbpServiceArea;
-    service_items?: Array<SocialApiAiCoreApiConnectorsBaseGbpServiceItem>;
-    special_hours?: Array<SocialApiAiCoreApiConnectorsBaseGbpSpecialHourPeriod>;
+    regular_hours?: Array<GbpTimePeriod>;
+    relationship_data?: GbpRelationshipData;
+    service_area?: GbpServiceArea;
+    service_items?: Array<GbpServiceItem>;
+    special_hours?: Array<GbpSpecialHourPeriod>;
     store_code?: string;
-    storefront_address?: SocialApiAiCoreApiConnectorsBaseGbpPostalAddress;
+    storefront_address?: GbpPostalAddress;
     website_uri?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpLocationUpdate = {
+export type GbpLocationUpdate = {
     /**
      * AdPhone is the alternate number shown on Google Ads extensions.
      */
     ad_phone?: string;
-    categories?: SocialApiAiCoreApiConnectorsBaseGbpCategoriesUpdate;
+    categories?: GbpCategoriesUpdate;
     description?: string;
     labels?: Array<string>;
-    latlng?: SocialApiAiCoreApiConnectorsBaseGbpLatLng;
-    more_hours?: Array<SocialApiAiCoreApiConnectorsBaseGbpMoreHours>;
+    latlng?: GbpLatLng;
+    more_hours?: Array<GbpMoreHours>;
     /**
      * OpenStatus is OPEN, CLOSED_PERMANENTLY or CLOSED_TEMPORARILY.
      */
     open_status?: string;
-    phone_numbers?: SocialApiAiCoreApiConnectorsBaseGbpPhoneNumbersUpdate;
-    regular_hours?: SocialApiAiCoreApiConnectorsBaseGbpHoursUpdate;
-    service_area?: SocialApiAiCoreApiConnectorsBaseGbpServiceAreaUpdate;
+    phone_numbers?: GbpPhoneNumbersUpdate;
+    regular_hours?: GbpHoursUpdate;
+    service_area?: GbpServiceAreaUpdate;
     /**
      * ServiceItems replaces the whole list of services the location offers; an
      * empty list removes them all. Google refuses it on a location whose
      * details report can_modify_service_list=false.
      */
-    service_items?: Array<SocialApiAiCoreApiConnectorsBaseGbpServiceItem>;
-    special_hours?: SocialApiAiCoreApiConnectorsBaseGbpSpecialHoursUpdate;
+    service_items?: Array<GbpServiceItem>;
+    special_hours?: GbpSpecialHoursUpdate;
     store_code?: string;
-    storefront_address?: SocialApiAiCoreApiConnectorsBaseGbpAddressUpdate;
+    storefront_address?: GbpAddressUpdate;
     title?: string;
     website_uri?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpMenuIngredient = {
-    labels?: Array<SocialApiAiCoreApiConnectorsBaseGbpMenuLabel>;
+export type GbpMenuIngredient = {
+    labels?: Array<GbpMenuLabel> | null;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpMenuLabel = {
+export type GbpMenuLabel = {
     description?: string;
-    display_name?: string;
+    display_name: string;
     /**
      * LanguageCode is a BCP 47 code. English is assumed when absent.
      */
     language_code?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpMenuPortionSize = {
+export type GbpMenuPortionSize = {
     quantity?: number;
-    unit?: Array<SocialApiAiCoreApiConnectorsBaseGbpMenuLabel>;
+    unit?: Array<GbpMenuLabel> | null;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpMetricSeries = {
-    metric?: string;
-    points?: Array<SocialApiAiCoreApiConnectorsBaseGbpInsightsPoint>;
-    total?: number;
+export type GbpMetricSeries = {
+    metric: string;
+    points: Array<GbpInsightsPoint> | null;
+    total: number;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpMoney = {
+export type GbpMoney = {
     currency_code?: string;
     /**
      * Nanos is the fractional part of the price, in billionths. Zero is a real
@@ -3048,27 +1441,27 @@ export type SocialApiAiCoreApiConnectorsBaseGbpMoney = {
     units?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpMoreHours = {
+export type GbpMoreHours = {
     hours_type_id?: string;
-    periods?: Array<SocialApiAiCoreApiConnectorsBaseGbpTimePeriod>;
+    periods?: Array<GbpTimePeriod>;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpNutritionFact = {
+export type GbpNutritionFact = {
     lower_amount?: number;
     unit?: string;
     upper_amount?: number;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpNutritionFacts = {
-    calories?: SocialApiAiCoreApiConnectorsBaseGbpCaloriesFact;
-    cholesterol?: SocialApiAiCoreApiConnectorsBaseGbpNutritionFact;
-    protein?: SocialApiAiCoreApiConnectorsBaseGbpNutritionFact;
-    sodium?: SocialApiAiCoreApiConnectorsBaseGbpNutritionFact;
-    total_carbohydrate?: SocialApiAiCoreApiConnectorsBaseGbpNutritionFact;
-    total_fat?: SocialApiAiCoreApiConnectorsBaseGbpNutritionFact;
+export type GbpNutritionFacts = {
+    calories?: GbpCaloriesFact;
+    cholesterol?: GbpNutritionFact;
+    protein?: GbpNutritionFact;
+    sodium?: GbpNutritionFact;
+    total_carbohydrate?: GbpNutritionFact;
+    total_fat?: GbpNutritionFact;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpPhoneNumbersUpdate = {
+export type GbpPhoneNumbersUpdate = {
     /**
      * AdditionalPhones replaces the whole list; an empty list clears it.
      */
@@ -3076,9 +1469,9 @@ export type SocialApiAiCoreApiConnectorsBaseGbpPhoneNumbersUpdate = {
     primary_phone?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpPlaceActionLink = {
+export type GbpPlaceActionLink = {
     create_time?: string;
-    id?: string;
+    id: string;
     /**
      * IsEditable is false for a link added by a third-party provider, which
      * cannot be changed or deleted here.
@@ -3088,32 +1481,32 @@ export type SocialApiAiCoreApiConnectorsBaseGbpPlaceActionLink = {
      * IsPreferred marks the link Google shows first for its action type.
      */
     is_preferred?: boolean;
-    place_action_type?: string;
+    place_action_type: string;
     /**
      * ProviderType is MERCHANT or AGGREGATOR_3P.
      */
     provider_type?: string;
     update_time?: string;
-    uri?: string;
+    uri: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpPlaceActionLinkInput = {
+export type GbpPlaceActionLinkInput = {
     is_preferred?: boolean;
     place_action_type?: string;
     uri?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpPlaceActionType = {
-    display_name?: string;
-    type?: string;
+export type GbpPlaceActionType = {
+    display_name: string;
+    type: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpPlaceInfo = {
+export type GbpPlaceInfo = {
     place_id?: string;
     place_name?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpPostalAddress = {
+export type GbpPostalAddress = {
     address_lines?: Array<string>;
     administrative_area?: string;
     locality?: string;
@@ -3124,39 +1517,39 @@ export type SocialApiAiCoreApiConnectorsBaseGbpPostalAddress = {
     sublocality?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpRelationshipData = {
-    children_locations?: Array<SocialApiAiCoreApiConnectorsBaseGbpRelevantLocation>;
+export type GbpRelationshipData = {
+    children_locations?: Array<GbpRelevantLocation>;
     parent_chain?: string;
-    parent_location?: SocialApiAiCoreApiConnectorsBaseGbpRelevantLocation;
+    parent_location?: GbpRelevantLocation;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpRelevantLocation = {
+export type GbpRelevantLocation = {
     place_id?: string;
     relation_type?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpRepeatedEnumValue = {
-    set_values?: Array<string>;
-    unset_values?: Array<string>;
+export type GbpRepeatedEnumValue = {
+    set_values?: Array<string> | null;
+    unset_values?: Array<string> | null;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpSearchKeyword = {
-    is_threshold?: boolean;
-    keyword?: string;
+export type GbpSearchKeyword = {
+    is_threshold: boolean;
+    keyword: string;
     threshold?: number;
     value?: number;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpServiceArea = {
+export type GbpServiceArea = {
     /**
      * BusinessType is CUSTOMER_LOCATION_ONLY or CUSTOMER_AND_BUSINESS_LOCATION.
      */
     business_type?: string;
-    places?: Array<SocialApiAiCoreApiConnectorsBaseGbpPlaceInfo>;
+    places?: Array<GbpPlaceInfo>;
     region_code?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpServiceAreaUpdate = {
+export type GbpServiceAreaUpdate = {
     /**
      * BusinessType is CUSTOMER_LOCATION_ONLY or CUSTOMER_AND_BUSINESS_LOCATION.
      */
@@ -3167,13 +1560,13 @@ export type SocialApiAiCoreApiConnectorsBaseGbpServiceAreaUpdate = {
     place_ids?: Array<string>;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpServiceItem = {
-    free_form_service_item?: SocialApiAiCoreApiConnectorsBaseGbpFreeFormService;
-    price?: SocialApiAiCoreApiConnectorsBaseGbpMoney;
-    structured_service_item?: SocialApiAiCoreApiConnectorsBaseGbpStructuredService;
+export type GbpServiceItem = {
+    free_form_service_item?: GbpFreeFormService;
+    price?: GbpMoney;
+    structured_service_item?: GbpStructuredService;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpSpecialHourPeriod = {
+export type GbpSpecialHourPeriod = {
     close_time?: string;
     /**
      * Closed marks the location shut for the whole period, in which case the
@@ -3185,35 +1578,277 @@ export type SocialApiAiCoreApiConnectorsBaseGbpSpecialHourPeriod = {
     start_date?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpSpecialHoursUpdate = {
-    periods?: Array<SocialApiAiCoreApiConnectorsBaseGbpSpecialHourPeriod>;
+export type GbpSpecialHoursUpdate = {
+    periods?: Array<GbpSpecialHourPeriod>;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpStructuredService = {
+export type GbpStructuredService = {
     description?: string;
     service_type_id?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseGbpTimePeriod = {
+export type GbpTimePeriod = {
     close_day?: string;
     close_time?: string;
     open_day?: string;
     open_time?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseInteraction = {
+export type GoogleAttributesResponse = {
+    data: Array<GbpAttribute> | null;
+};
+
+export type GoogleAvailableAttributesResponse = {
+    data: Array<GbpAttributeMetadata> | null;
+};
+
+export type GoogleFoodMenusResponse = {
+    data: GbpFoodMenus;
+};
+
+export type GoogleInsightsResponse = {
+    data: GbpInsights;
+};
+
+export type GoogleLocation = {
+    assignable: boolean;
+    assigned_account_id?: string;
+    assigned_brand_id?: string;
+    assigned_brand_name?: string;
+    bio?: string;
+    /**
+     * Category is the location's primary Google category, localized.
+     */
+    category?: string;
+    /**
+     * Details is the rest of what Google publishes about the location: address,
+     * phone numbers, categories, opening hours, service area, and the Maps and
+     * review links. Fields are omitted when Google returns no value, so a
+     * service-area business has no storefront_address rather than an empty one.
+     */
+    details?: GbpLocationDetails;
+    /**
+     * MapsURI is the location's page on Google Maps.
+     */
+    maps_uri?: string;
+    name: string;
+    platform_account_id: string;
+};
+
+export type GoogleLoginLocationsResponse = {
+    count: number;
+    locations: Array<GoogleLocation>;
+    login_email?: string;
+    login_id: string;
+    login_name?: string;
+};
+
+export type GoogleMediaAttribution = {
+    profile_name?: string;
+    profile_photo_url?: string;
+    profile_url?: string;
+    takedown_url?: string;
+};
+
+export type GoogleMediaCategory = 'COVER' | 'PROFILE' | 'LOGO' | 'EXTERIOR' | 'INTERIOR' | 'PRODUCT' | 'AT_WORK' | 'FOOD_AND_DRINK' | 'MENU' | 'COMMON_AREA' | 'ROOMS' | 'TEAMS' | 'ADDITIONAL';
+
+export type GoogleMediaItem = {
+    attribution?: GoogleMediaAttribution;
+    category?: string;
+    created_at?: string;
+    description?: string;
+    height_pixels?: number;
+    id: string;
+    media: MediaRef;
+    thumbnail_url?: string;
+    width_pixels?: number;
+};
+
+export type GoogleMediaListResponse = {
+    count: number;
+    items: Array<GoogleMediaItem>;
+    next_cursor?: string;
+    /**
+     * TotalCount is the total number of media items on the location, across all
+     * pages. Zero means an empty gallery.
+     */
+    total_count: number;
+};
+
+export type GoogleMediaType = 'image' | 'video';
+
+export type GooglePlaceActionLinkResponse = {
+    data: GbpPlaceActionLink;
+};
+
+export type GooglePlaceActionLinksResponse = {
+    data: Array<GbpPlaceActionLink> | null;
+};
+
+export type GooglePlaceActionTypesResponse = {
+    data: Array<GbpPlaceActionType> | null;
+};
+
+export type GoogleSearchKeywordsResponse = {
+    data: GbpKeywordsPage;
+};
+
+export type ImportPostsResponse = {
+    created: number;
+    errors?: Array<ImportRowError>;
+    failed: number;
+    posts?: Array<PostResponse>;
+    total_rows: number;
+};
+
+export type ImportRowError = {
+    message: string;
+    row: number;
+};
+
+export type InboxConversation = {
+    account_id: string;
+    created_at: string;
+    id: string;
+    last_message: string;
+    last_message_at: string | null;
+    page_id?: string;
+    participant_id: string;
+    participant_name: string;
+    participant_picture: string;
+    platform: Platform;
+    platform_id: string;
+    status: string;
+    unread_count: number;
+    updated_at: string;
+    user_id: string;
+};
+
+export type InboxMessage = {
+    attachment_type: string | null;
+    attachment_url: string | null;
+    conversation_id: string;
+    created_at: string;
+    direction: string;
+    id: string;
+    platform_id: string;
+    /**
+     * ReplyTo is the message this one replies to, or null when it is not a reply.
+     */
+    reply_to: MessageReply | null;
+    sender_id: string;
+    sender_name: string;
+    status?: string;
+    status_updated_at?: string;
+    text: string | null;
+};
+
+export type InboxPagination = {
+    has_more: boolean;
+    next_cursor: string;
+};
+
+export type InboxPaginationOpt = {
+    has_more: boolean;
+    next_cursor?: string;
+};
+
+export type InboxPost = {
+    account_id: string;
+    comment_count: number;
+    content: string | null;
+    created_at: string;
+    id: string;
+    like_count: number;
+    page_id?: string;
+    permalink: string | null;
+    platform: Platform;
+    platform_id?: string;
+    published_at: string | null;
+    thumbnail: string | null;
+    updated_at: string;
+    user_id: string;
+};
+
+export type InboxSyncRequest = {
+    account_id: string;
+    conversation_id?: string;
+};
+
+export type InboxSyncResponse = {
+    data: InboxSyncStatus;
+};
+
+export type InboxSyncStatus = {
+    error: string;
+    finished_at: string | null;
+    last_synced_at: string | null;
+    started_at: string | null;
+    /**
+     * State is "idle", "syncing", or "failed". A finished sync is idle with a
+     * fresher LastSyncedAt; there is no terminal "done".
+     */
+    state: SyncState;
+    /**
+     * Synced is how many items the last completed sync brought in. Display only.
+     */
+    synced: number;
+};
+
+export type InstagramAccountSummaryResponse = {
+    accounts_engaged: number;
+    display_name: string;
+    follower_count: number;
+    following_count: number;
+    interactions: number;
+    media_count: number;
+    net_follows: number;
+    period_end: string;
+    period_start: string;
+    picture_url: string;
+    reach: number;
+    username: string;
+    views: number;
+};
+
+export type InstagramCollaboratorsResponse = {
+    count: number;
+    data: Array<Collaborator> | null;
+};
+
+export type InstagramParticipantProfileResponse = {
+    follower_count?: number;
+    id: string;
+    is_business_follow_user?: boolean;
+    is_user_follow_business?: boolean;
+    is_verified_user?: boolean;
+    name?: string;
+    /**
+     * ProfilePic URLs expire after a few days; never persist one as durable.
+     */
+    profile_pic?: string;
+    username?: string;
+};
+
+export type InstagramStoriesResponse = {
+    count: number;
+    data: Array<Post> | null;
+    next_cursor?: string;
+};
+
+export type Interaction = {
     /**
      * [always]
      */
-    account_id?: string;
+    account_id: string;
     /**
      * [always] Fields are populated only when the source platform exposes them; absent fields are omitted from JSON
      */
-    author?: SocialApiAiCoreApiConnectorsBaseAuthor;
+    author: Author;
     /**
      * [always] Text may be empty for attachment-only or referral interactions
      */
-    content?: SocialApiAiCoreApiConnectorsBaseContent;
+    content: Content;
     /**
      * [optional] SocialAPI conversation ID; set on Facebook, Instagram, WhatsApp and Telegram DMs that belong to a conversation
      */
@@ -3221,13 +1856,13 @@ export type SocialApiAiCoreApiConnectorsBaseInteraction = {
     /**
      * [always] SocialAPI interaction ID (sapi_cmt_/sapi_rev_/sapi_dm_/sapi_mnt_ prefix)
      */
-    id?: string;
+    id: string;
     /**
      * [optional] Platform-specific keys: google sets "star_rating"; facebook mentions set "permalink_url"; instagram sets "media_id" or "referral"
      */
-    metadata?: {
+    metadata: {
         [key: string]: unknown;
-    };
+    } | null;
     /**
      * [platform: facebook] SocialAPI page ID identifying which Page received the event. Set for Facebook Page-scoped events; empty for platforms without a multi-page account model (e.g. Instagram), where account_id already identifies the account.
      */
@@ -3239,9 +1874,9 @@ export type SocialApiAiCoreApiConnectorsBaseInteraction = {
     /**
      * [always]
      */
-    platform?: string;
+    platform: Platform;
     /**
-     * [optional] Platform-native message id, byte-identical to the platform_id of the matching row from GET /v1/inbox/conversations/{id}/messages. Set on Instagram, Facebook and WhatsApp dm.received and dm.sent, on Telegram dm.received, and on Instagram and Facebook dm.postback, so a delivered event can be joined to a message from that endpoint: id is a SocialAPI interaction id, which the messages endpoint does not return, so without this the two carry no field in common. Empty for dm.referral, which has no platform message id.
+     * [optional] Platform-native message id, byte-identical to the platform_id of the matching row from GET /v1/inbox/conversations/{conversation_id}/messages. Set on Instagram, Facebook and WhatsApp dm.received and dm.sent, on Telegram dm.received, and on Instagram and Facebook dm.postback, so a delivered event can be joined to a message from that endpoint: id is a SocialAPI interaction id, which the messages endpoint does not return, so without this the two carry no field in common. Empty for dm.referral, which has no platform message id.
      */
     platform_id?: string;
     /**
@@ -3255,62 +1890,711 @@ export type SocialApiAiCoreApiConnectorsBaseInteraction = {
     /**
      * [always]
      */
-    received_at?: string;
+    received_at: string;
     /**
      * [platform: instagram, facebook, whatsapp] Non-nil for echo/sent DM events; nil for all other interaction types
      */
-    recipient?: SocialApiAiCoreApiConnectorsBaseAuthor;
+    recipient?: Author;
     /**
-     * [platform: telegram, instagram, facebook] The earlier message this DM replies to; same value as reply_to on the matching row from GET /v1/inbox/conversations/{id}/messages. Absent when the DM is not a reply
+     * [platform: telegram, instagram, facebook] The earlier message this DM replies to; same value as reply_to on the matching row from GET /v1/inbox/conversations/{conversation_id}/messages. Absent when the DM is not a reply
      */
-    reply_to?: SocialApiAiCoreApiConnectorsBaseMessageRef;
+    reply_to?: MessageRef;
     /**
      * [platform: instagram] Set when the interaction is a reply to one of the account's stories
      */
-    story?: SocialApiAiCoreApiConnectorsBaseStory;
+    story?: Story;
     /**
      * [always] One of: comment, review, dm, mention (or dm.sent/dm.received/dm.referral for webhook events)
      */
+    type: string;
+};
+
+export type InteractionSettings = {
+    /**
+     * [platform: tiktok]
+     */
+    comment_disabled: boolean;
+    /**
+     * [platform: tiktok]
+     */
+    duet_disabled: boolean;
+    /**
+     * [platform: tiktok]
+     */
+    stitch_disabled: boolean;
+};
+
+export type InviteListItem = {
+    created_at: string;
+    expires_at: string;
+    id: string;
+    is_active: boolean;
+    /**
+     * The permissions chosen when the invite was created. null means the brand's current permissions for this platform apply when the invite is used, or every permission if it has none.
+     */
+    permissions: Array<string> | null;
+    platform: Platform;
+    token: string;
+    url: string;
+};
+
+export type InviteListResponse = {
+    count: number;
+    data: Array<InviteListItem>;
+};
+
+export type InviteResponse = {
+    expires_at: string;
+    id: string;
+    /**
+     * The permissions chosen when the invite was created. null means the brand's current permissions for this platform apply when the invite is used, or every permission if it has none.
+     */
+    permissions: Array<string> | null;
+    platform: Platform;
+    token: string;
+    url: string;
+};
+
+export type KeyListItem = {
+    brand_ids: Array<string> | null;
+    created_at: string;
+    id: string;
+    is_active: boolean;
+    last_used_at?: string;
+    name: string;
+    preview: string;
+    scopes: Array<string> | null;
+};
+
+export type KeyScopeItem = {
+    description: string;
+    group: string;
+    name: string;
+};
+
+export type KeyScopesResponse = {
+    count: number;
+    data: Array<KeyScopeItem>;
+};
+
+export type KeysListResponse = {
+    count: number;
+    data: Array<KeyListItem>;
+};
+
+export type KeywordFilter = {
+    /**
+     * 1 to 50, each 1 to 100 characters
+     */
+    keywords: Array<string>;
+    /**
+     * contains: a keyword appears as a whole word or phrase. exact: the whole text equals a keyword
+     */
+    match: KeywordMatch;
+};
+
+export type KeywordMatch = 'contains' | 'exact';
+
+export type LinkedInInsightsResponse = {
+    data: PageInsights;
+};
+
+export type LinkedInLoginProfile = {
+    assignable: boolean;
+    assigned_account_id?: string;
+    assigned_brand_id?: string;
+    assigned_brand_name?: string;
+    /**
+     * ConnectionType is "profile" for the member, "organization" for a company Page.
+     */
+    connection_type: ConnectionType;
+    name: string;
+    picture_url?: string;
+    platform_account_id: string;
+    username?: string;
+};
+
+export type LinkedInLoginProfilesResponse = {
+    count: number;
+    login_id: string;
+    /**
+     * LoginName is the name of the LinkedIn member who authorized the login.
+     */
+    login_name?: string;
+    profiles: Array<LinkedInLoginProfile>;
+};
+
+export type ListWebhookEventsResponse = {
+    count: number;
+    data: Array<WebhookEventInfo>;
+};
+
+export type LostPageAccess = {
+    brand_id: string;
+    brand_name: string;
+    name: string;
+    platform_page_id: string;
+};
+
+export type Media = {
+    type: string;
+    url: string;
+};
+
+export type MediaConstraints = {
+    /**
+     * 0 = not supported
+     */
+    max_image_size_bytes?: number;
+    /**
+     * 0 = no max
+     */
+    max_video_duration_sec?: number;
+    /**
+     * 0 = no limit
+     */
+    max_video_fps?: number;
+    /**
+     * 0 = not supported
+     */
+    max_video_size_bytes?: number;
+    /**
+     * 0 = no min
+     */
+    min_video_duration_sec?: number;
+    /**
+     * MIME types, e.g. "image/jpeg"
+     */
+    supported_image_types?: Array<string>;
+    /**
+     * MIME types, e.g. "video/mp4"
+     */
+    supported_video_types?: Array<string>;
+};
+
+export type MediaFileType = 'image' | 'video' | 'audio' | 'file';
+
+export type MediaInput = {
+    source: string;
+    source_type: MediaSourceType;
+    /**
+     * The kind of file: image, video, audio or file.
+     */
     type?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseInteractionSettings = {
-    /**
-     * [platform: tiktok]
-     */
-    comment_disabled?: boolean;
-    /**
-     * [platform: tiktok]
-     */
-    duet_disabled?: boolean;
-    /**
-     * [platform: tiktok]
-     */
-    stitch_disabled?: boolean;
+export type MediaItemResponse = {
+    content_type: string;
+    created_at: string;
+    filename: string;
+    id: string;
+    size_bytes: number;
+    status: string;
+    url: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseMedia = {
-    type?: string;
+export type MediaListResponse = {
+    count: number;
+    data: Array<MediaItemResponse>;
+    next_cursor?: string;
+};
+
+export type MediaRef = {
+    type: GoogleMediaType;
+    url: string;
+};
+
+export type MediaSourceType = 'url' | 'media_id' | 'platform_attachment_id';
+
+export type MediaUploadInfoResponse = {
+    expires_at: string;
+    media_id: string;
+    upload_url: string;
+};
+
+export type MediaUploadResponse = {
+    media_id: string;
+};
+
+export type MentionsListResponse = {
+    count: number;
+    data: Array<Interaction> | null;
+    next_cursor?: string;
+};
+
+export type MessageButton = {
+    payload?: string;
+    title: string;
+    type: MessageButtonType;
     url?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseMessageRef = {
-    /**
-     * Platform-native id of the referenced message, as platform_id on GET /v1/inbox/conversations/{id}/messages
-     */
-    platform_id?: string;
+export type MessageButtonType = 'url' | 'postback';
+
+export type MessageCard = {
+    buttons?: Array<MessageButton>;
+    image_url?: string;
+    subtitle?: string;
+    title: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBasePageInsights = {
-    follower_count?: number;
+export type MessageListItem = {
+    description?: string;
+    id: string;
+    title: string;
+};
+
+export type MessageListSection = {
+    rows: Array<MessageListItem>;
+    title?: string;
+};
+
+export type MessageQuickReply = {
+    payload?: string;
+    title: string;
+};
+
+export type MessageRef = {
+    /**
+     * Platform-native id of the referenced message, as platform_id on GET /v1/inbox/conversations/{conversation_id}/messages
+     */
+    platform_id: string;
+};
+
+export type MessageReply = {
+    platform_id: string;
+};
+
+export type MessagesListResponse = {
+    data: Array<InboxMessage> | null;
+    last_synced_at: string | null;
+    pagination: InboxPagination;
+    /**
+     * The state of this conversation's message sync: idle, syncing or failed.
+     * Empty when no state is available.
+     */
+    sync_state: SyncState;
+};
+
+export type MetricSeries = {
+    /**
+     * DayTZ names the boundary these days were cut on, or mixed when a rollup
+     * combines platforms that cut differently. A Brand rollup genuinely mixes
+     * boundaries: up to eight hours of activity sits on the wrong side of a day
+     * edge for Meta platforms next to a UTC-cut platform in the same sum. The
+     * error is bounded and does not compound, and this field is how a reader
+     * tells it from a real discrepancy.
+     */
+    day_tz: string;
+    /**
+     * Kind is gauge (a level, diff it) or flow (a per-day count, sum it).
+     */
+    kind: string;
+    /**
+     * Metric is the platform's own name for a platform Metric.
+     */
+    metric: string;
+    /**
+     * Points are ordered oldest first.
+     */
+    points: Array<AnalyticsPoint>;
+    /**
+     * Source is reported, sampled, owned, or mixed when a rollup combines more
+     * than one.
+     */
+    source: string;
+};
+
+export type MetricsResponse = {
+    post_id: string;
+    targets: Array<PostTargetResponse> | null;
+};
+
+export type MetricsResponseWrapper = {
+    data: MetricsResponse;
+};
+
+export type MigrationAssessment = {
+    /**
+     * Brands needed across all profiles.
+     */
+    brands: number;
+    /**
+     * Most Pages any one Brand needs on a single platform.
+     */
+    pages_per_brand: number;
+    /**
+     * One entry per profile at your provider.
+     */
+    profiles: Array<MigrationProfile>;
+    /**
+     * Cheapest plan that fits.
+     */
+    recommended_plan: MigrationPlan;
+    /**
+     * Accounts SocialAPI can serve.
+     */
+    servable_accounts: number;
+    /**
+     * Accounts that stay with your provider, by platform.
+     */
+    stays_with_provider: Array<MigrationUnsupported>;
+};
+
+export type MigrationAuthorisation = {
+    text: string;
+    version: string;
+};
+
+export type MigrationPlan = {
+    brands_limit: number;
+    name: string;
+    pages_per_brand: number;
+    tier: string;
+};
+
+export type MigrationProfile = {
+    brands: number;
+    id: string;
+    name: string;
+    pages_per_brand: number;
+    servable_accounts: number;
+    /**
+     * Why the profile needs more than one Brand, one line per reason.
+     */
+    splits: Array<string> | null;
+};
+
+export type MigrationResponse = {
+    /**
+     * When the accounts were last read, RFC 3339. Null until the first read succeeds.
+     */
+    assessed_at: string | null;
+    /**
+     * Your accounts and how they map to SocialAPI. Null until started, or when your provider could not be read.
+     */
+    assessment: MigrationAssessment | null;
+    /**
+     * Why `assessment` is null on a started migration: `migration.key_invalid`, `migration.key_restricted` or `migration.source_unavailable`.
+     */
+    assessment_error: string | null;
+    /**
+     * Text to accept before starting, and its version.
+     */
+    authorisation: MigrationAuthorisation;
+    /**
+     * Version of the authorisation text accepted. Null until started.
+     */
+    authorisation_version: string | null;
+    /**
+     * When the authorisation was accepted, RFC 3339. Null until started.
+     */
+    authorised_at: string | null;
+    /**
+     * Base URL to set in your existing client. Null until started.
+     */
+    base_url: string | null;
+    /**
+     * When the migration started, RFC 3339. Null until started.
+     */
+    created_at: string | null;
+    /**
+     * Accounts already reconnected to SocialAPI.
+     */
+    cut_over: number;
+    /**
+     * Requests sent through the base URL since the migration started.
+     */
+    forwarded_calls: number;
+    /**
+     * Start and end of the key in use. Null until started.
+     */
+    key_hint: string | null;
+    /**
+     * True once a migration has started.
+     */
+    started: boolean;
+};
+
+export type MigrationUnsupported = {
+    count: number;
+    /**
+     * Platform name as your provider reports it.
+     */
+    platform: string;
+    /**
+     * Why the accounts stay: "unserved platform", "ads", "telephony", "commerce", "unknown platform" or "linked to another account".
+     */
+    reason: string;
+};
+
+export type ModerateYouTubeCommentRequest = {
+    account_id: string;
+    ban_author?: boolean;
+    post_id: string;
+    status: string;
+};
+
+export type OkResponse = {
+    ok: boolean;
+};
+
+export type OverviewBestTimeCell = {
+    /**
+     * AvgEngagements is the mean engagements of the posts published in this
+     * hour. It describes your past posts, not when your audience is online.
+     */
+    avg_engagements: number;
+    /**
+     * Hour is 0 to 23.
+     */
+    hour: number;
+    posts: number;
+    /**
+     * Weekday is 1 (Monday) to 7 (Sunday).
+     */
+    weekday: number;
+};
+
+export type OverviewBestTimes = {
+    cells: Array<OverviewBestTimeCell>;
+    posts_considered: number;
+};
+
+export type OverviewDay = {
+    day: string;
+    engagements: number;
+    posts: number;
+};
+
+export type OverviewFormat = {
+    engagements: number;
+    /**
+     * MediaType is the platform's own media kind, lowercased (image, video,
+     * reel, carousel_album, ...), or unknown when the platform did not say.
+     */
+    media_type: string;
+    posts: number;
+};
+
+export type OverviewPlatform = {
+    comments: number;
+    engagements: number;
+    likes: number;
+    platform: string;
+    posts: number;
+    saves: number;
+    shares: number;
+    views: number;
+};
+
+export type OverviewPostMetrics = {
+    comments: number;
+    engagements: number;
+    likes: number;
+    saves: number;
+    shares: number;
+    views: number;
+};
+
+export type OverviewTopPost = {
+    account_id: string;
+    media_type: string;
+    metrics: OverviewPostMetrics;
+    permalink?: string;
+    platform: string;
+    post_id: string;
+    published_at: string;
+    text?: string;
+    thumbnail?: string;
+};
+
+export type OverviewTotals = {
+    comments: number;
+    engagements: number;
+    likes: number;
+    posts: number;
+    saves: number;
+    shares: number;
+    views: number;
+};
+
+export type PageInsights = {
+    follower_count: number;
     /**
      * Kind is "organization" for a LinkedIn Page and "member" for a personal profile.
      */
-    kind?: 'organization' | 'member';
-    posts?: Array<SocialApiAiCoreApiConnectorsBasePostInsight>;
+    kind: PageInsightsKind;
+    posts: Array<PostInsight> | null;
 };
 
-export type SocialApiAiCoreApiConnectorsBasePlatformMediaItem = {
+export type PageInsightsKind = 'organization' | 'member';
+
+export type PagesListResponse = {
+    data: Array<AccountPage>;
+};
+
+export type PaginationInfo = {
+    has_more: boolean;
+    limit: number;
+    next_cursor?: string;
+};
+
+export type PatchMeRequest = {
+    /**
+     * JobRole records what best describes the user. Surrounding whitespace is
+     * trimmed, an empty value leaves the current one unchanged, and values
+     * longer than 120 characters are truncated.
+     */
+    job_role?: string;
+    /**
+     * LockAccountsToBrand toggles whether a social account already connected to
+     * one brand may be re-connected (moved) to a different brand. When true, such
+     * a connect attempt is rejected with 409 account.already_linked.
+     */
+    lock_accounts_to_brand?: boolean;
+    onboarding?: boolean;
+    referral?: string;
+    /**
+     * SignupMetadata adds keys to the signup answers on record: a shallow
+     * merge, so keys sent replace the same keys and others are kept. At most
+     * 4096 bytes once encoded.
+     */
+    signup_metadata?: {
+        [key: string]: unknown;
+    };
+    use_case?: string;
+};
+
+export type PendingConnectionDetailResponse = {
+    connection_id: string;
+    expires_at: string;
+    /**
+     * login_id identifies the login and is set for Facebook, Google and LinkedIn.
+     * pages and lost_access are Facebook page-selection only.
+     */
+    login_id?: string;
+    lost_access?: Array<LostPageAccess>;
+    pages?: Array<PendingPage>;
+    platform: Platform;
+    profiles: Array<PendingProfile>;
+};
+
+export type PendingConnectionResponse = {
+    connection_id: string;
+    /**
+     * login_id identifies the login and is set for Facebook, Google and LinkedIn.
+     * pages and lost_access are Facebook page-selection only.
+     */
+    login_id?: string;
+    lost_access?: Array<LostPageAccess>;
+    pages?: Array<PendingPage>;
+    platform: Platform;
+    profiles: Array<PendingProfile>;
+    status: string;
+};
+
+export type PendingPage = {
+    assignable: boolean;
+    assigned_account_id?: string;
+    assigned_brand_id?: string;
+    assigned_brand_name?: string;
+    category?: string;
+    name: string;
+    picture_url?: string;
+    platform_page_id: string;
+};
+
+export type PendingProfile = {
+    bio: string;
+    display_name: string;
+    platform_account_id: string;
+    profile_picture_url: string;
+    username: string;
+};
+
+export type PhoneNumberStatusResponse = {
+    /**
+     * True for a number that stays on the WhatsApp Business app alongside the API (coexistence). It is already verified and registered: request-code, verify-code and register are refused with 409 whatsapp.business_app_number.
+     */
+    business_app: boolean;
+    /**
+     * True when the number can send and receive messages.
+     */
+    registered: boolean;
+    /**
+     * True once the number has proven ownership, either with verify-code or in the WhatsApp Business app.
+     */
+    verified: boolean;
+};
+
+export type PinterestBoardItem = {
+    board_id: string;
+    id: string;
+    name: string;
+    /**
+     * Who can see the board, for example PUBLIC, PROTECTED or SECRET. Other values can appear.
+     */
+    privacy?: string;
+};
+
+export type PinterestBoardPrivacy = 'PUBLIC' | 'PROTECTED' | 'SECRET';
+
+export type PinterestBoardUpdatePrivacy = 'PUBLIC' | 'SECRET';
+
+export type PinterestBoardsResponse = {
+    data: Array<PinterestBoardItem>;
+};
+
+export type PinterestPinItem = {
+    board_id?: string;
+    created_at?: string;
+    id: string;
+    media_url?: string;
+    permalink: string;
+    /**
+     * Title carries the pin's description, not Pinterest's separate title field.
+     */
+    title: string;
+};
+
+export type PinterestPinsResponse = {
+    data: Array<PinterestPinItem>;
+};
+
+export type PinterestSummaryResponse = {
+    board_count: number;
+    follower_count: number;
+    monthly_views: number;
+    pin_count: number;
+    profile_image: string;
+    username: string;
+};
+
+export type Platform = 'app_store_connect' | 'bluesky' | 'facebook' | 'google' | 'instagram' | 'instagram_fb' | 'linkedin' | 'linkedin_page' | 'pinterest' | 'telegram' | 'threads' | 'tiktok' | 'twitter' | 'whatsapp' | 'youtube' | 'zalo';
+
+export type PlatformConstraints = {
+    carousel: CarouselConstraints;
+    media: MediaConstraints;
+    scheduling: SchedulingConstraints;
+    /**
+     * SupportsMixedMedia reports whether a platform_attachment_id item may be
+     * combined with other media (url/media_id) in the same post. When false
+     * (instagram, threads) a platform_attachment_id must be the only media item.
+     * Meaningful only when SupportsPlatformAttachmentID is true.
+     */
+    supports_mixed_media: boolean;
+    supports_platform_attachment_id: boolean;
+    text: TextConstraints;
+};
+
+export type PlatformConstraintsResponse = {
+    data: {
+        [key: string]: PlatformConstraints;
+    };
+};
+
+export type PlatformMediaItem = {
     /**
      * Link to a video's cover image, hosted by the platform. Temporary, like url. Absent on images.
      */
@@ -3318,34 +2602,36 @@ export type SocialApiAiCoreApiConnectorsBasePlatformMediaItem = {
     /**
      * image or video.
      */
-    type?: 'image' | 'video';
+    type: PlatformMediaType;
     /**
      * Link to the file, hosted by the platform. Temporary: download the file rather than keeping the link. Absent when the platform withholds the file, as Instagram does for media with licensed audio.
      */
     url?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBasePost = {
+export type PlatformMediaType = 'image' | 'video';
+
+export type Post = {
     /**
      * [always]
      */
-    account_id?: string;
+    account_id: string;
     /**
      * [always] Post text body; may be empty for media-only posts
      */
-    caption?: string;
+    caption: string;
     /**
      * [platform: instagram, facebook, tiktok] Zero on other platforms
      */
-    comments_count?: number;
+    comments_count: number;
     /**
      * [always] Platform-native post/video/media ID
      */
-    id?: string;
+    id: string;
     /**
      * [platform: instagram, facebook, tiktok] Zero on other platforms
      */
-    like_count?: number;
+    like_count: number;
     /**
      * [platform: instagram, facebook, threads, tiktok, youtube] Empty on linkedin and google
      */
@@ -3363,34 +2649,34 @@ export type SocialApiAiCoreApiConnectorsBasePost = {
     /**
      * [platform: instagram, facebook, threads, tiktok, youtube, google, linkedin]
      */
-    permalink?: string;
+    permalink: string;
     /**
      * [always]
      */
-    platform?: string;
+    platform: Platform;
     /**
      * [platform: instagram, facebook] Every image and video on the post, carousel slides or album photos in order
      */
-    platform_media?: Array<SocialApiAiCoreApiConnectorsBasePlatformMediaItem>;
+    platform_media?: Array<PlatformMediaItem>;
     /**
      * [platform: instagram, facebook] Settings the platform reports for the post
      */
-    settings?: SocialApiAiCoreApiConnectorsBasePostSettings;
+    settings?: PostSettings;
     /**
      * [platform: facebook] Zero on other platforms
      */
-    shares_count?: number;
+    shares_count: number;
     /**
      * [always]
      */
-    timestamp?: string;
+    timestamp: string;
     /**
      * [platform: youtube, tiktok] Zero on other platforms
      */
-    view_count?: number;
+    view_count: number;
 };
 
-export type SocialApiAiCoreApiConnectorsBasePostChildAttachment = {
+export type PostChildAttachment = {
     /**
      * Description text of the card.
      */
@@ -3398,7 +2684,7 @@ export type SocialApiAiCoreApiConnectorsBasePostChildAttachment = {
     /**
      * Destination URL of the card.
      */
-    link?: string;
+    link: string;
     /**
      * Title of the card.
      */
@@ -3409,44 +2695,71 @@ export type SocialApiAiCoreApiConnectorsBasePostChildAttachment = {
     picture?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBasePostInsight = {
-    clicks?: number;
-    comments?: number;
-    created_at?: string;
-    engagement_rate?: number;
-    impressions?: number;
-    likes?: number;
+export type PostInsight = {
+    clicks: number;
+    comments: number;
+    created_at: string;
+    engagement_rate: number;
+    impressions: number;
+    likes: number;
     permalink?: string;
-    post_id?: string;
-    shares?: number;
+    post_id: string;
+    shares: number;
     text?: string;
-    unique_views?: number;
+    unique_views: number;
 };
 
-export type SocialApiAiCoreApiConnectorsBasePostPlace = {
+export type PostPlace = {
     /**
      * Platform id of the tagged place.
      */
-    id?: string;
+    id: string;
     /**
      * Name of the tagged place.
      */
     name?: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBasePostSettings = {
+export type PostResponse = {
+    created_at: string;
+    hidden: boolean;
+    id: string;
+    media?: Array<MediaInput>;
+    /**
+     * Deprecated: use media.
+     */
+    media_ids?: Array<string>;
+    published_at?: string;
+    /**
+     * ID of the Queue the post is in. null when the post is not queued.
+     */
+    queue_id: string | null;
+    retry_count: number;
+    scheduled_at?: string;
+    status: PostStatus;
+    targets?: Array<PostTargetResponse>;
+    text: string | null;
+    title?: string;
+    updated_at: string;
+    /**
+     * Who can see the post, as set when it was created or last updated: public, private, connections_only or logged_in.
+     */
+    visibility?: string;
+};
+
+export type PostSettings = {
     /**
      * Image description set on the Instagram post.
      */
     alt_text?: string;
     /**
-     * Kind of audio on an Instagram Reel.
+     * Kind of audio on an Instagram Reel, for example MUSIC or ORIGINAL_SOUND. Other values can appear.
      */
-    audio_type?: 'MUSIC' | 'ORIGINAL_SOUND';
+    audio_type?: string;
     /**
      * Cards of a Facebook multi-link post.
      */
-    child_attachments?: Array<SocialApiAiCoreApiConnectorsBasePostChildAttachment>;
+    child_attachments?: Array<PostChildAttachment>;
     /**
      * True when comments are open on the Instagram post.
      */
@@ -3486,677 +2799,388 @@ export type SocialApiAiCoreApiConnectorsBasePostSettings = {
     /**
      * Location tagged on the Facebook post.
      */
-    place?: SocialApiAiCoreApiConnectorsBasePostPlace;
+    place?: PostPlace;
     /**
-     * Instagram surface the post lives on.
+     * Instagram surface the post lives on, for example FEED, REELS, STORY or AD. Other values can appear.
      */
-    product_type?: 'FEED' | 'REELS' | 'STORY' | 'AD';
+    product_type?: string;
     /**
      * True when an Instagram Reel also appears in the main profile feed.
      */
     share_to_feed?: boolean;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseStory = {
+export type PostStatus = 'draft' | 'scheduled' | 'publishing' | 'published' | 'partial' | 'failed' | 'cancelled';
+
+export type PostTargetErrorCategory = 'validation' | 'auth' | 'rate_limit' | 'platform' | 'system' | 'resource' | 'billing' | 'account' | 'conflict' | '';
+
+export type PostTargetErrorCause = 'user' | 'platform' | 'system' | 'internal' | '';
+
+export type PostTargetErrorResponse = {
     /**
-     * when media_url stops working; omitted when it cannot be determined
+     * The kind of error. Empty when the error has no category.
      */
-    expires_at?: string;
+    category: PostTargetErrorCategory;
     /**
-     * platform-native story id
+     * Who caused the error. Empty when the error has no category.
      */
-    id?: string;
-    /**
-     * [platform: facebook] photo or video
-     */
-    media_type?: string;
-    /**
-     * downloadable media link
-     */
-    media_url?: string;
-    /**
-     * [platform: facebook] story permalink
-     */
-    permalink?: string;
+    caused_by: PostTargetErrorCause;
+    code: string;
+    message: string;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseThreadsBreakdownResult = {
+export type PostTargetMetricsResponse = {
     /**
-     * Dimension is the breakdown value, such as a country code, a city, an age range or a gender.
+     * Average time a viewer spent watching the video, in milliseconds.
      */
-    dimension?: string;
-    value?: number;
-};
-
-export type SocialApiAiCoreApiConnectorsBaseThreadsInsights = {
-    metrics?: {
-        [key: string]: SocialApiAiCoreApiConnectorsBaseThreadsMetricValue;
+    avg_watch_time_ms?: number;
+    /**
+     * Taps on the profile's call button.
+     */
+    calls?: number;
+    comments: number;
+    /**
+     * Views of the copy shared to another network, for a post shared there too.
+     */
+    crossposted_views?: number;
+    /**
+     * Taps on the profile's directions button.
+     */
+    directions?: number;
+    /**
+     * Taps on the profile's email button.
+     */
+    emails?: number;
+    extra?: {
+        [key: string]: unknown;
     };
+    /**
+     * Accounts that followed after seeing the post.
+     */
+    follows?: number;
+    /**
+     * Likes, comments, saves and shares combined, as the platform counts them.
+     */
+    interactions?: number;
+    likes: number;
+    /**
+     * Actions taken on the account's profile after visiting it from the post. website_clicks, calls, directions, emails and texts break it down.
+     */
+    profile_actions?: number;
+    /**
+     * Visits to the account's profile from the post.
+     */
+    profile_visits?: number;
+    /**
+     * Unique accounts that saw the post.
+     */
+    reach?: number;
+    /**
+     * Times other accounts reposted the post.
+     */
+    reposts?: number;
+    saves: number;
+    shares: number;
+    /**
+     * Percentage of viewers who skipped the video near its start.
+     */
+    skip_rate?: number;
+    /**
+     * Taps on the profile's text message button.
+     */
+    texts?: number;
+    /**
+     * Total time all viewers spent watching the video, in milliseconds.
+     */
+    total_watch_time_ms?: number;
+    /**
+     * Times the post was shown or played.
+     */
+    views?: number;
+    /**
+     * Clicks on the profile's website link.
+     */
+    website_clicks?: number;
 };
 
-export type SocialApiAiCoreApiConnectorsBaseThreadsMetricValue = {
+export type PostTargetResponse = {
+    account_id?: string;
+    board_id?: string;
+    error?: PostTargetErrorResponse;
+    first_comment?: string;
+    media?: Array<MediaInput>;
     /**
-     * Breakdown is set only for follower_demographics.
+     * Deprecated: use media.
      */
-    breakdown?: Array<SocialApiAiCoreApiConnectorsBaseThreadsBreakdownResult>;
-    value?: number;
-    values?: Array<SocialApiAiCoreApiConnectorsBaseThreadsTimeSeriesPoint>;
-};
-
-export type SocialApiAiCoreApiConnectorsBaseThreadsPublicProfile = {
-    biography?: string;
-    follower_count?: number;
-    is_verified?: boolean;
-    likes_count?: number;
-    name?: string;
-    profile_picture_url?: string;
-    quotes_count?: number;
-    reposts_count?: number;
-    username?: string;
-    views_count?: number;
-};
-
-export type SocialApiAiCoreApiConnectorsBaseThreadsTimeSeriesPoint = {
-    end_time?: string;
-    value?: number;
-};
-
-export type SocialApiAiCoreApiConnectorsWhatsappPhoneNumberStatusResponse = {
+    media_ids?: Array<string>;
     /**
-     * True for a number that stays on the WhatsApp Business app alongside the API (coexistence). It is already verified and registered: request-code, verify-code and register are refused with 409 whatsapp.business_app_number.
+     * The kind of post, for example feed, reel, stories or carousel. Other values can appear.
      */
-    business_app?: boolean;
-    /**
-     * True when the number can send and receive messages.
-     */
-    registered?: boolean;
-    /**
-     * True once the number has proven ownership, either with verify-code or in the WhatsApp Business app.
-     */
-    verified?: boolean;
-};
-
-export type SocialApiAiCoreApiServiceAccountPage = {
-    about?: string;
-    category?: string;
-    cover_photo_url?: string;
-    enriched_at?: string;
-    followers_count?: number;
-    id?: string;
-    is_active?: boolean;
-    is_default?: boolean;
-    link?: string;
-    name?: string;
-    platform_page_id?: string;
-    profile_picture_url?: string;
-    username?: string;
-    verification_status?: string;
-};
-
-export type SocialApiAiCoreApiServiceAction = {
-    /**
-     * DM to the comment's author. Free
-     */
-    private_reply?: SocialApiAiCoreApiServiceTextAction;
-    /**
-     * Public reply to the comment. Costs 1 credit
-     */
-    reply_comment?: SocialApiAiCoreApiServiceTextAction;
-    /**
-     * DM in the conversation. Costs 1 credit
-     */
-    send_dm?: SocialApiAiCoreApiServiceTextAction;
-    type?: 'hide_comment' | 'reply_comment' | 'private_reply' | 'send_dm';
-};
-
-export type SocialApiAiCoreApiServiceActionOutcome = {
-    action?: string;
-    /**
-     * The error code the same API call would have returned
-     */
-    error_code?: string;
-    status?: 'sent' | 'failed';
-};
-
-export type SocialApiAiCoreApiServiceAnalyticsOverview = {
-    /**
-     * AccountsExcluded is how many accounts in scope were left out because
-     * they lack the analytics.read permission.
-     */
-    accounts_excluded?: number;
-    /**
-     * Activity is the daily count of replies, DMs and moderation SocialAPI
-     * performed for the accounts in scope, the same series shape as the
-     * history routes.
-     */
-    activity?: Array<SocialApiAiCoreApiServiceMetricSeries>;
-    best_times?: SocialApiAiCoreApiServiceOverviewBestTimes;
-    by_day?: Array<SocialApiAiCoreApiServiceOverviewDay>;
-    by_format?: Array<SocialApiAiCoreApiServiceOverviewFormat>;
-    by_platform?: Array<SocialApiAiCoreApiServiceOverviewPlatform>;
-    from?: string;
-    /**
-     * MetricsSyncedAt is the most recent counter refresh among the posts in
-     * range. Absent when none has been refreshed yet.
-     */
+    media_type?: string;
+    metadata?: {
+        [key: string]: unknown;
+    };
+    metrics?: PostTargetMetricsResponse;
     metrics_synced_at?: string;
-    /**
-     * Previous is the same figures for the window of equal length that ends
-     * the day before from.
-     */
-    previous?: SocialApiAiCoreApiServiceOverviewTotals;
-    to?: string;
-    top_posts?: Array<SocialApiAiCoreApiServiceOverviewTopPost>;
-    totals?: SocialApiAiCoreApiServiceOverviewTotals;
-    tz?: string;
-};
-
-export type SocialApiAiCoreApiServiceAnalyticsPoint = {
-    /**
-     * Change is the difference from the previous point in this series. Present
-     * on gauges only, and absent on the first point of a range, which has no
-     * predecessor to diff against.
-     */
-    change?: number;
-    /**
-     * Day is YYYY-MM-DD, cut on the boundary named by the series' day_tz.
-     */
-    day?: string;
-    /**
-     * DaysSpanned is how many days Change covers. It is 1 in the normal case
-     * and larger when a day is missing from the series. A chart must divide by
-     * it and style the segment as interpolated: otherwise a gap draws a spike
-     * that never happened.
-     */
-    days_spanned?: number;
-    /**
-     * SubjectsCounted is how many Subjects contributed to this point's summed
-     * value. Always at least 1. Read it before charting: a day on which not
-     * every Subject reported sums lower, and without the count that reads as a
-     * decline instead of a gap.
-     */
-    subjects_counted?: number;
-    /**
-     * Value is the figure for that day, verbatim from the platform for a
-     * reported point.
-     */
-    value?: number;
-};
-
-export type SocialApiAiCoreApiServiceAnalyticsResponse = {
-    /**
-     * From and To are the resolved range, echoed so a caller that named neither
-     * knows what it got.
-     */
-    from?: string;
-    series?: Array<SocialApiAiCoreApiServiceMetricSeries>;
-    to?: string;
-};
-
-export type SocialApiAiCoreApiServiceAutomation = {
-    account_id?: string;
-    created_at?: string;
-    /**
-     * Actions that failed
-     */
-    failed_count?: number;
-    /**
-     * Events the Automation ran against
-     */
-    fired_count?: number;
-    id?: string;
-    name?: string;
-    /**
-     * Reach each person at most once. A run in which every action failed does not count
-     */
-    once_per_person?: boolean;
-    /**
-     * Up to 100 platform post ids, each 1 to 100 characters, a comment must be on. Omitted means every post. Comment trigger only
-     */
-    post_ids?: Array<string>;
-    /**
-     * Actions carried out successfully
-     */
-    sent_count?: number;
-    status?: 'active' | 'paused';
-    /**
-     * Up to 10 Steps forming a graph. One must have the key "start"
-     */
-    steps?: Array<SocialApiAiCoreApiServiceStep>;
-    /**
-     * The kind of inbound event that fires the Automation
-     */
-    trigger?: 'comment' | 'dm';
-    updated_at?: string;
-};
-
-export type SocialApiAiCoreApiServiceCarouselConstraints = {
-    /**
-     * can carousel include video items
-     */
-    allow_video?: boolean;
-    /**
-     * only image items allowed
-     */
-    images_only?: boolean;
-    max_items?: number;
-    min_items?: number;
-    /**
-     * only photo items (no video, no gif - stricter than ImagesOnly)
-     */
-    photos_only?: boolean;
-    supported?: boolean;
-};
-
-export type SocialApiAiCoreApiServiceConversationRow = {
-    account_id?: string;
-    created_at?: string;
-    id?: string;
-    last_message?: string;
-    last_message_at?: string;
-    page_id?: string;
-    participant_id?: string;
-    participant_name?: string;
-    participant_picture?: string;
-    platform?: string;
-    platform_id?: string;
-    status?: string;
-    unread_count?: number;
-    updated_at?: string;
-    user_id?: string;
-};
-
-export type SocialApiAiCoreApiServiceCreateAutomationParams = {
-    account_id?: string;
-    /**
-     * Builds the three-step Follow gate. Instagram, comment trigger only. Send instead of steps
-     */
-    follow_gate?: SocialApiAiCoreApiServiceFollowGate;
-    /**
-     * 1 to 100 characters
-     */
-    name?: string;
-    /**
-     * Reach each person at most once. A run in which every action failed does not count. Defaults to false
-     */
-    once_per_person?: boolean;
-    /**
-     * Up to 100 platform post ids, each 1 to 100 characters, a comment must be on. Omitted means every post. Comment trigger only
-     */
-    post_ids?: Array<string>;
-    steps?: Array<SocialApiAiCoreApiServiceStep>;
-    trigger?: 'comment' | 'dm';
-};
-
-export type SocialApiAiCoreApiServiceCreateQueueParams = {
-    /**
-     * Set false to create the Queue paused. Defaults to true.
-     */
-    active?: boolean;
-    /**
-     * ID of the Brand to create the Queue on. Required.
-     */
-    brand_id?: string;
-    /**
-     * Set true to make this the Brand's default Queue. The Brand's first Queue is always the default.
-     */
-    is_default?: boolean;
-    /**
-     * Queue name. Required.
-     */
-    name?: string;
-    /**
-     * Weekly posting times, 1 to 100. Required.
-     */
-    slots?: Array<SocialApiAiCoreApiServiceSlot>;
-    /**
-     * IANA timezone the slots are expressed in. Required.
-     */
-    timezone?: string;
-};
-
-export type SocialApiAiCoreApiServiceDeliveryAttempt = {
-    attempt_number?: number;
-    created_at?: string;
-    duration_ms?: number;
-    error_message?: string;
-    response_body?: string;
-    status_code?: number;
-};
-
-export type SocialApiAiCoreApiServiceDeliveryListItem = {
-    attempt_count?: number;
-    created_at?: string;
-    description?: string;
-    event_type?: string;
-    id?: string;
-    response_duration_ms?: number;
-    response_status_code?: number;
-    status?: string;
-};
-
-export type SocialApiAiCoreApiServiceDeliveryStatBucket = {
-    delivered?: number;
-    failed?: number;
-};
-
-export type SocialApiAiCoreApiServiceFilter = {
-    /**
-     * Required when type is keyword
-     */
-    keyword?: SocialApiAiCoreApiServiceKeywordFilter;
-    /**
-     * follows_account is available on Instagram only and not on the start step
-     */
-    type?: 'keyword' | 'follows_account';
-};
-
-export type SocialApiAiCoreApiServiceFiring = {
-    created_at?: string;
-    /**
-     * Platform id of the comment or message
-     */
-    event_id?: string;
-    id?: string;
-    outcomes?: Array<SocialApiAiCoreApiServiceActionOutcome>;
-    /**
-     * Platform id of the person who commented or messaged
-     */
-    person_id?: string;
-    /**
-     * Key of the step whose actions ran, or the step the event entered at when no step's filters passed
-     */
-    step_key?: string;
-};
-
-export type SocialApiAiCoreApiServiceFollowGate = {
-    /**
-     * Up to 20 characters
-     */
-    button_title?: string;
-    /**
-     * Comment keywords that open the gate
-     */
-    keywords?: Array<string>;
-    /**
-     * Sent once the person follows
-     */
-    link_texts?: Array<string>;
-    /**
-     * Sent when the person does not follow the account yet
-     */
-    not_following_texts?: Array<string>;
-    /**
-     * Private reply sent to the commenter
-     */
-    opening_texts?: Array<string>;
-    /**
-     * Up to 20 characters
-     */
-    retry_button_title?: string;
-};
-
-export type SocialApiAiCoreApiServiceInboxPostRow = {
-    account_id?: string;
-    comment_count?: number;
-    content?: string;
-    created_at?: string;
-    id?: string;
-    like_count?: number;
     page_id?: string;
     permalink?: string;
-    platform?: string;
-    platform_id?: string;
+    platform: Platform;
+    /**
+     * The platform-specific options set on this target, as sent in platform_data when the post was created or last updated. Chain continuation posts are returned in segments, not here.
+     */
+    platform_data?: {
+        [key: string]: unknown;
+    };
+    /**
+     * Every image and video Instagram or Facebook reports on the published post: carousel slides or album photos in order, with a cover image for each video. The links are temporary: download the files rather than keeping the links, and call POST /v1/accounts/{account_id}/sync to get fresh ones. Absent on Facebook link and share posts and on other platforms.
+     */
+    platform_media?: Array<PlatformMediaItem>;
+    platform_post_id?: string;
     published_at?: string;
-    thumbnail?: string;
-    updated_at?: string;
-    user_id?: string;
+    scheduled_at?: string;
+    /**
+     * Publish settings Instagram or Facebook reports for the published post, such as the AI info label, alt text, tagged place or audience targeting. Absent when the platform reported none.
+     */
+    settings?: PostSettings;
+    status: PostTargetStatus;
+    text?: string;
+    title?: string;
+    visibility?: string;
 };
 
-export type SocialApiAiCoreApiServiceKeywordFilter = {
-    /**
-     * 1 to 50, each 1 to 100 characters
-     */
-    keywords?: Array<string>;
-    /**
-     * contains: a keyword appears as a whole word or phrase. exact: the whole text equals a keyword
-     */
-    match?: 'contains' | 'exact';
+export type PostTargetStatus = 'pending' | 'publishing' | 'published' | 'failed' | 'cancelled' | 'unpublished';
+
+export type PostVisibility = 'public' | 'private' | 'connections_only' | 'logged_in';
+
+export type PostsListResponse = {
+    data: Array<PostResponse>;
+    pagination: PaginationInfo;
 };
 
-export type SocialApiAiCoreApiServiceMediaConstraints = {
+export type PostsMetricsItem = {
     /**
-     * 0 = not supported
+     * Set when this post could not be read: not found, or a platform post ID that matches several posts.
      */
-    max_image_size_bytes?: number;
+    error?: PostTargetErrorResponse;
     /**
-     * 0 = no max
+     * The post ID as given in post_ids.
      */
-    max_video_duration_sec?: number;
+    post_id: string;
     /**
-     * 0 = no limit
+     * Same targets as GET /v1/posts/{post_id}/metrics. Empty when error is set.
      */
-    max_video_fps?: number;
-    /**
-     * 0 = not supported
-     */
-    max_video_size_bytes?: number;
-    /**
-     * 0 = no min
-     */
-    min_video_duration_sec?: number;
-    /**
-     * MIME types, e.g. "image/jpeg"
-     */
-    supported_image_types?: Array<string>;
-    /**
-     * MIME types, e.g. "video/mp4"
-     */
-    supported_video_types?: Array<string>;
+    targets: Array<PostTargetResponse>;
 };
 
-export type SocialApiAiCoreApiServiceMessageReply = {
-    platform_id?: string;
+export type PostsMetricsResponse = {
+    /**
+     * One item per distinct post ID, in request order.
+     */
+    data: Array<PostsMetricsItem>;
 };
 
-export type SocialApiAiCoreApiServiceMessageRow = {
-    attachment_type?: string;
-    attachment_url?: string;
-    conversation_id?: string;
-    created_at?: string;
-    direction?: string;
-    id?: string;
-    platform_id?: string;
+export type PrivateReplyAttachmentInput = {
     /**
-     * ReplyTo is the message this one replies to, or null when it is not a reply.
+     * Source is the attachment reference; its meaning is given by source_type.
      */
-    reply_to?: SocialApiAiCoreApiServiceMessageReply;
-    sender_id?: string;
-    sender_name?: string;
-    status?: string;
-    status_updated_at?: string;
+    source: string;
+    /**
+     * SourceType selects how Source is interpreted:
+     * - "url": Source is a publicly reachable media URL the platform fetches directly.
+     * - "media_id": Source is a file id in your SocialAPI media library
+     * (GET /v1/media).
+     * - "platform_attachment_id": Source is an id of media already uploaded to the
+     * target platform (for example a Meta attachment_id).
+     */
+    source_type: MediaSourceType;
+    /**
+     * Type is the media kind. Optional for url and media_id sources (inferred from
+     * the file), required for platform_attachment_id.
+     */
+    type?: MediaFileType;
+};
+
+export type PrivateReplyRequest = {
+    account_id: string;
+    /**
+     * Attachment sends one image, video, audio or file as the private reply,
+     * instead of text. Leave text and buttons empty when you set it.
+     */
+    attachment?: PrivateReplyAttachmentInput;
+    /**
+     * Buttons renders a button template (1-3 buttons); uses text as the bubble body.
+     */
+    buttons?: Array<MessageButton>;
     text?: string;
 };
 
-export type SocialApiAiCoreApiServiceMetricSeries = {
-    /**
-     * DayTZ names the boundary these days were cut on, or mixed when a rollup
-     * combines platforms that cut differently. A Brand rollup genuinely mixes
-     * boundaries: up to eight hours of activity sits on the wrong side of a day
-     * edge for Meta platforms next to a UTC-cut platform in the same sum. The
-     * error is bounded and does not compound, and this field is how a reader
-     * tells it from a real discrepancy.
-     */
-    day_tz?: string;
-    /**
-     * Kind is gauge (a level, diff it) or flow (a per-day count, sum it).
-     */
-    kind?: string;
-    /**
-     * Metric is the platform's own name for a platform Metric.
-     */
-    metric?: string;
-    /**
-     * Points are ordered oldest first.
-     */
-    points?: Array<SocialApiAiCoreApiServiceAnalyticsPoint>;
-    /**
-     * Source is reported, sampled, owned, or mixed when a rollup combines more
-     * than one.
-     */
-    source?: string;
-};
-
-export type SocialApiAiCoreApiServiceOverviewBestTimeCell = {
-    /**
-     * AvgEngagements is the mean engagements of the posts published in this
-     * hour. It describes your past posts, not when your audience is online.
-     */
-    avg_engagements?: number;
-    /**
-     * Hour is 0 to 23.
-     */
-    hour?: number;
-    posts?: number;
-    /**
-     * Weekday is 1 (Monday) to 7 (Sunday).
-     */
-    weekday?: number;
-};
-
-export type SocialApiAiCoreApiServiceOverviewBestTimes = {
-    cells?: Array<SocialApiAiCoreApiServiceOverviewBestTimeCell>;
-    posts_considered?: number;
-};
-
-export type SocialApiAiCoreApiServiceOverviewDay = {
-    day?: string;
-    engagements?: number;
-    posts?: number;
-};
-
-export type SocialApiAiCoreApiServiceOverviewFormat = {
-    engagements?: number;
-    /**
-     * MediaType is the platform's own media kind, lowercased (image, video,
-     * reel, carousel_album, ...), or unknown when the platform did not say.
-     */
-    media_type?: string;
-    posts?: number;
-};
-
-export type SocialApiAiCoreApiServiceOverviewPlatform = {
-    comments?: number;
-    engagements?: number;
-    likes?: number;
-    platform?: string;
-    posts?: number;
-    saves?: number;
-    shares?: number;
-    views?: number;
-};
-
-export type SocialApiAiCoreApiServiceOverviewPostMetrics = {
-    comments?: number;
-    engagements?: number;
-    likes?: number;
-    saves?: number;
-    shares?: number;
-    views?: number;
-};
-
-export type SocialApiAiCoreApiServiceOverviewTopPost = {
-    account_id?: string;
-    media_type?: string;
-    metrics?: SocialApiAiCoreApiServiceOverviewPostMetrics;
-    permalink?: string;
-    platform?: string;
-    post_id?: string;
-    published_at?: string;
-    text?: string;
-    thumbnail?: string;
-};
-
-export type SocialApiAiCoreApiServiceOverviewTotals = {
-    comments?: number;
-    engagements?: number;
-    likes?: number;
-    posts?: number;
-    saves?: number;
-    shares?: number;
-    views?: number;
-};
-
-export type SocialApiAiCoreApiServicePlatformConstraints = {
-    carousel?: SocialApiAiCoreApiServiceCarouselConstraints;
-    media?: SocialApiAiCoreApiServiceMediaConstraints;
-    scheduling?: SocialApiAiCoreApiServiceSchedulingConstraints;
-    /**
-     * SupportsMixedMedia reports whether a platform_attachment_id item may be
-     * combined with other media (url/media_id) in the same post. When false
-     * (instagram, threads) a platform_attachment_id must be the only media item.
-     * Meaningful only when SupportsPlatformAttachmentID is true.
-     */
-    supports_mixed_media?: boolean;
-    supports_platform_attachment_id?: boolean;
-    text?: SocialApiAiCoreApiServiceTextConstraints;
-};
-
-export type SocialApiAiCoreApiServiceQueue = {
+export type Queue = {
     /**
      * False when the Queue is paused: no new post can join it.
      */
-    active?: boolean;
+    active: boolean;
     /**
      * ID of the Brand the Queue belongs to.
      */
-    brand_id?: string;
+    brand_id: string;
     /**
      * When the Queue was created.
      */
-    created_at?: string;
+    created_at: string;
     /**
      * Queue ID.
      */
-    id?: string;
+    id: string;
     /**
      * True for the Brand's default Queue, the one queue_id "default" refers to.
      */
-    is_default?: boolean;
+    is_default: boolean;
     /**
      * Queue name.
      */
-    name?: string;
+    name: string;
     /**
      * Weekly posting times, sorted by day (Monday first) then time.
      */
-    slots?: Array<SocialApiAiCoreApiServiceSlot>;
+    slots: Array<Slot> | null;
     /**
      * IANA timezone the slots are expressed in.
      */
-    timezone?: string;
+    timezone: string;
     /**
      * When the Queue was last changed.
      */
-    updated_at?: string;
+    updated_at: string;
 };
 
-export type SocialApiAiCoreApiServiceQueuedTime = {
+export type QueueListResponse = {
+    count: number;
+    data: Array<Queue>;
+};
+
+export type QueuePreviewResponse = {
+    data: Array<QueuedTime> | null;
+};
+
+export type QueuedTime = {
     /**
      * Lowercase English weekday name.
      */
-    day?: string;
+    day: string;
     /**
      * The slot's time of day as HH:MM.
      */
-    slot_time?: string;
+    slot_time: string;
     /**
      * The time as RFC 3339 with the Queue's local offset.
      */
-    time?: string;
+    time: string;
 };
 
-export type SocialApiAiCoreApiServiceSchedulingConstraints = {
+export type ReactToMessageRequest = {
+    account_id: string;
+    reaction: string;
+};
+
+export type RedirectUriListResponse = {
+    count: number;
+    data: Array<RedirectUriResponse>;
+};
+
+export type RedirectUriResponse = {
+    created_at: string;
+    id: string;
+    label?: string;
+    uri: string;
+};
+
+export type ReplyReviewRequest = {
+    account_id: string;
+    text: string;
+};
+
+export type ReplyToCommentSuccessResponse = {
+    comment_id: string;
+    success: boolean;
+};
+
+export type ReplyToReviewResponse = {
+    reply_id: string;
+    state?: string;
+    success: boolean;
+};
+
+export type ReviewAccount = {
+    account_id: string;
+    average_rating: number | null;
+    last_review_at: string | null;
+    name: string;
+    platform: Platform;
+    status: ReviewAccountStatus;
+    total_count: number | null;
+};
+
+export type ReviewAccountStatus = 'ok' | 'reconnection_required' | 'error';
+
+export type ReviewAccountsResponse = {
+    data: Array<ReviewAccount>;
+};
+
+export type ReviewItem = {
+    author: Author;
+    created_at: string;
+    id: string;
+    media?: Array<ReviewMedia>;
+    rating: number;
+    reply: ReviewReplyDetail | null;
+    /**
+     * ReplyURL is the platform-hosted page for replying to this review, when
+     * the platform exposes one (Google). Empty elsewhere.
+     */
+    reply_url?: string;
+    text: string;
+    /**
+     * Title is the review's headline, on platforms whose reviews have one (App Store Connect).
+     */
+    title?: string;
+    updated_at: string;
+};
+
+export type ReviewMedia = {
+    thumbnail_label?: string;
+    thumbnail_url: string;
+    video_url?: string;
+};
+
+export type ReviewReplyDetail = {
+    /**
+     * PolicyViolation explains a REJECTED reply, passed through verbatim from
+     * the platform. Absent otherwise.
+     */
+    policy_violation?: {
+        [key: string]: unknown;
+    };
+    /**
+     * State is the moderation outcome: PENDING, APPROVED, or REJECTED.
+     * Omitted on platforms that report no moderation state (App Store Connect).
+     */
+    state?: string;
+    text: string;
+    updated_at: string;
+};
+
+export type ReviewSummaryResponse = {
+    average_rating: number;
+    total_count: number;
+};
+
+export type ReviewsListResponse = {
+    data: Array<ReviewItem>;
+    pagination: InboxPagination;
+    summary: ReviewSummaryResponse;
+};
+
+export type SchedulingConstraints = {
     /**
      * Mode reflects the platform's native scheduling support: "native" when the
      * platform can schedule the post itself, "server_side" when the platform has
@@ -4168,29 +3192,176 @@ export type SocialApiAiCoreApiServiceSchedulingConstraints = {
     /**
      * whether scheduled_at is accepted for this platform
      */
-    supported?: boolean;
+    supported: boolean;
 };
 
-export type SocialApiAiCoreApiServiceSlot = {
+export type SegmentRequest = {
+    /**
+     * Media is the ordered, agnostic media list. Each item is a url, a media_id,
+     * or a platform_attachment_id; order and mixing are preserved. Supersedes media_ids.
+     * Currently ignored: X drops segment media, and Threads chaining is temporarily unavailable.
+     */
+    media?: Array<MediaInput>;
+    /**
+     * MediaIDs attach media to this segment.
+     *
+     * Deprecated: use Media with source_type "media_id". Ignored when media is set.
+     */
+    media_ids?: Array<string>;
+    /**
+     * Text is the post body for this segment. Required.
+     */
+    text: string;
+};
+
+export type SelectProfileRequest = {
+    /**
+     * PageIDs selects the Facebook Pages to assign to the brand (Facebook pending connections only).
+     */
+    page_ids?: Array<string>;
+    /**
+     * PlatformAccountID selects the Google Business Profile to connect (Google
+     * pending connections only).
+     */
+    platform_account_id?: string;
+};
+
+export type SendFeedbackRequest = {
+    /**
+     * Message is the feedback content.
+     */
+    message: string;
+    /**
+     * Type is one of: bug, feature_request, general.
+     */
+    type: string;
+};
+
+export type SendMessageRequest = {
+    account_id: string;
+    /**
+     * AttachmentURL is a single-attachment shorthand. Ignored when attachments is
+     * non-empty; its type is inferred from the URL extension.
+     *
+     * Deprecated: use Attachments instead, which supersedes it and supports one or
+     * many items.
+     */
+    attachment_url?: string;
+    /**
+     * Attachments sends one or more media items, each as its own message bubble.
+     */
+    attachments?: Array<DmAttachmentInput>;
+    /**
+     * Buttons renders a button template (1-3 buttons); uses text as the bubble body.
+     * On WhatsApp send up to 3 postback buttons with unique payloads, or a single
+     * url button that opens its url.
+     */
+    buttons?: Array<MessageButton>;
+    /**
+     * Cards renders a generic/carousel template (up to 10 cards).
+     */
+    cards?: Array<MessageCard>;
+    /**
+     * ListButton is the label on the button that opens the list. Required with
+     * list_sections, max 20 characters.
+     */
+    list_button?: string;
+    /**
+     * ListSections renders a tappable list behind a single button, for menus wider
+     * than the 3 buttons a reply-button message allows (up to 10 rows in total,
+     * across up to 10 sections). WhatsApp only; requires text and list_button.
+     */
+    list_sections?: Array<MessageListSection>;
+    /**
+     * Optional. Only `HUMAN_AGENT` is accepted, on Instagram accounts connected with Instagram Login, for replies a member of your team types between 24 hours and 7 days after the person's last message. Workflows, automations, bots and AI agents acting on their own send without it, so they reply within 24 hours of the person's last message. Ask support to enable it for your account. Inside 24 hours the message is sent without the tag.
+     */
+    message_tag?: string;
+    /**
+     * QuickReplies renders up to 13 tappable chips above the keyboard; requires text.
+     */
+    quick_replies?: Array<MessageQuickReply>;
+    /**
+     * ReplyToMessageID makes the first sent bubble a reply to a specific prior
+     * message (Meta reply_to.mid). Instagram/Facebook only.
+     */
+    reply_to_message_id?: string;
+    text?: string;
+};
+
+export type SendMessageResponse = {
+    /**
+     * MessageID is the first sent message's ID; for a multi-attachment send it is
+     * only the first of several IDs.
+     *
+     * Deprecated: use MessageIDs instead.
+     */
+    message_id: string;
+    /**
+     * MessageIDs holds every sent message's ID, in send order.
+     */
+    message_ids: Array<string>;
+    success: boolean;
+};
+
+export type SenderAction = 'typing_on' | 'typing_off' | 'mark_seen';
+
+export type SenderActionRequest = {
+    /**
+     * Connected account ID that owns the conversation.
+     */
+    account_id: string;
+    /**
+     * What to show the other participant: typing_on, typing_off, or mark_seen.
+     */
+    action: SenderAction;
+};
+
+export type Slot = {
     /**
      * Lowercase English weekday name.
      */
-    day?: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
+    day: Weekday;
     /**
      * Time of day as HH:MM, 24-hour, in the Queue's timezone.
      */
-    time?: string;
+    time: string;
 };
 
-export type SocialApiAiCoreApiServiceStep = {
+export type StaggerRequest = {
+    /**
+     * MaxSeconds is the longest delay between two consecutive targets. Must be at least min_seconds and at most 86400 (24 hours).
+     */
+    max_seconds?: number;
+    /**
+     * MinSeconds is the shortest delay between two consecutive targets. Must be 0 or more.
+     */
+    min_seconds?: number;
+};
+
+export type StartMigrationRequest = {
+    /**
+     * Version of the authorisation text you accepted, as returned in `authorisation.version`.
+     */
+    authorisation_version: string;
+    /**
+     * API key from your account with that provider. It needs read access to profiles and accounts.
+     */
+    key: string;
+    /**
+     * Identifier of the provider you are moving from.
+     */
+    provider: string;
+};
+
+export type Step = {
     /**
      * At most one of each type
      */
-    actions?: Array<SocialApiAiCoreApiServiceAction>;
+    actions: Array<Action>;
     /**
      * Up to 3, shown under the private_reply or send_dm message. With buttons, each of that message's texts is at most 640 characters
      */
-    buttons?: Array<SocialApiAiCoreApiServiceStepButton>;
+    buttons?: Array<StepButton>;
     /**
      * Key of the Step to run when this Step's filters fail. Not allowed on start
      */
@@ -4198,14 +3369,14 @@ export type SocialApiAiCoreApiServiceStep = {
     /**
      * Up to 10. All must pass. None means every event passes
      */
-    filters?: Array<SocialApiAiCoreApiServiceFilter>;
+    filters?: Array<Filter>;
     /**
      * Unique within the Automation. The entry step is "start"
      */
-    key?: string;
+    key: string;
 };
 
-export type SocialApiAiCoreApiServiceStepButton = {
+export type StepButton = {
     /**
      * Key of the Step to run when this button is tapped. Required when type is postback
      */
@@ -4213,45 +3384,261 @@ export type SocialApiAiCoreApiServiceStepButton = {
     /**
      * Up to 20 characters
      */
-    title?: string;
-    type?: 'url' | 'postback';
+    title: string;
+    type: StepButtonType;
     /**
      * An http or https URL. Required when type is url
      */
     url?: string;
 };
 
-export type SocialApiAiCoreApiServiceTextAction = {
+export type StepButtonType = 'url' | 'postback';
+
+export type StorageUsageResponse = {
+    count: number;
+    limit_bytes: number;
+    used_bytes: number;
+};
+
+export type Story = {
+    /**
+     * when media_url stops working; omitted when it cannot be determined
+     */
+    expires_at?: string;
+    /**
+     * platform-native story id
+     */
+    id: string;
+    /**
+     * [platform: facebook] photo or video
+     */
+    media_type?: string;
+    /**
+     * downloadable media link
+     */
+    media_url: string;
+    /**
+     * [platform: facebook] story permalink
+     */
+    permalink?: string;
+};
+
+export type SuccessResponse = {
+    success: boolean;
+};
+
+export type SyncState = 'idle' | 'syncing' | 'failed' | '';
+
+export type TargetDeleteOutcome = 'deleted' | 'not_supported' | 'failed';
+
+export type TargetDeleteOutcomeResponse = {
+    account_id?: string;
+    message?: string;
+    outcome: TargetDeleteOutcome;
+    platform: Platform;
+};
+
+export type TargetRequest = {
+    /**
+     * AccountID is the connected account to publish to. Required.
+     */
+    account_id: string;
+    /**
+     * BoardID targets a specific board within a Pinterest account. Pinterest
+     * targets use board_id; page_id is also accepted as an alias, but supplying
+     * both is an error.
+     */
+    board_id?: string;
+    /**
+     * FirstComment overrides the post-level first comment for this target.
+     */
+    first_comment?: string;
+    /**
+     * Media is the ordered, agnostic media list. Each item is a url, a media_id,
+     * or a platform_attachment_id; order and mixing are preserved. Supersedes media_ids.
+     */
+    media?: Array<MediaInput>;
+    /**
+     * MediaIDs overrides the post-level media for this target.
+     *
+     * Deprecated: use Media with source_type "media_id". Ignored when media is set.
+     */
+    media_ids?: Array<string>;
+    /**
+     * PageID optionally targets a specific page within the account (e.g. Facebook Page).
+     */
+    page_id?: string;
+    /**
+     * PlatformData passes platform-specific fields (e.g. TikTok privacy settings, LinkedIn article metadata).
+     */
+    platform_data?: {
+        [key: string]: unknown;
+    };
+    /**
+     * ScheduledAt overrides the post-level schedule time for this target.
+     */
+    scheduled_at?: string;
+    /**
+     * Text overrides the post-level text for this target.
+     */
+    text?: string;
+    /**
+     * Title overrides the post-level title for this target.
+     */
+    title?: string;
+    /**
+     * Visibility overrides the post-level visibility for this target.
+     */
+    visibility?: PostVisibility;
+};
+
+export type TestDeliveryResponse = {
+    delivery_id: string;
+    response_body: string;
+    response_duration_ms: number;
+    response_status_code: number;
+    status: string;
+};
+
+export type TestWebhookRequest = {
+    event_type: string;
+    payload: {
+        [key: string]: unknown;
+    };
+};
+
+export type TextAction = {
     /**
      * 1 to 10 variants, each 1 to 1000 characters, or at most 640 for a private_reply or send_dm whose step has buttons; one is picked at random each time
      */
-    texts?: Array<string>;
+    texts: Array<string>;
 };
 
-export type SocialApiAiCoreApiServiceTextConstraints = {
+export type TextConstraints = {
     /**
      * "chars" (default), "utf16", "bytes"
      */
-    counting_mode?: string;
+    counting_mode: string;
     /**
      * 0 = no limit
      */
-    max_hashtags?: number;
+    max_hashtags: number;
     /**
      * maximum allowed length (in units defined by CountingMode)
      */
-    max_length?: number;
+    max_length: number;
     /**
      * 0 = no limit
      */
-    max_mentions?: number;
+    max_mentions: number;
     /**
      * platform-specific stricter cap for photo-mode captions (e.g. TikTok); 0 = use MaxLength
      */
     photo_max_length?: number;
 };
 
-export type SocialApiAiCoreApiServiceUpdateAutomationParams = {
+export type ThreadsBreakdownResult = {
+    /**
+     * Dimension is the breakdown value, such as a country code, a city, an age range or a gender.
+     */
+    dimension: string;
+    value: number;
+};
+
+export type ThreadsInsights = {
+    metrics: {
+        [key: string]: ThreadsMetricValue;
+    } | null;
+};
+
+export type ThreadsInsightsResponse = {
+    data: ThreadsInsights;
+};
+
+export type ThreadsMetricValue = {
+    /**
+     * Breakdown is set only for follower_demographics.
+     */
+    breakdown?: Array<ThreadsBreakdownResult>;
+    value?: number;
+    values?: Array<ThreadsTimeSeriesPoint>;
+};
+
+export type ThreadsProfileResponse = {
+    data: ThreadsPublicProfile;
+};
+
+export type ThreadsPublicProfile = {
+    biography: string;
+    follower_count: number;
+    is_verified: boolean;
+    likes_count: number;
+    name: string;
+    profile_picture_url: string;
+    quotes_count: number;
+    reposts_count: number;
+    username: string;
+    views_count: number;
+};
+
+export type ThreadsTimeSeriesPoint = {
+    end_time: string;
+    value: number;
+};
+
+export type TikTokAccountSummaryResponse = {
+    avatar_url: string;
+    bio_description: string;
+    display_name: string;
+    follower_count: number;
+    following_count: number;
+    is_verified: boolean;
+    likes_count: number;
+    profile_deep_link: string;
+    username: string;
+    video_count: number;
+};
+
+export type TwitterByokRequest = {
+    client_id: string;
+    client_secret: string;
+};
+
+export type TwitterByokItem = {
+    /**
+     * Brand these credentials apply to. null for the default credentials, which apply to every brand without its own entry.
+     */
+    brand_id: string | null;
+    client_id_hint: string;
+    created_at: string;
+    updated_at: string;
+};
+
+export type TwitterByokListResponse = {
+    count: number;
+    data: Array<TwitterByokItem>;
+};
+
+export type TwitterByokTestResponse = {
+    reason: string;
+    valid: boolean;
+};
+
+export type UnpublishRequest = {
+    /**
+     * AccountID optionally scopes the unpublish to a single platform target.
+     */
+    account_id?: string;
+};
+
+export type UpdateAccountPermissionsRequest = {
+    /**
+     * Permissions replaces the account's permissions and is required. Send null to give the account every permission, including ones added later. An empty list is rejected. Removing a permission immediately deletes the comments, messages, analytics and posts not published through SocialAPI that it covers; posts published through SocialAPI are kept. Valid values: posts.read, posts.write, comments.read, comments.write, messages.read, messages.write, reviews.read, reviews.write, analytics.read.
+     */
+    permissions: Array<string> | null;
+};
+
+export type UpdateAutomationParams = {
     /**
      * 1 to 100 characters
      */
@@ -4261,11 +3648,129 @@ export type SocialApiAiCoreApiServiceUpdateAutomationParams = {
      * Up to 100 platform post ids, each 1 to 100 characters, a comment must be on. An empty list means every post. Comment trigger only
      */
     post_ids?: Array<string>;
-    status?: 'active' | 'paused';
-    steps?: Array<SocialApiAiCoreApiServiceStep>;
+    status?: AutomationStatus;
+    steps?: Array<Step>;
 };
 
-export type SocialApiAiCoreApiServiceUpdateQueueParams = {
+export type UpdateBoardRequest = {
+    description?: string;
+    name?: string;
+    privacy?: PinterestBoardUpdatePrivacy;
+};
+
+export type UpdateBrandRequest = {
+    name: string;
+};
+
+export type UpdateConversationRequest = {
+    /**
+     * Status must be "active" or "archived".
+     */
+    status: ConversationStatus;
+};
+
+export type UpdateGoogleAttributesRequest = {
+    /**
+     * Attributes to write. Each one replaces that attribute's value; one sent
+     * with no value field is removed. Attributes not listed are left as they are.
+     */
+    attributes: Array<GbpAttribute>;
+};
+
+export type UpdateGoogleLocationResponse = {
+    data: GbpLocationDetails;
+    /**
+     * Validated is true when the request ran with validate_only, meaning Google
+     * accepted the change as valid and wrote nothing. Data is empty in that case.
+     */
+    validated?: boolean;
+};
+
+export type UpdateKeyRequest = {
+    /**
+     * BrandIDs restricts the key to specific brands. Empty means all brands.
+     */
+    brand_ids?: Array<string>;
+    name: string;
+    /**
+     * Scopes restricts the key to specific actions. Empty means full access.
+     */
+    scopes?: Array<string>;
+};
+
+export type UpdateKeyResponse = {
+    brand_ids: Array<string> | null;
+    id: string;
+    name: string;
+    scopes: Array<string> | null;
+};
+
+export type UpdatePageRequest = {
+    is_active?: boolean;
+    is_default?: boolean;
+};
+
+export type UpdatePostRequest = {
+    /**
+     * FirstComment replaces the auto-first-comment.
+     */
+    first_comment?: string;
+    /**
+     * Hidden archives the post from default list views when true.
+     */
+    hidden?: boolean;
+    /**
+     * Media is the ordered, agnostic media list. Each item is a url, a media_id,
+     * or a platform_attachment_id; order and mixing are preserved. Supersedes media_ids.
+     */
+    media?: Array<MediaInput>;
+    /**
+     * MediaIDs replaces the attached media files.
+     *
+     * Deprecated: use Media with source_type "media_id". Ignored when media is set.
+     */
+    media_ids?: Array<string>;
+    /**
+     * PlatformData passes platform-specific fields keyed by platform name (e.g. {"instagram": {"content_type": "feed"}}). Folded into each matching target; a target's own platform_data wins on conflicts.
+     */
+    platform_data?: {
+        [key: string]: unknown;
+    };
+    /**
+     * QueueID moves the post to another Queue, which gives it that Queue's earliest free time and frees its old one. Send null to take the post out of its Queue and keep its time. Send "default" for the Brand's default Queue.
+     */
+    queue_id?: string | null;
+    /**
+     * ScheduledAt changes the scheduled publication time (RFC3339).
+     */
+    scheduled_at?: string;
+    /**
+     * Segments are continuation posts that publish as a native thread on X. Threads chaining is temporarily unavailable.
+     */
+    segments?: Array<SegmentRequest>;
+    /**
+     * SkipValidation bypasses pre-publish validation. The post is scheduled/published as-is and may fail at the platform.
+     */
+    skip_validation?: boolean;
+    /**
+     * Targets replaces or updates per-platform target configuration.
+     */
+    targets?: Array<TargetRequest>;
+    /**
+     * Text replaces the post body. Only for draft/scheduled/failed posts.
+     */
+    text?: string;
+    /**
+     * Title replaces the post title.
+     */
+    title?: string;
+    /**
+     * Visibility changes who can see the post.
+     */
+    visibility?: PostVisibility;
+};
+
+export type UpdateQueueParams = {
     /**
      * False pauses the Queue, true resumes it.
      */
@@ -4285,28 +3790,639 @@ export type SocialApiAiCoreApiServiceUpdateQueueParams = {
     /**
      * Weekly posting times. Replaces the whole list when sent; omit to keep the current list.
      */
-    slots?: Array<SocialApiAiCoreApiServiceSlot>;
+    slots?: Array<Slot>;
     /**
      * New IANA timezone.
      */
     timezone?: string;
 };
 
-export type SocialApiAiCoreApiServiceWebhookEventInfo = {
+export type UpdateQueueResponse = {
+    /**
+     * False when the Queue is paused: no new post can join it.
+     */
+    active: boolean;
+    /**
+     * ID of the Brand the Queue belongs to.
+     */
+    brand_id: string;
+    /**
+     * When the Queue was created.
+     */
+    created_at: string;
+    /**
+     * Queue ID.
+     */
+    id: string;
+    /**
+     * True for the Brand's default Queue, the one queue_id "default" refers to.
+     */
+    is_default: boolean;
+    /**
+     * Queue name.
+     */
+    name: string;
+    /**
+     * Number of queued posts moved to the new times. Present only when the request sent reshuffle_existing: true.
+     */
+    reshuffled_count?: number;
+    /**
+     * Weekly posting times, sorted by day (Monday first) then time.
+     */
+    slots: Array<Slot> | null;
+    /**
+     * IANA timezone the slots are expressed in.
+     */
+    timezone: string;
+    /**
+     * When the Queue was last changed.
+     */
+    updated_at: string;
+};
+
+export type UpdateWebhookRequest = {
+    /**
+     * Events replaces the subscribed event types.
+     */
+    events?: Array<WebhookEventType>;
+    /**
+     * IsActive enables or disables delivery to this endpoint.
+     */
+    is_active?: boolean;
+    /**
+     * URL changes the webhook delivery endpoint. Must be HTTPS.
+     */
+    url?: string;
+};
+
+export type UpdateYouTubeVideoRequest = {
+    /**
+     * Public URL of a JPG or PNG image (50 MB max) to set as the video's custom thumbnail. The channel must be verified to use custom thumbnails, otherwise the request fails with 403 platform.youtube.custom_thumbnail_forbidden. If the thumbnail is refused, no other field in the request is applied.
+     */
+    cover_url?: string;
+    description?: string;
+    tags?: Array<string>;
+    title?: string;
+    /**
+     * public | unlisted | private
+     */
+    visibility?: string;
+};
+
+export type UsageLimitsResponse = {
+    [key: string]: number;
+};
+
+export type UsageResponse = {
+    brands_limit: number;
+    brands_used: number;
+    interactions_limit: number;
+    interactions_used: number;
+    page_allowance: number;
+    page_billing_exempt: boolean;
+    period_end: string;
+    period_start: string;
+    posts_limit: number;
+    posts_used: number;
+    profile_units_limit: number;
+    profile_units_used: number;
+};
+
+export type UserMeResponse = {
+    allowed_platforms: Array<string>;
+    avatar_url: string | null;
+    beta_tester: boolean;
+    /**
+     * BillingBlockReason is why access is paused, empty when it is not.
+     * "past_due": a payment failed, and settling it restores access.
+     * "ban": the account was suspended for a Terms of Service violation.
+     * Paying does not lift it, and every route except this one returns
+     * 403 auth.suspended. Contact support to appeal.
+     */
+    billing_block_reason?: string;
+    /**
+     * BillingBlocked is true when API access and webhook delivery are paused.
+     * Read BillingBlockReason to tell why and whether paying lifts it.
+     */
+    billing_blocked: boolean;
+    /**
+     * BillingBlockedAt is when the block began, or null when not blocked.
+     */
+    billing_blocked_at?: string;
+    /**
+     * BillingCurrency is the currency your subscription is billed in: "usd"
+     * or "eur". A subscription never changes currency, so plan changes are
+     * priced in it. Kept after a cancellation; "" when you never subscribed.
+     */
+    billing_currency: string;
+    email: string;
+    /**
+     * ExperimentEnrolled is true only when ExperimentVariant was assigned by
+     * the experiment itself. False means the "control" above is a fallback
+     * (not enrolled, flag off, or evaluation failed) and must not be recorded
+     * as the caller's arm.
+     */
+    experiment_enrolled: boolean;
+    /**
+     * ExperimentVariant is the caller's variant for staged feature rollouts:
+     * "control" or "treatment". "control" unless the caller is enrolled.
+     */
+    experiment_variant: string;
+    /**
+     * FacebookPageSelection, when true, makes a Facebook connection (and an
+     * Instagram connection through Facebook Login) end with
+     * status=selection_required so you choose the Pages. Read-only.
+     */
+    facebook_page_selection: boolean;
+    id: string;
+    /**
+     * JobRole is what best describes the user, as answered during
+     * onboarding. Null until answered.
+     */
+    job_role: string | null;
+    /**
+     * LockAccountsToBrand, when true, rejects connecting a social account that is
+     * already connected to another of your brands (409 account.already_linked)
+     * instead of moving it. Default false.
+     */
+    lock_accounts_to_brand: boolean;
+    onboarding: boolean;
+    plan: string;
+    /**
+     * Role is the caller's team role: "admin", "developer", or "" for the
+     * account Owner, who holds no Role. An API key and an OAuth token both
+     * read "".
+     */
+    role: string;
+    /**
+     * SignupMetadata holds open-ended answers recorded at signup, such as
+     * referral_source and search_query. An empty object until answered.
+     */
+    signup_metadata: {
+        [key: string]: unknown;
+    } | null;
+    use_case: string | null;
+};
+
+export type ValidatePostRequest = {
+    /**
+     * AccountIDs lists connected account IDs - their platforms are resolved automatically.
+     */
+    account_ids?: Array<string>;
+    /**
+     * Media is the ordered, agnostic media list. Each item is a url, a media_id,
+     * or a platform_attachment_id; order and mixing are preserved. Supersedes media_ids.
+     */
+    media?: Array<MediaInput>;
+    /**
+     * MediaIDs are media file IDs to validate (checks count and type limits).
+     *
+     * Deprecated: use Media with source_type "media_id". Ignored when media is set.
+     */
+    media_ids?: Array<string>;
+    /**
+     * PlatformData passes platform-specific fields keyed by platform name (e.g. {"instagram": {"content_type": "feed"}}). Folded into each matching target; a target's own platform_data wins on conflicts.
+     */
+    platform_data?: {
+        [key: string]: unknown;
+    };
+    /**
+     * Platforms lists platform names to validate against (e.g. ["instagram", "linkedin"]).
+     */
+    platforms?: Array<string>;
+    /**
+     * ScheduledAt validates the schedule time (must be in the future, within platform limits).
+     */
+    scheduled_at?: string;
+    /**
+     * Segments are continuation posts that publish as a native thread on X. Threads chaining is temporarily unavailable.
+     */
+    segments?: Array<SegmentRequest>;
+    /**
+     * Targets validates per-target overrides if provided.
+     */
+    targets?: Array<TargetRequest>;
+    /**
+     * Text is the post content to validate against platform constraints.
+     */
+    text?: string;
+};
+
+export type ValidatePostResponse = {
+    errors: Array<ValidationIssue> | null;
+    valid: boolean;
+    warnings: Array<ValidationIssue> | null;
+};
+
+export type ValidationIssue = {
+    field: string;
+    message: string;
+    /**
+     * The platform the issue applies to, such as instagram. Empty when the issue applies to the whole post.
+     */
+    platform: string;
+    /**
+     * SegmentIndex pins the issue to a continuation segment (0-based); nil for the main post.
+     */
+    segment_index?: number;
+    target?: string;
+};
+
+export type WebhookDetailResponse = {
+    created_at: string;
+    events: Array<string> | null;
+    id: string;
+    is_active: boolean;
+    secret_hint: string;
+    stats: WebhookStats;
+    url: string;
+};
+
+export type WebhookEndpointItem = {
+    created_at: string;
+    events: Array<string> | null;
+    id: string;
+    is_active: boolean;
+    url: string;
+};
+
+export type WebhookEventInfo = {
     /**
      * "posts" | "inbox" | "accounts"
      */
-    category?: string;
+    category: string;
+    description: string;
+    event: string;
+};
+
+export type WebhookEventType = 'post.scheduled' | 'post.published' | 'post.failed' | 'post.partial' | 'post.updated' | 'post.deleted' | 'post.unpublished' | 'post.retried' | 'comment.received' | 'dm.received' | 'dm.sent' | 'dm.referral' | 'dm.postback' | 'dm.deleted' | 'dm.status.sent' | 'dm.status.delivered' | 'dm.status.read' | 'dm.status.failed' | 'review.received' | 'review.updated' | 'mention.received' | 'account.connected' | 'account.disconnected' | 'account.updated' | 'page.removed';
+
+export type WebhookStats = {
+    last_24h: DeliveryStatBucket;
+    last_7d: DeliveryStatBucket;
+};
+
+export type WebhooksListResponse = {
+    count: number;
+    data: Array<WebhookEndpointItem>;
+};
+
+export type Weekday = 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
+
+export type WhatsAppBusinessProfile = {
+    /**
+     * About is the profile tagline shown in the chat header.
+     */
+    about?: string;
+    /**
+     * Address is the business address (max 256 characters).
+     */
+    address?: string;
+    /**
+     * Description is the business description.
+     */
     description?: string;
-    event?: string;
+    /**
+     * Email is the contact email.
+     */
+    email?: string;
+    /**
+     * MessagingProduct is always "whatsapp".
+     */
+    messaging_product?: string;
+    /**
+     * ProfilePictureURL is the public URL of the current profile picture (read-only; use profile_picture_handle to update).
+     */
+    profile_picture_url?: string;
+    /**
+     * The business category, for example RETAIL, RESTAURANT or PROF_SERVICES. Other values can appear.
+     */
+    vertical?: string;
+    /**
+     * Websites lists the business websites (max 2).
+     */
+    websites?: Array<string>;
 };
 
-export type SocialApiAiCoreApiServiceWebhookStats = {
-    last_24h?: SocialApiAiCoreApiServiceDeliveryStatBucket;
-    last_7d?: SocialApiAiCoreApiServiceDeliveryStatBucket;
+export type WhatsAppBusinessVertical = 'OTHER' | 'AUTO' | 'BEAUTY' | 'APPAREL' | 'EDU' | 'ENTERTAIN' | 'EVENT_PLAN' | 'FINANCE' | 'GROCERY' | 'GOVT' | 'HOTEL' | 'HEALTH' | 'NONPROFIT' | 'PROF_SERVICES' | 'RETAIL' | 'TRAVEL' | 'RESTAURANT' | 'ALCOHOL';
+
+export type WhatsAppContact = {
+    input: string;
+    wa_id: string;
 };
 
-export type GetAccountsData = {
+export type WhatsAppCreateTemplateRequest = {
+    /**
+     * Category is the message category. Marketing intent in a UTILITY template triggers automatic rejection.
+     */
+    category: WhatsAppTemplateCategory;
+    /**
+     * Components define the template body, optional header, optional footer, and optional buttons.
+     * At minimum one BODY component is required.
+     */
+    components: Array<WhatsAppTemplateComponentDef>;
+    /**
+     * Language is the BCP-47 language code (e.g. en_US, fr_FR, pt_BR).
+     */
+    language: string;
+    /**
+     * Name is the template identifier. Lowercase letters, digits, underscores only; no spaces.
+     */
+    name: string;
+};
+
+export type WhatsAppCursors = {
+    after?: string;
+    before?: string;
+};
+
+export type WhatsAppEditTemplateRequest = {
+    /**
+     * Components replaces the template's components.
+     */
+    components: Array<WhatsAppTemplateComponentDef>;
+};
+
+export type WhatsAppMessageRef = {
+    id: string;
+    message_status: string;
+};
+
+export type WhatsAppOnboarding = 'cloud_api' | 'business_app';
+
+export type WhatsAppRegisterRequest = {
+    /**
+     * PIN is the 6-digit two-step verification PIN to set on the phone number.
+     * This PIN is required for future re-registration and must be stored securely.
+     */
+    pin: string;
+};
+
+export type WhatsAppRequestCodeRequest = {
+    /**
+     * Language is the BCP-47 locale used for the verification message (e.g. en_US, fr_FR).
+     */
+    language: string;
+    /**
+     * Method is the verification channel. WhatsApp Business API requires SMS or VOICE.
+     */
+    method: WhatsAppVerificationMethod;
+};
+
+export type WhatsAppSendComponentType = 'header' | 'body' | 'button';
+
+export type WhatsAppSendTemplateRequest = {
+    /**
+     * Components carries header/body/button variable substitutions.
+     * Each component matches WhatsApp's template component schema (type + parameters).
+     */
+    components?: Array<WhatsAppTemplateComponent>;
+    /**
+     * Language is the BCP-47 code matching the template's approved language (e.g. en_US, fr_FR).
+     */
+    language: string;
+    /**
+     * TemplateName is the approved template name to send.
+     */
+    template_name: string;
+    /**
+     * To is the recipient phone number in E.164 format without the leading "+".
+     */
+    to: string;
+};
+
+export type WhatsAppSendTemplateResponse = {
+    /**
+     * Contacts maps the input phone number to its canonical WhatsApp ID.
+     */
+    contacts: Array<WhatsAppContact>;
+    /**
+     * MessageID is the SocialAPI message ID for the send, matching the "id"
+     * field on the dm.status.* webhooks for this message. Empty when WhatsApp
+     * returned no wamid or no canonical wa_id, since an ID built from half the
+     * pair would collide across conversations.
+     */
+    message_id?: string;
+    /**
+     * Messages contains one entry per delivered message, with its platform ID.
+     */
+    messages: Array<WhatsAppMessageRef>;
+    /**
+     * MessagingProduct is always "whatsapp".
+     */
+    messaging_product: string;
+};
+
+export type WhatsAppTemplateButtonDef = {
+    /**
+     * Example carries the button's sample value(s), forwarded verbatim: a dynamic
+     * URL example (["https://..."]) or a COPY_CODE sample ("250FF").
+     */
+    example?: {
+        [key: string]: unknown;
+    };
+    /**
+     * PhoneNumber is required when Type is PHONE_NUMBER. E.164 format with leading "+".
+     */
+    phone_number?: string;
+    /**
+     * Text is the button label. Not required for COPY_CODE (WhatsApp auto-labels it).
+     */
+    text?: string;
+    /**
+     * Type is the button kind.
+     */
+    type: WhatsAppTemplateButtonType;
+    /**
+     * URL is required when Type is URL. May contain a single {{1}} placeholder.
+     */
+    url?: string;
+};
+
+export type WhatsAppTemplateButtonType = 'QUICK_REPLY' | 'URL' | 'PHONE_NUMBER' | 'COPY_CODE';
+
+export type WhatsAppTemplateCategory = 'AUTHENTICATION' | 'MARKETING' | 'UTILITY';
+
+export type WhatsAppTemplateComponent = {
+    /**
+     * Parameters lists variable substitutions for this component.
+     */
+    parameters?: Array<WhatsAppTemplateParameter>;
+    /**
+     * Type is the component slot: header, body, or button.
+     */
+    type: WhatsAppSendComponentType;
+};
+
+export type WhatsAppTemplateComponentDef = {
+    /**
+     * Buttons populate a BUTTONS component (one of QUICK_REPLY, URL, PHONE_NUMBER, COPY_CODE).
+     */
+    buttons?: Array<WhatsAppTemplateButtonDef>;
+    /**
+     * Example carries WhatsApp's sample values, forwarded verbatim. For a TEXT
+     * BODY/HEADER it is {"body_text":[["v1","v2"]]} / {"header_text":["v1"]}; for
+     * a media HEADER it is {"header_handle":["<url-or-handle>"]}. Required for
+     * approval when the component contains variables.
+     */
+    example?: {
+        [key: string]: unknown;
+    };
+    /**
+     * Format is required for HEADER components.
+     */
+    format?: WhatsAppTemplateFormat;
+    /**
+     * Text is the literal text for HEADER (when Format is TEXT), BODY, or FOOTER components.
+     * May contain 1-indexed placeholders such as {{1}}, {{2}}.
+     */
+    text?: string;
+    /**
+     * Type is the component slot.
+     */
+    type: WhatsAppTemplateComponentType;
+};
+
+export type WhatsAppTemplateComponentType = 'HEADER' | 'BODY' | 'FOOTER' | 'BUTTONS';
+
+export type WhatsAppTemplateCreateResponse = {
+    /**
+     * Category WhatsApp gave the template, for example AUTHENTICATION, MARKETING or UTILITY. Other values can appear.
+     */
+    category: string;
+    id: string;
+    /**
+     * Review status of the new template, for example APPROVED, PENDING or REJECTED. Other values can appear.
+     */
+    status: string;
+};
+
+export type WhatsAppTemplateFormat = 'TEXT' | 'IMAGE' | 'VIDEO' | 'DOCUMENT';
+
+export type WhatsAppTemplateInfo = {
+    /**
+     * Template category, for example AUTHENTICATION, MARKETING or UTILITY. Other values can appear.
+     */
+    category: string;
+    /**
+     * Components is the raw WhatsApp template component definition.
+     */
+    components?: unknown;
+    id: string;
+    language: string;
+    name: string;
+    /**
+     * Review status of the template, for example APPROVED, PENDING, REJECTED, PAUSED or DISABLED. Other values can appear.
+     */
+    status: string;
+};
+
+export type WhatsAppTemplateListPaging = {
+    cursors: WhatsAppCursors;
+    next?: string;
+};
+
+export type WhatsAppTemplateListResponse = {
+    data: Array<WhatsAppTemplateInfo> | null;
+    paging?: WhatsAppTemplateListPaging;
+};
+
+export type WhatsAppTemplateParameter = {
+    /**
+     * Text is the substituted value when Type is "text".
+     */
+    text?: string;
+    /**
+     * Type is the parameter type. Only "text" is supported today.
+     */
+    type: WhatsAppTemplateParameterType;
+};
+
+export type WhatsAppTemplateParameterType = 'text';
+
+export type WhatsAppTemplateValidationIssue = {
+    /**
+     * ComponentIndex pins the issue to a components[] entry (0-based); nil for
+     * top-level fields such as name, category, or language.
+     */
+    component_index?: number;
+    /**
+     * Field is the offending request field (e.g. "name", "components.format",
+     * "components.buttons[0].url").
+     */
+    field: string;
+    /**
+     * Message is a developer-facing description of the problem.
+     */
+    message: string;
+};
+
+export type WhatsAppUpdateBusinessProfileRequest = {
+    /**
+     * About is the profile tagline (max 139 characters).
+     */
+    about?: string;
+    /**
+     * Address is the business address (max 256 characters).
+     */
+    address?: string;
+    /**
+     * Description is the business description.
+     */
+    description?: string;
+    /**
+     * Email is the contact email.
+     */
+    email?: string;
+    /**
+     * ProfilePictureHandle is a handle returned by the Resumable Upload API.
+     * Use this to change the profile picture; the picture URL is read-only.
+     */
+    profile_picture_handle?: string;
+    /**
+     * Vertical is the business category.
+     */
+    vertical?: WhatsAppBusinessVertical;
+    /**
+     * Websites lists the business websites (max 2).
+     */
+    websites?: Array<string>;
+};
+
+export type WhatsAppValidateTemplateResponse = {
+    /**
+     * Errors are hard violations WhatsApp would reject at submission.
+     */
+    errors: Array<WhatsAppTemplateValidationIssue>;
+    /**
+     * Valid is true when there are no errors (warnings do not affect validity).
+     */
+    valid: boolean;
+    /**
+     * Warnings are best-practice issues or items that cannot be fully verified offline.
+     */
+    warnings: Array<WhatsAppTemplateValidationIssue>;
+};
+
+export type WhatsAppVerificationMethod = 'SMS' | 'VOICE';
+
+export type WhatsAppVerifyCodeRequest = {
+    /**
+     * Code is the 6-digit verification code received via SMS or voice.
+     */
+    code: string;
+};
+
+export type YouTubeChannelSummaryResponse = {
+    handle: string;
+    subscriber_count: number;
+    thumbnail_url: string;
+    title: string;
+    video_count: number;
+    view_count: number;
+};
+
+export type ListAccountsData = {
     body?: never;
     path?: never;
     query?: {
@@ -4318,69 +4434,69 @@ export type GetAccountsData = {
     url: '/accounts';
 };
 
-export type GetAccountsErrors = {
+export type ListAccountsErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Daily rate limit exceeded
      */
-    429: ApiEndpointsErrorResponse;
+    429: ErrorResponse;
 };
 
-export type GetAccountsError = GetAccountsErrors[keyof GetAccountsErrors];
+export type ListAccountsError = ListAccountsErrors[keyof ListAccountsErrors];
 
-export type GetAccountsResponses = {
+export type ListAccountsResponses = {
     /**
      * List of connected accounts
      */
-    200: ApiEndpointsAccountsListResponse;
+    200: AccountsListResponse;
 };
 
-export type GetAccountsResponse = GetAccountsResponses[keyof GetAccountsResponses];
+export type ListAccountsResponse = ListAccountsResponses[keyof ListAccountsResponses];
 
-export type PostAccountsConnectData = {
+export type ConnectAccountData = {
     /**
      * Platform and metadata
      */
-    body: ApiEndpointsConnectRequest;
+    body: ConnectRequest;
     path?: never;
     query?: never;
     url: '/accounts/connect';
 };
 
-export type PostAccountsConnectErrors = {
+export type ConnectAccountErrors = {
     /**
      * Missing platform, unsupported platform, or invalid permissions (validation.permissions_empty, validation.permission_unknown)
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Plan limit reached (billing.platform_not_available or billing.brands_limit)
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
 };
 
-export type PostAccountsConnectError = PostAccountsConnectErrors[keyof PostAccountsConnectErrors];
+export type ConnectAccountError = ConnectAccountErrors[keyof ConnectAccountErrors];
 
-export type PostAccountsConnectResponses = {
+export type ConnectAccountResponses = {
     /**
      * Account connected (direct auth)
      */
-    201: ApiEndpointsConnectAccountResponse;
+    201: ConnectAccountResponse;
     /**
      * OAuth2 flow initiated
      */
-    202: ApiEndpointsConnectOAuthResponse;
+    202: ConnectOAuthResponse;
 };
 
-export type PostAccountsConnectResponse = PostAccountsConnectResponses[keyof PostAccountsConnectResponses];
+export type ConnectAccountResponse2 = ConnectAccountResponses[keyof ConnectAccountResponses];
 
-export type GetAccountsPendingByConnectionIdData = {
+export type GetPendingConnectionData = {
     body?: never;
     path: {
         /**
@@ -4392,29 +4508,29 @@ export type GetAccountsPendingByConnectionIdData = {
     url: '/accounts/pending/{connection_id}';
 };
 
-export type GetAccountsPendingByConnectionIdErrors = {
+export type GetPendingConnectionErrors = {
     /**
      * Unknown, expired, or not owner
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type GetAccountsPendingByConnectionIdError = GetAccountsPendingByConnectionIdErrors[keyof GetAccountsPendingByConnectionIdErrors];
+export type GetPendingConnectionError = GetPendingConnectionErrors[keyof GetPendingConnectionErrors];
 
-export type GetAccountsPendingByConnectionIdResponses = {
+export type GetPendingConnectionResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsPendingConnectionDetailResponse;
+    200: PendingConnectionDetailResponse;
 };
 
-export type GetAccountsPendingByConnectionIdResponse = GetAccountsPendingByConnectionIdResponses[keyof GetAccountsPendingByConnectionIdResponses];
+export type GetPendingConnectionResponse = GetPendingConnectionResponses[keyof GetPendingConnectionResponses];
 
-export type PostAccountsPendingByConnectionIdSelectData = {
+export type SelectPendingConnectionData = {
     /**
      * Chosen platform_account_id (Google) or page_ids (Facebook)
      */
-    body: ApiEndpointsSelectProfileRequest;
+    body: SelectProfileRequest;
     path: {
         /**
          * Pending connection ID
@@ -4425,114 +4541,114 @@ export type PostAccountsPendingByConnectionIdSelectData = {
     url: '/accounts/pending/{connection_id}/select';
 };
 
-export type PostAccountsPendingByConnectionIdSelectErrors = {
+export type SelectPendingConnectionErrors = {
     /**
      * platform_account_id or page_ids not in the candidate set
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Unknown, expired, or not owner
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type PostAccountsPendingByConnectionIdSelectError = PostAccountsPendingByConnectionIdSelectErrors[keyof PostAccountsPendingByConnectionIdSelectErrors];
+export type SelectPendingConnectionError = SelectPendingConnectionErrors[keyof SelectPendingConnectionErrors];
 
-export type PostAccountsPendingByConnectionIdSelectResponses = {
+export type SelectPendingConnectionResponses = {
     /**
      * Created
      */
-    201: ApiEndpointsConnectAccountResponse;
+    201: ConnectAccountResponse;
 };
 
-export type PostAccountsPendingByConnectionIdSelectResponse = PostAccountsPendingByConnectionIdSelectResponses[keyof PostAccountsPendingByConnectionIdSelectResponses];
+export type SelectPendingConnectionResponse = SelectPendingConnectionResponses[keyof SelectPendingConnectionResponses];
 
-export type DeleteAccountsByIdData = {
+export type DisconnectAccountData = {
     body?: never;
     path: {
         /**
          * Account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/accounts/{id}';
+    url: '/accounts/{account_id}';
 };
 
-export type DeleteAccountsByIdErrors = {
+export type DisconnectAccountErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type DeleteAccountsByIdError = DeleteAccountsByIdErrors[keyof DeleteAccountsByIdErrors];
+export type DisconnectAccountError = DisconnectAccountErrors[keyof DisconnectAccountErrors];
 
-export type DeleteAccountsByIdResponses = {
+export type DisconnectAccountResponses = {
     /**
      * Account disconnected
      */
     204: void;
 };
 
-export type DeleteAccountsByIdResponse = DeleteAccountsByIdResponses[keyof DeleteAccountsByIdResponses];
+export type DisconnectAccountResponse = DisconnectAccountResponses[keyof DisconnectAccountResponses];
 
-export type PatchAccountsByIdData = {
+export type UpdateAccountPermissionsData = {
     /**
      * New permissions
      */
-    body: ApiEndpointsUpdateAccountPermissionsRequest;
+    body: UpdateAccountPermissionsRequest;
     path: {
         /**
          * Account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/accounts/{id}';
+    url: '/accounts/{account_id}';
 };
 
-export type PatchAccountsByIdErrors = {
+export type UpdateAccountPermissionsErrors = {
     /**
      * Invalid body, missing permissions field, empty list, or unknown permission (validation.body_invalid, validation.field_required, validation.permissions_empty, validation.permission_unknown)
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The key's scopes do not include accounts:manage
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type PatchAccountsByIdError = PatchAccountsByIdErrors[keyof PatchAccountsByIdErrors];
+export type UpdateAccountPermissionsError = UpdateAccountPermissionsErrors[keyof UpdateAccountPermissionsErrors];
 
-export type PatchAccountsByIdResponses = {
+export type UpdateAccountPermissionsResponses = {
     /**
      * OK
      */
-    200: SocialApiAiCoreApiConnectorsBaseAccount;
+    200: Account;
 };
 
-export type PatchAccountsByIdResponse = PatchAccountsByIdResponses[keyof PatchAccountsByIdResponses];
+export type UpdateAccountPermissionsResponse = UpdateAccountPermissionsResponses[keyof UpdateAccountPermissionsResponses];
 
-export type GetAccountsByIdAnalyticsData = {
+export type GetAccountAnalyticsData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: {
         /**
@@ -4552,345 +4668,345 @@ export type GetAccountsByIdAnalyticsData = {
          */
         page_id?: string;
     };
-    url: '/accounts/{id}/analytics';
+    url: '/accounts/{account_id}/analytics';
 };
 
-export type GetAccountsByIdAnalyticsErrors = {
+export type GetAccountAnalyticsErrors = {
     /**
      * Malformed or inverted range, or a range wider than 400 days
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type GetAccountsByIdAnalyticsError = GetAccountsByIdAnalyticsErrors[keyof GetAccountsByIdAnalyticsErrors];
+export type GetAccountAnalyticsError = GetAccountAnalyticsErrors[keyof GetAccountAnalyticsErrors];
 
-export type GetAccountsByIdAnalyticsResponses = {
+export type GetAccountAnalyticsResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsAnalyticsResponseWrapper;
+    200: AnalyticsResponseWrapper;
 };
 
-export type GetAccountsByIdAnalyticsResponse = GetAccountsByIdAnalyticsResponses[keyof GetAccountsByIdAnalyticsResponses];
+export type GetAccountAnalyticsResponse = GetAccountAnalyticsResponses[keyof GetAccountAnalyticsResponses];
 
-export type GetAccountsByIdBoardsData = {
+export type ListPinterestBoardsData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/accounts/{id}/boards';
+    url: '/accounts/{account_id}/boards';
 };
 
-export type GetAccountsByIdBoardsErrors = {
+export type ListPinterestBoardsErrors = {
     /**
      * Bad Request
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Forbidden
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Not Found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type GetAccountsByIdBoardsError = GetAccountsByIdBoardsErrors[keyof GetAccountsByIdBoardsErrors];
+export type ListPinterestBoardsError = ListPinterestBoardsErrors[keyof ListPinterestBoardsErrors];
 
-export type GetAccountsByIdBoardsResponses = {
+export type ListPinterestBoardsResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsPinterestBoardsResponse;
+    200: PinterestBoardsResponse;
 };
 
-export type GetAccountsByIdBoardsResponse = GetAccountsByIdBoardsResponses[keyof GetAccountsByIdBoardsResponses];
+export type ListPinterestBoardsResponse = ListPinterestBoardsResponses[keyof ListPinterestBoardsResponses];
 
-export type PostAccountsByIdBoardsData = {
+export type CreatePinterestBoardData = {
     /**
      * Board to create
      */
-    body: ApiEndpointsCreateBoardRequest;
+    body: CreateBoardRequest;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/accounts/{id}/boards';
+    url: '/accounts/{account_id}/boards';
 };
 
-export type PostAccountsByIdBoardsErrors = {
+export type CreatePinterestBoardErrors = {
     /**
      * Bad Request
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Forbidden
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Not Found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Service Unavailable
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type PostAccountsByIdBoardsError = PostAccountsByIdBoardsErrors[keyof PostAccountsByIdBoardsErrors];
+export type CreatePinterestBoardError = CreatePinterestBoardErrors[keyof CreatePinterestBoardErrors];
 
-export type PostAccountsByIdBoardsResponses = {
+export type CreatePinterestBoardResponses = {
     /**
      * Created
      */
-    201: ApiEndpointsPinterestBoardItem;
+    201: PinterestBoardItem;
 };
 
-export type PostAccountsByIdBoardsResponse = PostAccountsByIdBoardsResponses[keyof PostAccountsByIdBoardsResponses];
+export type CreatePinterestBoardResponse = CreatePinterestBoardResponses[keyof CreatePinterestBoardResponses];
 
-export type DeleteAccountsByIdBoardsByBoardIdData = {
+export type DeletePinterestBoardData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
         /**
          * Board ID
          */
-        boardId: string;
+        board_id: string;
     };
     query?: never;
-    url: '/accounts/{id}/boards/{boardId}';
+    url: '/accounts/{account_id}/boards/{board_id}';
 };
 
-export type DeleteAccountsByIdBoardsByBoardIdErrors = {
+export type DeletePinterestBoardErrors = {
     /**
      * Bad Request
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Forbidden
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Not Found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Service Unavailable
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type DeleteAccountsByIdBoardsByBoardIdError = DeleteAccountsByIdBoardsByBoardIdErrors[keyof DeleteAccountsByIdBoardsByBoardIdErrors];
+export type DeletePinterestBoardError = DeletePinterestBoardErrors[keyof DeletePinterestBoardErrors];
 
-export type DeleteAccountsByIdBoardsByBoardIdResponses = {
+export type DeletePinterestBoardResponses = {
     /**
      * Board deleted
      */
     204: void;
 };
 
-export type DeleteAccountsByIdBoardsByBoardIdResponse = DeleteAccountsByIdBoardsByBoardIdResponses[keyof DeleteAccountsByIdBoardsByBoardIdResponses];
+export type DeletePinterestBoardResponse = DeletePinterestBoardResponses[keyof DeletePinterestBoardResponses];
 
-export type PatchAccountsByIdBoardsByBoardIdData = {
+export type UpdatePinterestBoardData = {
     /**
      * Board update
      */
-    body: ApiEndpointsUpdateBoardRequest;
+    body: UpdateBoardRequest;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
         /**
          * Board ID
          */
-        boardId: string;
+        board_id: string;
     };
     query?: never;
-    url: '/accounts/{id}/boards/{boardId}';
+    url: '/accounts/{account_id}/boards/{board_id}';
 };
 
-export type PatchAccountsByIdBoardsByBoardIdErrors = {
+export type UpdatePinterestBoardErrors = {
     /**
      * Bad Request
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Forbidden
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Not Found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Service Unavailable
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type PatchAccountsByIdBoardsByBoardIdError = PatchAccountsByIdBoardsByBoardIdErrors[keyof PatchAccountsByIdBoardsByBoardIdErrors];
+export type UpdatePinterestBoardError = UpdatePinterestBoardErrors[keyof UpdatePinterestBoardErrors];
 
-export type PatchAccountsByIdBoardsByBoardIdResponses = {
+export type UpdatePinterestBoardResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsPinterestBoardItem;
+    200: PinterestBoardItem;
 };
 
-export type PatchAccountsByIdBoardsByBoardIdResponse = PatchAccountsByIdBoardsByBoardIdResponses[keyof PatchAccountsByIdBoardsByBoardIdResponses];
+export type UpdatePinterestBoardResponse = UpdatePinterestBoardResponses[keyof UpdatePinterestBoardResponses];
 
-export type GetAccountsByIdCreatorInfoData = {
+export type GetCreatorInfoData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/accounts/{id}/creator-info';
+    url: '/accounts/{account_id}/creator-info';
 };
 
-export type GetAccountsByIdCreatorInfoErrors = {
+export type GetCreatorInfoErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Platform does not support creator info
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
 };
 
-export type GetAccountsByIdCreatorInfoError = GetAccountsByIdCreatorInfoErrors[keyof GetAccountsByIdCreatorInfoErrors];
+export type GetCreatorInfoError = GetCreatorInfoErrors[keyof GetCreatorInfoErrors];
 
-export type GetAccountsByIdCreatorInfoResponses = {
+export type GetCreatorInfoResponses = {
     /**
      * Creator info
      */
-    200: ApiEndpointsCreatorInfoResponse;
+    200: CreatorInfoResponse;
 };
 
-export type GetAccountsByIdCreatorInfoResponse = GetAccountsByIdCreatorInfoResponses[keyof GetAccountsByIdCreatorInfoResponses];
+export type GetCreatorInfoResponse = GetCreatorInfoResponses[keyof GetCreatorInfoResponses];
 
-export type PostAccountsByIdExportData = {
+export type CreateExportData = {
     /**
      * Export options
      */
-    body: ApiEndpointsCreateExportRequest;
+    body: CreateExportRequest;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/accounts/{id}/export';
+    url: '/accounts/{account_id}/export';
 };
 
-export type PostAccountsByIdExportErrors = {
+export type CreateExportErrors = {
     /**
      * Bad Request
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Not Found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Too Many Requests
      */
-    429: ApiEndpointsErrorResponse;
+    429: ErrorResponse;
     /**
      * Internal Server Error
      */
-    500: ApiEndpointsErrorResponse;
+    500: ErrorResponse;
 };
 
-export type PostAccountsByIdExportError = PostAccountsByIdExportErrors[keyof PostAccountsByIdExportErrors];
+export type CreateExportError = CreateExportErrors[keyof CreateExportErrors];
 
-export type PostAccountsByIdExportResponses = {
+export type CreateExportResponses = {
     /**
      * Accepted
      */
-    202: ApiEndpointsExportAcceptedResponse;
+    202: ExportAcceptedResponse;
 };
 
-export type PostAccountsByIdExportResponse = PostAccountsByIdExportResponses[keyof PostAccountsByIdExportResponses];
+export type CreateExportResponse = CreateExportResponses[keyof CreateExportResponses];
 
-export type GetAccountsByIdLimitsData = {
+export type GetAccountLimitsData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/accounts/{id}/limits';
+    url: '/accounts/{account_id}/limits';
 };
 
-export type GetAccountsByIdLimitsErrors = {
+export type GetAccountLimitsErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account requires reconnection
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Platform does not expose usage limits
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
 };
 
-export type GetAccountsByIdLimitsError = GetAccountsByIdLimitsErrors[keyof GetAccountsByIdLimitsErrors];
+export type GetAccountLimitsError = GetAccountLimitsErrors[keyof GetAccountLimitsErrors];
 
-export type GetAccountsByIdLimitsResponses = {
+export type GetAccountLimitsResponses = {
     /**
      * Platform quota map (keys are platform-specific)
      */
-    200: ApiEndpointsUsageLimitsResponse;
+    200: UsageLimitsResponse;
 };
 
-export type GetAccountsByIdLimitsResponse = GetAccountsByIdLimitsResponses[keyof GetAccountsByIdLimitsResponses];
+export type GetAccountLimitsResponse = GetAccountLimitsResponses[keyof GetAccountLimitsResponses];
 
-export type GetAccountsByIdMentionsData = {
+export type ListMentionsData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: {
         /**
@@ -4906,44 +5022,44 @@ export type GetAccountsByIdMentionsData = {
          */
         cursor?: string;
     };
-    url: '/accounts/{id}/mentions';
+    url: '/accounts/{account_id}/mentions';
 };
 
-export type GetAccountsByIdMentionsErrors = {
+export type ListMentionsErrors = {
     /**
      * Invalid query parameters
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Rate limit exceeded
      */
-    429: ApiEndpointsErrorResponse;
+    429: ErrorResponse;
     /**
      * Platform does not support mention tracking
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
 };
 
-export type GetAccountsByIdMentionsError = GetAccountsByIdMentionsErrors[keyof GetAccountsByIdMentionsErrors];
+export type ListMentionsError = ListMentionsErrors[keyof ListMentionsErrors];
 
-export type GetAccountsByIdMentionsResponses = {
+export type ListMentionsResponses = {
     /**
      * Paginated list of mentions
      */
-    200: ApiEndpointsMentionsListResponse;
+    200: MentionsListResponse;
 };
 
-export type GetAccountsByIdMentionsResponse = GetAccountsByIdMentionsResponses[keyof GetAccountsByIdMentionsResponses];
+export type ListMentionsResponse = ListMentionsResponses[keyof ListMentionsResponses];
 
-export type PostAccountsByIdMentionsReplyData = {
+export type ReplyToMentionData = {
     /**
      * Reply content
      */
@@ -4956,204 +5072,204 @@ export type PostAccountsByIdMentionsReplyData = {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/accounts/{id}/mentions/reply';
+    url: '/accounts/{account_id}/mentions/reply';
 };
 
-export type PostAccountsByIdMentionsReplyErrors = {
+export type ReplyToMentionErrors = {
     /**
      * Missing required fields
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Monthly interaction limit exceeded
      */
-    429: ApiEndpointsErrorResponse;
+    429: ErrorResponse;
     /**
      * Platform does not support replying to mentions
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
 };
 
-export type PostAccountsByIdMentionsReplyError = PostAccountsByIdMentionsReplyErrors[keyof PostAccountsByIdMentionsReplyErrors];
+export type ReplyToMentionError = ReplyToMentionErrors[keyof ReplyToMentionErrors];
 
-export type PostAccountsByIdMentionsReplyResponses = {
+export type ReplyToMentionResponses = {
     /**
      * Reply posted with comment_id
      */
-    200: ApiEndpointsReplyToCommentSuccessResponse;
+    200: ReplyToCommentSuccessResponse;
 };
 
-export type PostAccountsByIdMentionsReplyResponse = PostAccountsByIdMentionsReplyResponses[keyof PostAccountsByIdMentionsReplyResponses];
+export type ReplyToMentionResponse = ReplyToMentionResponses[keyof ReplyToMentionResponses];
 
-export type GetAccountsByIdPagesData = {
+export type ListAccountPagesData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/accounts/{id}/pages';
+    url: '/accounts/{account_id}/pages';
 };
 
-export type GetAccountsByIdPagesErrors = {
+export type ListAccountPagesErrors = {
     /**
      * Bad Request
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Not Found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type GetAccountsByIdPagesError = GetAccountsByIdPagesErrors[keyof GetAccountsByIdPagesErrors];
+export type ListAccountPagesError = ListAccountPagesErrors[keyof ListAccountPagesErrors];
 
-export type GetAccountsByIdPagesResponses = {
+export type ListAccountPagesResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsPagesListResponse;
+    200: PagesListResponse;
 };
 
-export type GetAccountsByIdPagesResponse = GetAccountsByIdPagesResponses[keyof GetAccountsByIdPagesResponses];
+export type ListAccountPagesResponse = ListAccountPagesResponses[keyof ListAccountPagesResponses];
 
-export type PatchAccountsByIdPagesByPageIdData = {
+export type UpdateAccountPageData = {
     /**
      * Page update
      */
-    body: ApiEndpointsUpdatePageRequest;
+    body: UpdatePageRequest;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
         /**
          * Page ID
          */
-        pageId: string;
+        page_id: string;
     };
     query?: never;
-    url: '/accounts/{id}/pages/{pageId}';
+    url: '/accounts/{account_id}/pages/{page_id}';
 };
 
-export type PatchAccountsByIdPagesByPageIdErrors = {
+export type UpdateAccountPageErrors = {
     /**
      * Not Found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type PatchAccountsByIdPagesByPageIdError = PatchAccountsByIdPagesByPageIdErrors[keyof PatchAccountsByIdPagesByPageIdErrors];
+export type UpdateAccountPageError = UpdateAccountPageErrors[keyof UpdateAccountPageErrors];
 
-export type PatchAccountsByIdPagesByPageIdResponses = {
+export type UpdateAccountPageResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsAccountPageResponse;
+    200: AccountPageResponse;
 };
 
-export type PatchAccountsByIdPagesByPageIdResponse = PatchAccountsByIdPagesByPageIdResponses[keyof PatchAccountsByIdPagesByPageIdResponses];
+export type UpdateAccountPageResponse = UpdateAccountPageResponses[keyof UpdateAccountPageResponses];
 
-export type GetAccountsByIdSyncData = {
+export type GetAccountSyncStatusData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/accounts/{id}/sync';
+    url: '/accounts/{account_id}/sync';
 };
 
-export type GetAccountsByIdSyncErrors = {
+export type GetAccountSyncStatusErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The account was not granted the posts.read permission
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type GetAccountsByIdSyncError = GetAccountsByIdSyncErrors[keyof GetAccountsByIdSyncErrors];
+export type GetAccountSyncStatusError = GetAccountSyncStatusErrors[keyof GetAccountSyncStatusErrors];
 
-export type GetAccountsByIdSyncResponses = {
+export type GetAccountSyncStatusResponses = {
     /**
      * Current sync state
      */
-    200: ApiEndpointsAccountPostsSyncResponse;
+    200: AccountPostsSyncResponse;
 };
 
-export type GetAccountsByIdSyncResponse = GetAccountsByIdSyncResponses[keyof GetAccountsByIdSyncResponses];
+export type GetAccountSyncStatusResponse = GetAccountSyncStatusResponses[keyof GetAccountSyncStatusResponses];
 
-export type PostAccountsByIdSyncData = {
+export type SyncAccountPostsData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/accounts/{id}/sync';
+    url: '/accounts/{account_id}/sync';
 };
 
-export type PostAccountsByIdSyncErrors = {
+export type SyncAccountPostsErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The account was not granted the posts.read permission
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * accounts.sync_rate_limited: this account was synced less than 15 minutes ago. accounts.sync_daily_limit: the plan's daily sync limit is reached. The Retry-After header carries the seconds to wait.
      */
-    429: ApiEndpointsErrorResponse;
+    429: ErrorResponse;
     /**
      * Platform cannot list posts
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
     /**
      * The sync could not be started. Retry later.
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type PostAccountsByIdSyncError = PostAccountsByIdSyncErrors[keyof PostAccountsByIdSyncErrors];
+export type SyncAccountPostsError = SyncAccountPostsErrors[keyof SyncAccountPostsErrors];
 
-export type PostAccountsByIdSyncResponses = {
+export type SyncAccountPostsResponses = {
     /**
      * Sync started, or already running
      */
-    202: ApiEndpointsAccountPostsSyncResponse;
+    202: AccountPostsSyncResponse;
 };
 
-export type PostAccountsByIdSyncResponse = PostAccountsByIdSyncResponses[keyof PostAccountsByIdSyncResponses];
+export type SyncAccountPostsResponse = SyncAccountPostsResponses[keyof SyncAccountPostsResponses];
 
 export type GetAnalyticsOverviewData = {
     body?: never;
@@ -5195,15 +5311,15 @@ export type GetAnalyticsOverviewErrors = {
     /**
      * Malformed or inverted range, a range wider than 400 days, an unknown tz, or an unknown sort
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account or brand not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
 export type GetAnalyticsOverviewError = GetAnalyticsOverviewErrors[keyof GetAnalyticsOverviewErrors];
@@ -5212,71 +5328,12 @@ export type GetAnalyticsOverviewResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsAnalyticsOverviewResponseWrapper;
+    200: AnalyticsOverviewResponseWrapper;
 };
 
 export type GetAnalyticsOverviewResponse = GetAnalyticsOverviewResponses[keyof GetAnalyticsOverviewResponses];
 
-export type GetAnnouncementsData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/announcements';
-};
-
-export type GetAnnouncementsErrors = {
-    /**
-     * Invalid or missing API key
-     */
-    401: ApiEndpointsErrorResponse;
-};
-
-export type GetAnnouncementsError = GetAnnouncementsErrors[keyof GetAnnouncementsErrors];
-
-export type GetAnnouncementsResponses = {
-    /**
-     * Currently visible announcements
-     */
-    200: ApiEndpointsAnnouncementsListResponse;
-};
-
-export type GetAnnouncementsResponse = GetAnnouncementsResponses[keyof GetAnnouncementsResponses];
-
-export type PostAnnouncementsByIdSeenData = {
-    body?: never;
-    path: {
-        /**
-         * Announcement ID
-         */
-        id: string;
-    };
-    query?: never;
-    url: '/announcements/{id}/seen';
-};
-
-export type PostAnnouncementsByIdSeenErrors = {
-    /**
-     * Invalid or missing API key
-     */
-    401: ApiEndpointsErrorResponse;
-    /**
-     * Announcement not found
-     */
-    404: ApiEndpointsErrorResponse;
-};
-
-export type PostAnnouncementsByIdSeenError = PostAnnouncementsByIdSeenErrors[keyof PostAnnouncementsByIdSeenErrors];
-
-export type PostAnnouncementsByIdSeenResponses = {
-    /**
-     * Announcement marked as seen
-     */
-    200: ApiEndpointsOkResponse;
-};
-
-export type PostAnnouncementsByIdSeenResponse = PostAnnouncementsByIdSeenResponses[keyof PostAnnouncementsByIdSeenResponses];
-
-export type GetAutomationsData = {
+export type ListAutomationsData = {
     body?: never;
     path?: never;
     query?: {
@@ -5288,204 +5345,204 @@ export type GetAutomationsData = {
     url: '/automations';
 };
 
-export type GetAutomationsErrors = {
+export type ListAutomationsErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The key's scopes do not include automations:read
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
 };
 
-export type GetAutomationsError = GetAutomationsErrors[keyof GetAutomationsErrors];
+export type ListAutomationsError = ListAutomationsErrors[keyof ListAutomationsErrors];
 
-export type GetAutomationsResponses = {
+export type ListAutomationsResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsAutomationListResponse;
+    200: AutomationListResponse;
 };
 
-export type GetAutomationsResponse = GetAutomationsResponses[keyof GetAutomationsResponses];
+export type ListAutomationsResponse = ListAutomationsResponses[keyof ListAutomationsResponses];
 
-export type PostAutomationsData = {
+export type CreateAutomationData = {
     /**
      * Automation definition
      */
-    body: SocialApiAiCoreApiServiceCreateAutomationParams;
+    body: CreateAutomationParams;
     path?: never;
     query?: never;
     url: '/automations';
 };
 
-export type PostAutomationsErrors = {
+export type CreateAutomationErrors = {
     /**
      * Invalid definition (validation.*), or a trigger or action needs a permission the account does not have (validation.permission_missing)
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The key's scopes do not include automations:write or the scope an action needs
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * The account already has 50 Automations (automation.limit_reached)
      */
-    409: ApiEndpointsErrorResponse;
+    409: ErrorResponse;
     /**
      * The account is not on Instagram or Facebook (automation.platform_unsupported)
      */
-    422: ApiEndpointsErrorResponse;
+    422: ErrorResponse;
 };
 
-export type PostAutomationsError = PostAutomationsErrors[keyof PostAutomationsErrors];
+export type CreateAutomationError = CreateAutomationErrors[keyof CreateAutomationErrors];
 
-export type PostAutomationsResponses = {
+export type CreateAutomationResponses = {
     /**
      * Created
      */
-    201: SocialApiAiCoreApiServiceAutomation;
+    201: Automation;
 };
 
-export type PostAutomationsResponse = PostAutomationsResponses[keyof PostAutomationsResponses];
+export type CreateAutomationResponse = CreateAutomationResponses[keyof CreateAutomationResponses];
 
-export type DeleteAutomationsByIdData = {
+export type DeleteAutomationData = {
     body?: never;
     path: {
         /**
          * Automation ID
          */
-        id: string;
+        automation_id: string;
     };
     query?: never;
-    url: '/automations/{id}';
+    url: '/automations/{automation_id}';
 };
 
-export type DeleteAutomationsByIdErrors = {
+export type DeleteAutomationErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The key's scopes do not include automations:write
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Automation not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type DeleteAutomationsByIdError = DeleteAutomationsByIdErrors[keyof DeleteAutomationsByIdErrors];
+export type DeleteAutomationError = DeleteAutomationErrors[keyof DeleteAutomationErrors];
 
-export type DeleteAutomationsByIdResponses = {
+export type DeleteAutomationResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsSuccessResponse;
+    200: SuccessResponse;
 };
 
-export type DeleteAutomationsByIdResponse = DeleteAutomationsByIdResponses[keyof DeleteAutomationsByIdResponses];
+export type DeleteAutomationResponse = DeleteAutomationResponses[keyof DeleteAutomationResponses];
 
-export type GetAutomationsByIdData = {
+export type GetAutomationData = {
     body?: never;
     path: {
         /**
          * Automation ID
          */
-        id: string;
+        automation_id: string;
     };
     query?: never;
-    url: '/automations/{id}';
+    url: '/automations/{automation_id}';
 };
 
-export type GetAutomationsByIdErrors = {
+export type GetAutomationErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The key's scopes do not include automations:read
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Automation not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type GetAutomationsByIdError = GetAutomationsByIdErrors[keyof GetAutomationsByIdErrors];
+export type GetAutomationError = GetAutomationErrors[keyof GetAutomationErrors];
 
-export type GetAutomationsByIdResponses = {
+export type GetAutomationResponses = {
     /**
      * OK
      */
-    200: SocialApiAiCoreApiServiceAutomation;
+    200: Automation;
 };
 
-export type GetAutomationsByIdResponse = GetAutomationsByIdResponses[keyof GetAutomationsByIdResponses];
+export type GetAutomationResponse = GetAutomationResponses[keyof GetAutomationResponses];
 
-export type PatchAutomationsByIdData = {
+export type UpdateAutomationData = {
     /**
      * Fields to change
      */
-    body: SocialApiAiCoreApiServiceUpdateAutomationParams;
+    body: UpdateAutomationParams;
     path: {
         /**
          * Automation ID
          */
-        id: string;
+        automation_id: string;
     };
     query?: never;
-    url: '/automations/{id}';
+    url: '/automations/{automation_id}';
 };
 
-export type PatchAutomationsByIdErrors = {
+export type UpdateAutomationErrors = {
     /**
      * Invalid definition (validation.*), or a trigger or action needs a permission the account does not have (validation.permission_missing)
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The key's scopes do not include automations:write or the scope an action needs
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Automation not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type PatchAutomationsByIdError = PatchAutomationsByIdErrors[keyof PatchAutomationsByIdErrors];
+export type UpdateAutomationError = UpdateAutomationErrors[keyof UpdateAutomationErrors];
 
-export type PatchAutomationsByIdResponses = {
+export type UpdateAutomationResponses = {
     /**
      * OK
      */
-    200: SocialApiAiCoreApiServiceAutomation;
+    200: Automation;
 };
 
-export type PatchAutomationsByIdResponse = PatchAutomationsByIdResponses[keyof PatchAutomationsByIdResponses];
+export type UpdateAutomationResponse = UpdateAutomationResponses[keyof UpdateAutomationResponses];
 
-export type GetAutomationsByIdFiringsData = {
+export type ListAutomationFiringsData = {
     body?: never;
     path: {
         /**
          * Automation ID
          */
-        id: string;
+        automation_id: string;
     };
     query?: {
         /**
@@ -5497,207 +5554,182 @@ export type GetAutomationsByIdFiringsData = {
          */
         limit?: number;
     };
-    url: '/automations/{id}/firings';
+    url: '/automations/{automation_id}/firings';
 };
 
-export type GetAutomationsByIdFiringsErrors = {
+export type ListAutomationFiringsErrors = {
     /**
      * limit is not a positive integer
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The key's scopes do not include automations:read
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Automation not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type GetAutomationsByIdFiringsError = GetAutomationsByIdFiringsErrors[keyof GetAutomationsByIdFiringsErrors];
+export type ListAutomationFiringsError = ListAutomationFiringsErrors[keyof ListAutomationFiringsErrors];
 
-export type GetAutomationsByIdFiringsResponses = {
+export type ListAutomationFiringsResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsFiringListResponse;
+    200: FiringListResponse;
 };
 
-export type GetAutomationsByIdFiringsResponse = GetAutomationsByIdFiringsResponses[keyof GetAutomationsByIdFiringsResponses];
+export type ListAutomationFiringsResponse = ListAutomationFiringsResponses[keyof ListAutomationFiringsResponses];
 
-export type GetBillingPlansData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/billing/plans';
-};
-
-export type GetBillingPlansErrors = {
-    /**
-     * Invalid or missing API key
-     */
-    401: ApiEndpointsErrorResponse;
-};
-
-export type GetBillingPlansError = GetBillingPlansErrors[keyof GetBillingPlansErrors];
-
-export type GetBillingPlansResponses = {
-    /**
-     * Plan catalog
-     */
-    200: ApiEndpointsBillingPlansResponse;
-};
-
-export type GetBillingPlansResponse = GetBillingPlansResponses[keyof GetBillingPlansResponses];
-
-export type GetBrandsData = {
+export type ListBrandsData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/brands';
 };
 
-export type GetBrandsErrors = {
+export type ListBrandsErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
 };
 
-export type GetBrandsError = GetBrandsErrors[keyof GetBrandsErrors];
+export type ListBrandsError = ListBrandsErrors[keyof ListBrandsErrors];
 
-export type GetBrandsResponses = {
+export type ListBrandsResponses = {
     /**
      * List of brands
      */
-    200: ApiEndpointsBrandsListResponse;
+    200: BrandsListResponse;
 };
 
-export type GetBrandsResponse = GetBrandsResponses[keyof GetBrandsResponses];
+export type ListBrandsResponse = ListBrandsResponses[keyof ListBrandsResponses];
 
-export type PostBrandsData = {
+export type CreateBrandData = {
     /**
      * Brand name
      */
-    body: ApiEndpointsCreateBrandRequest;
+    body: CreateBrandRequest;
     path?: never;
     query?: never;
     url: '/brands';
 };
 
-export type PostBrandsErrors = {
+export type CreateBrandErrors = {
     /**
      * Invalid request body or missing name
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Brand limit reached for plan
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
 };
 
-export type PostBrandsError = PostBrandsErrors[keyof PostBrandsErrors];
+export type CreateBrandError = CreateBrandErrors[keyof CreateBrandErrors];
 
-export type PostBrandsResponses = {
+export type CreateBrandResponses = {
     /**
      * Brand created
      */
-    201: ApiEndpointsBrandResponse;
+    201: BrandResponse;
 };
 
-export type PostBrandsResponse = PostBrandsResponses[keyof PostBrandsResponses];
+export type CreateBrandResponse = CreateBrandResponses[keyof CreateBrandResponses];
 
-export type DeleteBrandsByIdData = {
+export type DeleteBrandData = {
     body?: never;
     path: {
         /**
          * Brand ID
          */
-        id: string;
+        brand_id: string;
     };
     query?: never;
-    url: '/brands/{id}';
+    url: '/brands/{brand_id}';
 };
 
-export type DeleteBrandsByIdErrors = {
+export type DeleteBrandErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Brand not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type DeleteBrandsByIdError = DeleteBrandsByIdErrors[keyof DeleteBrandsByIdErrors];
+export type DeleteBrandError = DeleteBrandErrors[keyof DeleteBrandErrors];
 
-export type DeleteBrandsByIdResponses = {
+export type DeleteBrandResponses = {
     /**
      * Brand deleted
      */
     204: void;
 };
 
-export type DeleteBrandsByIdResponse = DeleteBrandsByIdResponses[keyof DeleteBrandsByIdResponses];
+export type DeleteBrandResponse = DeleteBrandResponses[keyof DeleteBrandResponses];
 
-export type PatchBrandsByIdData = {
+export type UpdateBrandData = {
     /**
      * New name
      */
-    body: ApiEndpointsUpdateBrandRequest;
+    body: UpdateBrandRequest;
     path: {
         /**
          * Brand ID
          */
-        id: string;
+        brand_id: string;
     };
     query?: never;
-    url: '/brands/{id}';
+    url: '/brands/{brand_id}';
 };
 
-export type PatchBrandsByIdErrors = {
+export type UpdateBrandErrors = {
     /**
      * Invalid request body or missing name
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Brand not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type PatchBrandsByIdError = PatchBrandsByIdErrors[keyof PatchBrandsByIdErrors];
+export type UpdateBrandError = UpdateBrandErrors[keyof UpdateBrandErrors];
 
-export type PatchBrandsByIdResponses = {
+export type UpdateBrandResponses = {
     /**
      * Brand updated
      */
-    200: ApiEndpointsBrandResponse;
+    200: BrandResponse;
 };
 
-export type PatchBrandsByIdResponse = PatchBrandsByIdResponses[keyof PatchBrandsByIdResponses];
+export type UpdateBrandResponse = UpdateBrandResponses[keyof UpdateBrandResponses];
 
-export type GetBrandsByIdAnalyticsData = {
+export type GetBrandAnalyticsData = {
     body?: never;
     path: {
         /**
          * Brand ID
          */
-        id: string;
+        brand_id: string;
     };
     query?: {
         /**
@@ -5713,36 +5745,36 @@ export type GetBrandsByIdAnalyticsData = {
          */
         metrics?: string;
     };
-    url: '/brands/{id}/analytics';
+    url: '/brands/{brand_id}/analytics';
 };
 
-export type GetBrandsByIdAnalyticsErrors = {
+export type GetBrandAnalyticsErrors = {
     /**
      * Malformed or inverted range, or a range wider than 400 days
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Brand not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type GetBrandsByIdAnalyticsError = GetBrandsByIdAnalyticsErrors[keyof GetBrandsByIdAnalyticsErrors];
+export type GetBrandAnalyticsError = GetBrandAnalyticsErrors[keyof GetBrandAnalyticsErrors];
 
-export type GetBrandsByIdAnalyticsResponses = {
+export type GetBrandAnalyticsResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsAnalyticsResponseWrapper;
+    200: AnalyticsResponseWrapper;
 };
 
-export type GetBrandsByIdAnalyticsResponse = GetBrandsByIdAnalyticsResponses[keyof GetBrandsByIdAnalyticsResponses];
+export type GetBrandAnalyticsResponse = GetBrandAnalyticsResponses[keyof GetBrandAnalyticsResponses];
 
-export type GetEventsData = {
+export type ListEventsData = {
     body?: never;
     path?: never;
     query?: {
@@ -5790,23 +5822,23 @@ export type GetEventsData = {
     url: '/events';
 };
 
-export type GetEventsErrors = {
+export type ListEventsErrors = {
     /**
      * Bad Request
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
 };
 
-export type GetEventsError = GetEventsErrors[keyof GetEventsErrors];
+export type ListEventsError = ListEventsErrors[keyof ListEventsErrors];
 
-export type GetEventsResponses = {
+export type ListEventsResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsEventsListResponse;
+    200: EventsListResponse;
 };
 
-export type GetEventsResponse = GetEventsResponses[keyof GetEventsResponses];
+export type ListEventsResponse = ListEventsResponses[keyof ListEventsResponses];
 
 export type GetEventsSummaryData = {
     body?: never;
@@ -5828,7 +5860,7 @@ export type GetEventsSummaryErrors = {
     /**
      * Bad Request
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
 };
 
 export type GetEventsSummaryError = GetEventsSummaryErrors[keyof GetEventsSummaryErrors];
@@ -5837,12 +5869,12 @@ export type GetEventsSummaryResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsEventsSummaryResponse;
+    200: EventsSummaryResponse;
 };
 
 export type GetEventsSummaryResponse = GetEventsSummaryResponses[keyof GetEventsSummaryResponses];
 
-export type GetExportsData = {
+export type ListExportsData = {
     body?: never;
     path?: never;
     query?: {
@@ -5854,129 +5886,97 @@ export type GetExportsData = {
     url: '/exports';
 };
 
-export type GetExportsErrors = {
+export type ListExportsErrors = {
     /**
      * Unauthorized
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Internal Server Error
      */
-    500: ApiEndpointsErrorResponse;
+    500: ErrorResponse;
 };
 
-export type GetExportsError = GetExportsErrors[keyof GetExportsErrors];
+export type ListExportsError = ListExportsErrors[keyof ListExportsErrors];
 
-export type GetExportsResponses = {
+export type ListExportsResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsExportsListResponse;
+    200: ExportsListResponse;
 };
 
-export type GetExportsResponse = GetExportsResponses[keyof GetExportsResponses];
+export type ListExportsResponse = ListExportsResponses[keyof ListExportsResponses];
 
-export type GetExportsByIdData = {
+export type GetExportData = {
     body?: never;
     path: {
         /**
          * Export ID
          */
-        id: string;
+        export_id: string;
     };
     query?: never;
-    url: '/exports/{id}';
+    url: '/exports/{export_id}';
 };
 
-export type GetExportsByIdErrors = {
+export type GetExportErrors = {
     /**
      * Not Found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Internal Server Error
      */
-    500: ApiEndpointsErrorResponse;
+    500: ErrorResponse;
 };
 
-export type GetExportsByIdError = GetExportsByIdErrors[keyof GetExportsByIdErrors];
+export type GetExportError = GetExportErrors[keyof GetExportErrors];
 
-export type GetExportsByIdResponses = {
+export type GetExportResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsExportStatusResponse;
+    200: ExportStatusResponse;
 };
 
-export type GetExportsByIdResponse = GetExportsByIdResponses[keyof GetExportsByIdResponses];
+export type GetExportResponse = GetExportResponses[keyof GetExportResponses];
 
-export type GetExportsByIdVideosData = {
+export type ListExportVideosData = {
     body?: never;
     path: {
         /**
          * Export ID
          */
-        id: string;
+        export_id: string;
     };
     query?: never;
-    url: '/exports/{id}/videos';
+    url: '/exports/{export_id}/videos';
 };
 
-export type GetExportsByIdVideosErrors = {
+export type ListExportVideosErrors = {
     /**
      * Bad Request
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Not Found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type GetExportsByIdVideosError = GetExportsByIdVideosErrors[keyof GetExportsByIdVideosErrors];
+export type ListExportVideosError = ListExportVideosErrors[keyof ListExportVideosErrors];
 
-export type GetExportsByIdVideosResponses = {
+export type ListExportVideosResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsExportVideosResponse;
+    200: ExportVideosResponse;
 };
 
-export type GetExportsByIdVideosResponse = GetExportsByIdVideosResponses[keyof GetExportsByIdVideosResponses];
+export type ListExportVideosResponse = ListExportVideosResponses[keyof ListExportVideosResponses];
 
-export type PostFeedbackData = {
-    /**
-     * Feedback type and message
-     */
-    body: ApiEndpointsSendFeedbackRequest;
-    path?: never;
-    query?: never;
-    url: '/feedback';
-};
-
-export type PostFeedbackErrors = {
-    /**
-     * Invalid type or empty message
-     */
-    400: ApiEndpointsErrorResponse;
-    /**
-     * Invalid or missing API key
-     */
-    401: ApiEndpointsErrorResponse;
-};
-
-export type PostFeedbackError = PostFeedbackErrors[keyof PostFeedbackErrors];
-
-export type PostFeedbackResponses = {
-    /**
-     * Feedback received
-     */
-    200: ApiEndpointsOkResponse;
-};
-
-export type PostFeedbackResponse = PostFeedbackResponses[keyof PostFeedbackResponses];
-
-export type GetInboxCommentsData = {
+export type ListCommentedPostsData = {
     body?: never;
     path?: never;
     query?: {
@@ -6020,35 +6020,35 @@ export type GetInboxCommentsData = {
     url: '/inbox/comments';
 };
 
-export type GetInboxCommentsErrors = {
+export type ListCommentedPostsErrors = {
     /**
      * Invalid query parameters
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
 };
 
-export type GetInboxCommentsError = GetInboxCommentsErrors[keyof GetInboxCommentsErrors];
+export type ListCommentedPostsError = ListCommentedPostsErrors[keyof ListCommentedPostsErrors];
 
-export type GetInboxCommentsResponses = {
+export type ListCommentedPostsResponses = {
     /**
      * Paginated list of commented posts
      */
-    200: ApiEndpointsCommentedPostsListResponse;
+    200: CommentedPostsListResponse;
 };
 
-export type GetInboxCommentsResponse = GetInboxCommentsResponses[keyof GetInboxCommentsResponses];
+export type ListCommentedPostsResponse = ListCommentedPostsResponses[keyof ListCommentedPostsResponses];
 
-export type GetInboxCommentsByPostIdData = {
+export type ListCommentsData = {
     body?: never;
     path: {
         /**
          * Platform post ID
          */
-        postId: string;
+        post_id: string;
     };
     query: {
         /**
@@ -6076,36 +6076,36 @@ export type GetInboxCommentsByPostIdData = {
          */
         q?: string;
     };
-    url: '/inbox/comments/{postId}';
+    url: '/inbox/comments/{post_id}';
 };
 
-export type GetInboxCommentsByPostIdErrors = {
+export type ListCommentsErrors = {
     /**
      * Missing required parameters
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Post not found in inbox
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type GetInboxCommentsByPostIdError = GetInboxCommentsByPostIdErrors[keyof GetInboxCommentsByPostIdErrors];
+export type ListCommentsError = ListCommentsErrors[keyof ListCommentsErrors];
 
-export type GetInboxCommentsByPostIdResponses = {
+export type ListCommentsResponses = {
     /**
      * Paginated list of comments with capabilities
      */
-    200: ApiEndpointsCommentsWithCapsListResponse;
+    200: CommentsWithCapsListResponse;
 };
 
-export type GetInboxCommentsByPostIdResponse = GetInboxCommentsByPostIdResponses[keyof GetInboxCommentsByPostIdResponses];
+export type ListCommentsResponse = ListCommentsResponses[keyof ListCommentsResponses];
 
-export type PostInboxCommentsByPostIdData = {
+export type ReplyToCommentData = {
     /**
      * Reply content
      */
@@ -6118,57 +6118,57 @@ export type PostInboxCommentsByPostIdData = {
         /**
          * Platform post ID
          */
-        postId: string;
+        post_id: string;
     };
     query?: never;
-    url: '/inbox/comments/{postId}';
+    url: '/inbox/comments/{post_id}';
 };
 
-export type PostInboxCommentsByPostIdErrors = {
+export type ReplyToCommentErrors = {
     /**
      * Missing required fields
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Monthly interaction limit exceeded
      */
-    429: ApiEndpointsErrorResponse;
+    429: ErrorResponse;
     /**
      * Platform does not support comment replies
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
 };
 
-export type PostInboxCommentsByPostIdError = PostInboxCommentsByPostIdErrors[keyof PostInboxCommentsByPostIdErrors];
+export type ReplyToCommentError = ReplyToCommentErrors[keyof ReplyToCommentErrors];
 
-export type PostInboxCommentsByPostIdResponses = {
+export type ReplyToCommentResponses = {
     /**
      * Reply posted with comment_id
      */
-    200: ApiEndpointsReplyToCommentSuccessResponse;
+    200: ReplyToCommentSuccessResponse;
 };
 
-export type PostInboxCommentsByPostIdResponse = PostInboxCommentsByPostIdResponses[keyof PostInboxCommentsByPostIdResponses];
+export type ReplyToCommentResponse = ReplyToCommentResponses[keyof ReplyToCommentResponses];
 
-export type DeleteInboxCommentsByPostIdByCommentIdData = {
+export type DeleteCommentData = {
     body?: never;
     path: {
         /**
          * Platform post ID
          */
-        postId: string;
+        post_id: string;
         /**
          * Platform comment ID to delete
          */
-        commentId: string;
+        comment_id: string;
     };
     query: {
         /**
@@ -6176,54 +6176,54 @@ export type DeleteInboxCommentsByPostIdByCommentIdData = {
          */
         account_id: string;
     };
-    url: '/inbox/comments/{postId}/{commentId}';
+    url: '/inbox/comments/{post_id}/{comment_id}';
 };
 
-export type DeleteInboxCommentsByPostIdByCommentIdErrors = {
+export type DeleteCommentErrors = {
     /**
      * Missing required parameters
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The key's scopes do not include inbox:write
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Platform does not support comment deletion
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
 };
 
-export type DeleteInboxCommentsByPostIdByCommentIdError = DeleteInboxCommentsByPostIdByCommentIdErrors[keyof DeleteInboxCommentsByPostIdByCommentIdErrors];
+export type DeleteCommentError = DeleteCommentErrors[keyof DeleteCommentErrors];
 
-export type DeleteInboxCommentsByPostIdByCommentIdResponses = {
+export type DeleteCommentResponses = {
     /**
      * Comment deleted
      */
-    200: ApiEndpointsSuccessResponse;
+    200: SuccessResponse;
 };
 
-export type DeleteInboxCommentsByPostIdByCommentIdResponse = DeleteInboxCommentsByPostIdByCommentIdResponses[keyof DeleteInboxCommentsByPostIdByCommentIdResponses];
+export type DeleteCommentResponse = DeleteCommentResponses[keyof DeleteCommentResponses];
 
-export type DeleteInboxCommentsByPostIdByCommentIdHideData = {
+export type UnhideCommentData = {
     body?: never;
     path: {
         /**
          * Platform post ID
          */
-        postId: string;
+        post_id: string;
         /**
          * Platform comment ID to unhide
          */
-        commentId: string;
+        comment_id: string;
     };
     query: {
         /**
@@ -6231,48 +6231,48 @@ export type DeleteInboxCommentsByPostIdByCommentIdHideData = {
          */
         account_id: string;
     };
-    url: '/inbox/comments/{postId}/{commentId}/hide';
+    url: '/inbox/comments/{post_id}/{comment_id}/hide';
 };
 
-export type DeleteInboxCommentsByPostIdByCommentIdHideErrors = {
+export type UnhideCommentErrors = {
     /**
      * Missing required parameters
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The key's scopes do not include inbox:write
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Facebook refused to change the comment's visibility (platform.facebook.comment_not_hideable). Retrying does not help
      */
-    422: ApiEndpointsErrorResponse;
+    422: ErrorResponse;
     /**
      * Platform does not support hiding comments
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
 };
 
-export type DeleteInboxCommentsByPostIdByCommentIdHideError = DeleteInboxCommentsByPostIdByCommentIdHideErrors[keyof DeleteInboxCommentsByPostIdByCommentIdHideErrors];
+export type UnhideCommentError = UnhideCommentErrors[keyof UnhideCommentErrors];
 
-export type DeleteInboxCommentsByPostIdByCommentIdHideResponses = {
+export type UnhideCommentResponses = {
     /**
      * Comment unhidden
      */
-    200: ApiEndpointsSuccessResponse;
+    200: SuccessResponse;
 };
 
-export type DeleteInboxCommentsByPostIdByCommentIdHideResponse = DeleteInboxCommentsByPostIdByCommentIdHideResponses[keyof DeleteInboxCommentsByPostIdByCommentIdHideResponses];
+export type UnhideCommentResponse = UnhideCommentResponses[keyof UnhideCommentResponses];
 
-export type PostInboxCommentsByPostIdByCommentIdHideData = {
+export type HideCommentData = {
     /**
      * Account that owns the post
      */
@@ -6283,65 +6283,65 @@ export type PostInboxCommentsByPostIdByCommentIdHideData = {
         /**
          * Platform post ID
          */
-        postId: string;
+        post_id: string;
         /**
          * Platform comment ID to hide
          */
-        commentId: string;
+        comment_id: string;
     };
     query?: never;
-    url: '/inbox/comments/{postId}/{commentId}/hide';
+    url: '/inbox/comments/{post_id}/{comment_id}/hide';
 };
 
-export type PostInboxCommentsByPostIdByCommentIdHideErrors = {
+export type HideCommentErrors = {
     /**
      * Missing required parameters
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The key's scopes do not include inbox:write
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Facebook refused to change the comment's visibility (platform.facebook.comment_not_hideable). Retrying does not help
      */
-    422: ApiEndpointsErrorResponse;
+    422: ErrorResponse;
     /**
      * Platform does not support hiding comments
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
 };
 
-export type PostInboxCommentsByPostIdByCommentIdHideError = PostInboxCommentsByPostIdByCommentIdHideErrors[keyof PostInboxCommentsByPostIdByCommentIdHideErrors];
+export type HideCommentError = HideCommentErrors[keyof HideCommentErrors];
 
-export type PostInboxCommentsByPostIdByCommentIdHideResponses = {
+export type HideCommentResponses = {
     /**
      * Comment hidden
      */
-    200: ApiEndpointsSuccessResponse;
+    200: SuccessResponse;
 };
 
-export type PostInboxCommentsByPostIdByCommentIdHideResponse = PostInboxCommentsByPostIdByCommentIdHideResponses[keyof PostInboxCommentsByPostIdByCommentIdHideResponses];
+export type HideCommentResponse = HideCommentResponses[keyof HideCommentResponses];
 
-export type DeleteInboxCommentsByPostIdByCommentIdLikeData = {
+export type UnlikeCommentData = {
     body?: never;
     path: {
         /**
          * Platform post ID
          */
-        postId: string;
+        post_id: string;
         /**
          * Platform comment ID to unlike
          */
-        commentId: string;
+        comment_id: string;
     };
     query: {
         /**
@@ -6349,44 +6349,44 @@ export type DeleteInboxCommentsByPostIdByCommentIdLikeData = {
          */
         account_id: string;
     };
-    url: '/inbox/comments/{postId}/{commentId}/like';
+    url: '/inbox/comments/{post_id}/{comment_id}/like';
 };
 
-export type DeleteInboxCommentsByPostIdByCommentIdLikeErrors = {
+export type UnlikeCommentErrors = {
     /**
      * Missing required parameters
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The key's scopes do not include inbox:write
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Platform does not support comment likes
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
 };
 
-export type DeleteInboxCommentsByPostIdByCommentIdLikeError = DeleteInboxCommentsByPostIdByCommentIdLikeErrors[keyof DeleteInboxCommentsByPostIdByCommentIdLikeErrors];
+export type UnlikeCommentError = UnlikeCommentErrors[keyof UnlikeCommentErrors];
 
-export type DeleteInboxCommentsByPostIdByCommentIdLikeResponses = {
+export type UnlikeCommentResponses = {
     /**
      * Comment unliked
      */
-    200: ApiEndpointsSuccessResponse;
+    200: SuccessResponse;
 };
 
-export type DeleteInboxCommentsByPostIdByCommentIdLikeResponse = DeleteInboxCommentsByPostIdByCommentIdLikeResponses[keyof DeleteInboxCommentsByPostIdByCommentIdLikeResponses];
+export type UnlikeCommentResponse = UnlikeCommentResponses[keyof UnlikeCommentResponses];
 
-export type PostInboxCommentsByPostIdByCommentIdLikeData = {
+export type LikeCommentData = {
     /**
      * Account to like as
      */
@@ -6397,118 +6397,118 @@ export type PostInboxCommentsByPostIdByCommentIdLikeData = {
         /**
          * Platform post ID
          */
-        postId: string;
+        post_id: string;
         /**
          * Platform comment ID to like
          */
-        commentId: string;
+        comment_id: string;
     };
     query?: never;
-    url: '/inbox/comments/{postId}/{commentId}/like';
+    url: '/inbox/comments/{post_id}/{comment_id}/like';
 };
 
-export type PostInboxCommentsByPostIdByCommentIdLikeErrors = {
+export type LikeCommentErrors = {
     /**
      * Missing required parameters
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The key's scopes do not include inbox:write
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Platform does not support comment likes
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
 };
 
-export type PostInboxCommentsByPostIdByCommentIdLikeError = PostInboxCommentsByPostIdByCommentIdLikeErrors[keyof PostInboxCommentsByPostIdByCommentIdLikeErrors];
+export type LikeCommentError = LikeCommentErrors[keyof LikeCommentErrors];
 
-export type PostInboxCommentsByPostIdByCommentIdLikeResponses = {
+export type LikeCommentResponses = {
     /**
      * Comment liked
      */
-    200: ApiEndpointsSuccessResponse;
+    200: SuccessResponse;
 };
 
-export type PostInboxCommentsByPostIdByCommentIdLikeResponse = PostInboxCommentsByPostIdByCommentIdLikeResponses[keyof PostInboxCommentsByPostIdByCommentIdLikeResponses];
+export type LikeCommentResponse = LikeCommentResponses[keyof LikeCommentResponses];
 
-export type PostInboxCommentsByPostIdByCommentIdPrivateReplyData = {
+export type SendPrivateReplyData = {
     /**
      * Private reply content
      */
-    body: ApiEndpointsPrivateReplyRequest;
+    body: PrivateReplyRequest;
     path: {
         /**
          * Platform post ID
          */
-        postId: string;
+        post_id: string;
         /**
          * Platform comment ID
          */
-        commentId: string;
+        comment_id: string;
     };
     query?: never;
-    url: '/inbox/comments/{postId}/{commentId}/private-reply';
+    url: '/inbox/comments/{post_id}/{comment_id}/private-reply';
 };
 
-export type PostInboxCommentsByPostIdByCommentIdPrivateReplyErrors = {
+export type SendPrivateReplyErrors = {
     /**
      * Missing required fields, attachment combined with text or buttons (validation.attachment_conflict), or comment not eligible for a private reply (platform.instagram.private_reply_ineligible, platform.facebook.private_reply_ineligible)
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The key's scopes do not include inbox:write, or the account lacks the messages.write permission (account.permission_missing)
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * The platform could not fetch or accept the attachment (platform.instagram.attachment_failed, platform.facebook.attachment_failed). The comment can still receive a private reply: fix the URL or file and send again
      */
-    422: ApiEndpointsErrorResponse;
+    422: ErrorResponse;
     /**
      * Platform does not support private replies
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
 };
 
-export type PostInboxCommentsByPostIdByCommentIdPrivateReplyError = PostInboxCommentsByPostIdByCommentIdPrivateReplyErrors[keyof PostInboxCommentsByPostIdByCommentIdPrivateReplyErrors];
+export type SendPrivateReplyError = SendPrivateReplyErrors[keyof SendPrivateReplyErrors];
 
-export type PostInboxCommentsByPostIdByCommentIdPrivateReplyResponses = {
+export type SendPrivateReplyResponses = {
     /**
      * Private reply sent
      */
-    200: ApiEndpointsSuccessResponse;
+    200: SuccessResponse;
 };
 
-export type PostInboxCommentsByPostIdByCommentIdPrivateReplyResponse = PostInboxCommentsByPostIdByCommentIdPrivateReplyResponses[keyof PostInboxCommentsByPostIdByCommentIdPrivateReplyResponses];
+export type SendPrivateReplyResponse = SendPrivateReplyResponses[keyof SendPrivateReplyResponses];
 
-export type GetInboxCommentsByPostIdByCommentIdRepliesData = {
+export type ListCommentRepliesData = {
     body?: never;
     path: {
         /**
          * Platform post ID
          */
-        postId: string;
+        post_id: string;
         /**
          * Platform comment ID to get replies for
          */
-        commentId: string;
+        comment_id: string;
     };
     query: {
         /**
@@ -6524,44 +6524,44 @@ export type GetInboxCommentsByPostIdByCommentIdRepliesData = {
          */
         cursor?: string;
     };
-    url: '/inbox/comments/{postId}/{commentId}/replies';
+    url: '/inbox/comments/{post_id}/{comment_id}/replies';
 };
 
-export type GetInboxCommentsByPostIdByCommentIdRepliesErrors = {
+export type ListCommentRepliesErrors = {
     /**
      * Missing required parameters
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The key's scopes do not include inbox:read
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Platform does not support comment replies
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
 };
 
-export type GetInboxCommentsByPostIdByCommentIdRepliesError = GetInboxCommentsByPostIdByCommentIdRepliesErrors[keyof GetInboxCommentsByPostIdByCommentIdRepliesErrors];
+export type ListCommentRepliesError = ListCommentRepliesErrors[keyof ListCommentRepliesErrors];
 
-export type GetInboxCommentsByPostIdByCommentIdRepliesResponses = {
+export type ListCommentRepliesResponses = {
     /**
      * Paginated list of replies with capabilities
      */
-    200: ApiEndpointsCommentsWithCapsListResponse;
+    200: CommentsWithCapsListResponse;
 };
 
-export type GetInboxCommentsByPostIdByCommentIdRepliesResponse = GetInboxCommentsByPostIdByCommentIdRepliesResponses[keyof GetInboxCommentsByPostIdByCommentIdRepliesResponses];
+export type ListCommentRepliesResponse = ListCommentRepliesResponses[keyof ListCommentRepliesResponses];
 
-export type GetInboxConversationsData = {
+export type ListConversationsData = {
     body?: never;
     path?: never;
     query?: {
@@ -6597,114 +6597,114 @@ export type GetInboxConversationsData = {
     url: '/inbox/conversations';
 };
 
-export type GetInboxConversationsErrors = {
+export type ListConversationsErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
 };
 
-export type GetInboxConversationsError = GetInboxConversationsErrors[keyof GetInboxConversationsErrors];
+export type ListConversationsError = ListConversationsErrors[keyof ListConversationsErrors];
 
-export type GetInboxConversationsResponses = {
+export type ListConversationsResponses = {
     /**
      * Paginated list of conversations
      */
-    200: ApiEndpointsConversationsListResponse;
+    200: ConversationsListResponse;
 };
 
-export type GetInboxConversationsResponse = GetInboxConversationsResponses[keyof GetInboxConversationsResponses];
+export type ListConversationsResponse = ListConversationsResponses[keyof ListConversationsResponses];
 
-export type GetInboxConversationsByIdData = {
+export type GetConversationData = {
     body?: never;
     path: {
         /**
          * Conversation ID
          */
-        id: string;
+        conversation_id: string;
     };
     query?: never;
-    url: '/inbox/conversations/{id}';
+    url: '/inbox/conversations/{conversation_id}';
 };
 
-export type GetInboxConversationsByIdErrors = {
+export type GetConversationErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The key's scopes do not include dms:read
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Conversation not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type GetInboxConversationsByIdError = GetInboxConversationsByIdErrors[keyof GetInboxConversationsByIdErrors];
+export type GetConversationError = GetConversationErrors[keyof GetConversationErrors];
 
-export type GetInboxConversationsByIdResponses = {
+export type GetConversationResponses = {
     /**
      * Conversation details
      */
-    200: ApiEndpointsConversationResponse;
+    200: ConversationResponse;
 };
 
-export type GetInboxConversationsByIdResponse = GetInboxConversationsByIdResponses[keyof GetInboxConversationsByIdResponses];
+export type GetConversationResponse = GetConversationResponses[keyof GetConversationResponses];
 
-export type PatchInboxConversationsByIdData = {
+export type UpdateConversationData = {
     /**
      * Status payload
      */
-    body: ApiEndpointsUpdateConversationRequest;
+    body: UpdateConversationRequest;
     path: {
         /**
          * Conversation ID
          */
-        id: string;
+        conversation_id: string;
     };
     query?: never;
-    url: '/inbox/conversations/{id}';
+    url: '/inbox/conversations/{conversation_id}';
 };
 
-export type PatchInboxConversationsByIdErrors = {
+export type UpdateConversationErrors = {
     /**
      * Invalid request body or status value
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The key's scopes do not include dms:read
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Conversation not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type PatchInboxConversationsByIdError = PatchInboxConversationsByIdErrors[keyof PatchInboxConversationsByIdErrors];
+export type UpdateConversationError = UpdateConversationErrors[keyof UpdateConversationErrors];
 
-export type PatchInboxConversationsByIdResponses = {
+export type UpdateConversationResponses = {
     /**
      * Updated
      */
-    200: ApiEndpointsSuccessResponse;
+    200: SuccessResponse;
 };
 
-export type PatchInboxConversationsByIdResponse = PatchInboxConversationsByIdResponses[keyof PatchInboxConversationsByIdResponses];
+export type UpdateConversationResponse = UpdateConversationResponses[keyof UpdateConversationResponses];
 
-export type GetInboxConversationsByIdMessagesData = {
+export type ListMessagesData = {
     body?: never;
     path: {
         /**
          * Conversation ID
          */
-        id: string;
+        conversation_id: string;
     };
     query?: {
         /**
@@ -6716,103 +6716,103 @@ export type GetInboxConversationsByIdMessagesData = {
          */
         cursor?: string;
     };
-    url: '/inbox/conversations/{id}/messages';
+    url: '/inbox/conversations/{conversation_id}/messages';
 };
 
-export type GetInboxConversationsByIdMessagesErrors = {
+export type ListMessagesErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The key's scopes do not include dms:read
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Conversation not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type GetInboxConversationsByIdMessagesError = GetInboxConversationsByIdMessagesErrors[keyof GetInboxConversationsByIdMessagesErrors];
+export type ListMessagesError = ListMessagesErrors[keyof ListMessagesErrors];
 
-export type GetInboxConversationsByIdMessagesResponses = {
+export type ListMessagesResponses = {
     /**
      * Paginated list of messages
      */
-    200: ApiEndpointsMessagesListResponse;
+    200: MessagesListResponse;
 };
 
-export type GetInboxConversationsByIdMessagesResponse = GetInboxConversationsByIdMessagesResponses[keyof GetInboxConversationsByIdMessagesResponses];
+export type ListMessagesResponse = ListMessagesResponses[keyof ListMessagesResponses];
 
-export type PostInboxConversationsByIdMessagesData = {
+export type SendMessageData = {
     /**
      * Message payload
      */
-    body: ApiEndpointsSendMessageRequest;
+    body: SendMessageRequest;
     path: {
         /**
          * Conversation ID
          */
-        id: string;
+        conversation_id: string;
     };
     query?: never;
-    url: '/inbox/conversations/{id}/messages';
+    url: '/inbox/conversations/{conversation_id}/messages';
 };
 
-export type PostInboxConversationsByIdMessagesErrors = {
+export type SendMessageErrors = {
     /**
      * Invalid request body, missing required fields, or messaging window closed (platform.instagram.window_closed / platform.facebook.window_closed: the recipient must message you first to reopen the 24-hour window). After the platform refuses a thread for a closed window, later untagged sends on it fail with the same code, at no credit cost, until the recipient messages you again. messaging.human_agent_window_closed: message_tag was sent after the human agent window closed, so the person must message you first.
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Platform rejected the request (e.g. platform.instagram.permission_denied), or account requires reconnection (account.reconnection_required), or message_tag was sent but human agent tagging is not enabled for your account (messaging.tag_not_enabled): contact support to request it.
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Conversation or account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * The platform could not fetch or accept an attachment (platform.instagram.attachment_failed, platform.facebook.attachment_failed): check that the URL is publicly reachable and the file type and size are supported. messaging.tag_not_supported: message_tag is not HUMAN_AGENT, or this account does not accept message tags; send without message_tag.
      */
-    422: ApiEndpointsErrorResponse;
+    422: ErrorResponse;
     /**
      * Plan interaction allowance used up (validation.interaction_limit_exhausted), sending too fast (messaging.velocity_limit), too many different recipients this calendar day in UTC (messaging.recipient_limit), calls paused after the platform's own rate limit (platform.{platform}.throttled), or the platform's own rate limit (platform.{platform}.rate_limit). Wait for the Retry-After header when it is present.
      */
-    429: ApiEndpointsErrorResponse;
+    429: ErrorResponse;
     /**
      * Platform does not support sending DMs
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
 };
 
-export type PostInboxConversationsByIdMessagesError = PostInboxConversationsByIdMessagesErrors[keyof PostInboxConversationsByIdMessagesErrors];
+export type SendMessageError = SendMessageErrors[keyof SendMessageErrors];
 
-export type PostInboxConversationsByIdMessagesResponses = {
+export type SendMessageResponses = {
     /**
      * Message sent with ID
      */
-    200: ApiEndpointsSendMessageResponse;
+    200: SendMessageResponse;
 };
 
-export type PostInboxConversationsByIdMessagesResponse = PostInboxConversationsByIdMessagesResponses[keyof PostInboxConversationsByIdMessagesResponses];
+export type SendMessageResponse2 = SendMessageResponses[keyof SendMessageResponses];
 
-export type DeleteInboxConversationsByIdMessagesByMessageIdReactionData = {
+export type RemoveMessageReactionData = {
     body?: never;
     path: {
         /**
          * Conversation ID
          */
-        id: string;
+        conversation_id: string;
         /**
          * Platform message ID to remove the reaction from
          */
-        messageId: string;
+        message_id: string;
     };
     query: {
         /**
@@ -6820,234 +6820,234 @@ export type DeleteInboxConversationsByIdMessagesByMessageIdReactionData = {
          */
         account_id: string;
     };
-    url: '/inbox/conversations/{id}/messages/{messageId}/reaction';
+    url: '/inbox/conversations/{conversation_id}/messages/{message_id}/reaction';
 };
 
-export type DeleteInboxConversationsByIdMessagesByMessageIdReactionErrors = {
+export type RemoveMessageReactionErrors = {
     /**
      * Missing account_id
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Conversation or account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Rate limit exceeded
      */
-    429: ApiEndpointsErrorResponse;
+    429: ErrorResponse;
     /**
      * Platform does not support message reactions
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
     /**
      * Upstream platform API error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type DeleteInboxConversationsByIdMessagesByMessageIdReactionError = DeleteInboxConversationsByIdMessagesByMessageIdReactionErrors[keyof DeleteInboxConversationsByIdMessagesByMessageIdReactionErrors];
+export type RemoveMessageReactionError = RemoveMessageReactionErrors[keyof RemoveMessageReactionErrors];
 
-export type DeleteInboxConversationsByIdMessagesByMessageIdReactionResponses = {
+export type RemoveMessageReactionResponses = {
     /**
      * Reaction removed
      */
-    200: ApiEndpointsSuccessResponse;
+    200: SuccessResponse;
 };
 
-export type DeleteInboxConversationsByIdMessagesByMessageIdReactionResponse = DeleteInboxConversationsByIdMessagesByMessageIdReactionResponses[keyof DeleteInboxConversationsByIdMessagesByMessageIdReactionResponses];
+export type RemoveMessageReactionResponse = RemoveMessageReactionResponses[keyof RemoveMessageReactionResponses];
 
-export type PostInboxConversationsByIdMessagesByMessageIdReactionData = {
+export type AddMessageReactionData = {
     /**
      * Account and emoji
      */
-    body: ApiEndpointsReactToMessageRequest;
+    body: ReactToMessageRequest;
     path: {
         /**
          * Conversation ID
          */
-        id: string;
+        conversation_id: string;
         /**
          * Platform message ID to react to
          */
-        messageId: string;
+        message_id: string;
     };
     query?: never;
-    url: '/inbox/conversations/{id}/messages/{messageId}/reaction';
+    url: '/inbox/conversations/{conversation_id}/messages/{message_id}/reaction';
 };
 
-export type PostInboxConversationsByIdMessagesByMessageIdReactionErrors = {
+export type AddMessageReactionErrors = {
     /**
      * Invalid body, missing account_id, or reaction is not a single emoji
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Conversation or account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Rate limit exceeded
      */
-    429: ApiEndpointsErrorResponse;
+    429: ErrorResponse;
     /**
      * Platform does not support message reactions
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
     /**
      * Upstream platform API error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type PostInboxConversationsByIdMessagesByMessageIdReactionError = PostInboxConversationsByIdMessagesByMessageIdReactionErrors[keyof PostInboxConversationsByIdMessagesByMessageIdReactionErrors];
+export type AddMessageReactionError = AddMessageReactionErrors[keyof AddMessageReactionErrors];
 
-export type PostInboxConversationsByIdMessagesByMessageIdReactionResponses = {
+export type AddMessageReactionResponses = {
     /**
      * Reaction applied
      */
-    200: ApiEndpointsSuccessResponse;
+    200: SuccessResponse;
 };
 
-export type PostInboxConversationsByIdMessagesByMessageIdReactionResponse = PostInboxConversationsByIdMessagesByMessageIdReactionResponses[keyof PostInboxConversationsByIdMessagesByMessageIdReactionResponses];
+export type AddMessageReactionResponse = AddMessageReactionResponses[keyof AddMessageReactionResponses];
 
-export type PostInboxConversationsByIdReadData = {
+export type MarkConversationReadData = {
     body?: never;
     path: {
         /**
          * Conversation ID
          */
-        id: string;
+        conversation_id: string;
     };
     query?: never;
-    url: '/inbox/conversations/{id}/read';
+    url: '/inbox/conversations/{conversation_id}/read';
 };
 
-export type PostInboxConversationsByIdReadErrors = {
+export type MarkConversationReadErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The key's scopes do not include dms:read
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Conversation not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type PostInboxConversationsByIdReadError = PostInboxConversationsByIdReadErrors[keyof PostInboxConversationsByIdReadErrors];
+export type MarkConversationReadError = MarkConversationReadErrors[keyof MarkConversationReadErrors];
 
-export type PostInboxConversationsByIdReadResponses = {
+export type MarkConversationReadResponses = {
     /**
      * Marked as read
      */
-    200: ApiEndpointsSuccessResponse;
+    200: SuccessResponse;
 };
 
-export type PostInboxConversationsByIdReadResponse = PostInboxConversationsByIdReadResponses[keyof PostInboxConversationsByIdReadResponses];
+export type MarkConversationReadResponse = MarkConversationReadResponses[keyof MarkConversationReadResponses];
 
-export type PostInboxConversationsByIdSenderActionData = {
+export type SendSenderActionData = {
     /**
      * Account and action
      */
-    body: ApiEndpointsSenderActionRequest;
+    body: SenderActionRequest;
     path: {
         /**
          * Conversation ID
          */
-        id: string;
+        conversation_id: string;
     };
     query?: never;
-    url: '/inbox/conversations/{id}/sender-action';
+    url: '/inbox/conversations/{conversation_id}/sender-action';
 };
 
-export type PostInboxConversationsByIdSenderActionErrors = {
+export type SendSenderActionErrors = {
     /**
      * Invalid body, missing account_id, unknown action, or an action the platform does not offer
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Conversation or account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Rate limit exceeded
      */
-    429: ApiEndpointsErrorResponse;
+    429: ErrorResponse;
     /**
      * Platform does not support sender actions
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
     /**
      * Upstream platform API error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type PostInboxConversationsByIdSenderActionError = PostInboxConversationsByIdSenderActionErrors[keyof PostInboxConversationsByIdSenderActionErrors];
+export type SendSenderActionError = SendSenderActionErrors[keyof SendSenderActionErrors];
 
-export type PostInboxConversationsByIdSenderActionResponses = {
+export type SendSenderActionResponses = {
     /**
      * Action sent
      */
-    200: ApiEndpointsSuccessResponse;
+    200: SuccessResponse;
 };
 
-export type PostInboxConversationsByIdSenderActionResponse = PostInboxConversationsByIdSenderActionResponses[keyof PostInboxConversationsByIdSenderActionResponses];
+export type SendSenderActionResponse = SendSenderActionResponses[keyof SendSenderActionResponses];
 
-export type GetInboxMediaByIdData = {
+export type GetInboxMediaData = {
     body?: never;
     path: {
         /**
          * Inbox media ID
          */
-        id: string;
+        media_id: string;
     };
     query?: never;
-    url: '/inbox/media/{id}';
+    url: '/inbox/media/{media_id}';
 };
 
-export type GetInboxMediaByIdErrors = {
+export type GetInboxMediaErrors = {
     /**
      * Unknown media, or not owned by the caller
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Media expired or permanently unavailable
      */
-    410: ApiEndpointsErrorResponse;
+    410: ErrorResponse;
     /**
      * Media fetch still in progress or too many concurrent requests, retry shortly
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type GetInboxMediaByIdError = GetInboxMediaByIdErrors[keyof GetInboxMediaByIdErrors];
+export type GetInboxMediaError = GetInboxMediaErrors[keyof GetInboxMediaErrors];
 
-export type GetInboxMediaByIdResponses = {
+export type GetInboxMediaResponses = {
     /**
      * OK
      */
     200: Blob | File;
 };
 
-export type GetInboxMediaByIdResponse = GetInboxMediaByIdResponses[keyof GetInboxMediaByIdResponses];
+export type GetInboxMediaResponse = GetInboxMediaResponses[keyof GetInboxMediaResponses];
 
-export type GetInboxReviewsData = {
+export type ListReviewAccountsData = {
     body?: never;
     path?: never;
     query?: {
@@ -7059,25 +7059,25 @@ export type GetInboxReviewsData = {
     url: '/inbox/reviews';
 };
 
-export type GetInboxReviewsErrors = {
+export type ListReviewAccountsErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
 };
 
-export type GetInboxReviewsError = GetInboxReviewsErrors[keyof GetInboxReviewsErrors];
+export type ListReviewAccountsError = ListReviewAccountsErrors[keyof ListReviewAccountsErrors];
 
-export type GetInboxReviewsResponses = {
+export type ListReviewAccountsResponses = {
     /**
      * Accounts with review summaries
      */
-    200: ApiEndpointsReviewAccountsResponse;
+    200: ReviewAccountsResponse;
 };
 
-export type GetInboxReviewsResponse = GetInboxReviewsResponses[keyof GetInboxReviewsResponses];
+export type ListReviewAccountsResponse = ListReviewAccountsResponses[keyof ListReviewAccountsResponses];
 
-export type GetInboxReviewsByAccountIdData = {
+export type ListReviewsData = {
     body?: never;
     path: {
         /**
@@ -7102,90 +7102,90 @@ export type GetInboxReviewsByAccountIdData = {
     url: '/inbox/reviews/{account_id}';
 };
 
-export type GetInboxReviewsByAccountIdErrors = {
+export type ListReviewsErrors = {
     /**
      * Invalid query parameters
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Account platform does not support reviews (account.platform_unsupported)
      */
-    422: ApiEndpointsErrorResponse;
+    422: ErrorResponse;
 };
 
-export type GetInboxReviewsByAccountIdError = GetInboxReviewsByAccountIdErrors[keyof GetInboxReviewsByAccountIdErrors];
+export type ListReviewsError = ListReviewsErrors[keyof ListReviewsErrors];
 
-export type GetInboxReviewsByAccountIdResponses = {
+export type ListReviewsResponses = {
     /**
      * Reviews with summary and pagination
      */
-    200: ApiEndpointsReviewsListResponse;
+    200: ReviewsListResponse;
 };
 
-export type GetInboxReviewsByAccountIdResponse = GetInboxReviewsByAccountIdResponses[keyof GetInboxReviewsByAccountIdResponses];
+export type ListReviewsResponse = ListReviewsResponses[keyof ListReviewsResponses];
 
-export type PostInboxReviewsByIdReplyData = {
+export type ReplyToReviewData = {
     /**
      * Reply content
      */
-    body: ApiEndpointsReplyReviewRequest;
+    body: ReplyReviewRequest;
     path: {
         /**
          * Review ID
          */
-        id: string;
+        review_id: string;
     };
     query?: never;
-    url: '/inbox/reviews/{id}/reply';
+    url: '/inbox/reviews/{review_id}/reply';
 };
 
-export type PostInboxReviewsByIdReplyErrors = {
+export type ReplyToReviewErrors = {
     /**
      * Missing required fields
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account requires reconnection (account.reconnection_required)
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Account platform does not support reviews (account.platform_unsupported)
      */
-    422: ApiEndpointsErrorResponse;
+    422: ErrorResponse;
     /**
      * Monthly interaction limit exceeded
      */
-    429: ApiEndpointsErrorResponse;
+    429: ErrorResponse;
 };
 
-export type PostInboxReviewsByIdReplyError = PostInboxReviewsByIdReplyErrors[keyof PostInboxReviewsByIdReplyErrors];
+export type ReplyToReviewError = ReplyToReviewErrors[keyof ReplyToReviewErrors];
 
-export type PostInboxReviewsByIdReplyResponses = {
+export type ReplyToReviewResponses = {
     /**
      * Reply posted with reply_id
      */
-    200: ApiEndpointsReplyToReviewResponse;
+    200: ReplyToReviewResponse;
 };
 
-export type PostInboxReviewsByIdReplyResponse = PostInboxReviewsByIdReplyResponses[keyof PostInboxReviewsByIdReplyResponses];
+export type ReplyToReviewResponse2 = ReplyToReviewResponses[keyof ReplyToReviewResponses];
 
-export type GetInboxSyncData = {
+export type GetInboxSyncStatusData = {
     body?: never;
     path?: never;
     query: {
@@ -7201,98 +7201,73 @@ export type GetInboxSyncData = {
     url: '/inbox/sync';
 };
 
-export type GetInboxSyncErrors = {
+export type GetInboxSyncStatusErrors = {
     /**
      * Missing account_id
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account or conversation not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type GetInboxSyncError = GetInboxSyncErrors[keyof GetInboxSyncErrors];
+export type GetInboxSyncStatusError = GetInboxSyncStatusErrors[keyof GetInboxSyncStatusErrors];
 
-export type GetInboxSyncResponses = {
+export type GetInboxSyncStatusResponses = {
     /**
      * Current sync state
      */
-    200: ApiEndpointsInboxSyncResponse;
+    200: InboxSyncResponse;
 };
 
-export type GetInboxSyncResponse = GetInboxSyncResponses[keyof GetInboxSyncResponses];
+export type GetInboxSyncStatusResponse = GetInboxSyncStatusResponses[keyof GetInboxSyncStatusResponses];
 
-export type PostInboxSyncData = {
+export type StartInboxSyncData = {
     /**
      * Sync target
      */
-    body: ApiEndpointsInboxSyncRequest;
+    body: InboxSyncRequest;
     path?: never;
     query?: never;
     url: '/inbox/sync';
 };
 
-export type PostInboxSyncErrors = {
+export type StartInboxSyncErrors = {
     /**
      * Missing or invalid account_id, or account.page_inactive: the conversation's Facebook Page is no longer connected, so its thread cannot be refreshed. Reconnect the Page to sync it again.
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account or conversation not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * A sync for this target ran too recently. The Retry-After header carries the seconds to wait.
      */
-    429: ApiEndpointsErrorResponse;
+    429: ErrorResponse;
 };
 
-export type PostInboxSyncError = PostInboxSyncErrors[keyof PostInboxSyncErrors];
+export type StartInboxSyncError = StartInboxSyncErrors[keyof StartInboxSyncErrors];
 
-export type PostInboxSyncResponses = {
+export type StartInboxSyncResponses = {
     /**
      * Sync started, or already running
      */
-    202: ApiEndpointsInboxSyncResponse;
+    202: InboxSyncResponse;
 };
 
-export type PostInboxSyncResponse = PostInboxSyncResponses[keyof PostInboxSyncResponses];
+export type StartInboxSyncResponse = StartInboxSyncResponses[keyof StartInboxSyncResponses];
 
-export type GetInviteByTokenData = {
-    body?: never;
-    path: {
-        /**
-         * Invite token
-         */
-        token: string;
-    };
-    query?: never;
-    url: '/invite/{token}';
-};
-
-export type GetInviteByTokenErrors = {
-    /**
-     * Invite not found
-     */
-    404: string;
-    /**
-     * Invite expired or already used
-     */
-    410: string;
-};
-
-export type GetInviteByTokenError = GetInviteByTokenErrors[keyof GetInviteByTokenErrors];
-
-export type GetInvitesData = {
+export type ListInvitesData = {
     body?: never;
     path?: never;
     query: {
@@ -7304,290 +7279,290 @@ export type GetInvitesData = {
     url: '/invites';
 };
 
-export type GetInvitesErrors = {
+export type ListInvitesErrors = {
     /**
      * Missing brand_id
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Brand not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type GetInvitesError = GetInvitesErrors[keyof GetInvitesErrors];
+export type ListInvitesError = ListInvitesErrors[keyof ListInvitesErrors];
 
-export type GetInvitesResponses = {
+export type ListInvitesResponses = {
     /**
      * List of invites
      */
-    200: ApiEndpointsInviteListResponse;
+    200: InviteListResponse;
 };
 
-export type GetInvitesResponse = GetInvitesResponses[keyof GetInvitesResponses];
+export type ListInvitesResponse = ListInvitesResponses[keyof ListInvitesResponses];
 
-export type PostInvitesData = {
+export type CreateInviteData = {
     /**
      * Invite details
      */
-    body: ApiEndpointsCreateInviteRequest;
+    body: CreateInviteRequest;
     path?: never;
     query?: never;
     url: '/invites';
 };
 
-export type PostInvitesErrors = {
+export type CreateInviteErrors = {
     /**
      * Missing or invalid fields, or invalid permissions (validation.permissions_empty, validation.permission_unknown)
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Brand not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Account or active invite already exists
      */
-    409: ApiEndpointsErrorResponse;
+    409: ErrorResponse;
 };
 
-export type PostInvitesError = PostInvitesErrors[keyof PostInvitesErrors];
+export type CreateInviteError = CreateInviteErrors[keyof CreateInviteErrors];
 
-export type PostInvitesResponses = {
+export type CreateInviteResponses = {
     /**
      * Invite created
      */
-    201: ApiEndpointsInviteResponse;
+    201: InviteResponse;
 };
 
-export type PostInvitesResponse = PostInvitesResponses[keyof PostInvitesResponses];
+export type CreateInviteResponse = CreateInviteResponses[keyof CreateInviteResponses];
 
-export type DeleteInvitesByIdData = {
+export type RevokeInviteData = {
     body?: never;
     path: {
         /**
          * Invite ID
          */
-        id: string;
+        invite_id: string;
     };
     query?: never;
-    url: '/invites/{id}';
+    url: '/invites/{invite_id}';
 };
 
-export type DeleteInvitesByIdErrors = {
+export type RevokeInviteErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Invite not found or already used
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type DeleteInvitesByIdError = DeleteInvitesByIdErrors[keyof DeleteInvitesByIdErrors];
+export type RevokeInviteError = RevokeInviteErrors[keyof RevokeInviteErrors];
 
-export type DeleteInvitesByIdResponses = {
+export type RevokeInviteResponses = {
     /**
      * Invite revoked
      */
     204: void;
 };
 
-export type DeleteInvitesByIdResponse = DeleteInvitesByIdResponses[keyof DeleteInvitesByIdResponses];
+export type RevokeInviteResponse = RevokeInviteResponses[keyof RevokeInviteResponses];
 
-export type GetKeysData = {
+export type ListApiKeysData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/keys';
 };
 
-export type GetKeysErrors = {
+export type ListApiKeysErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
 };
 
-export type GetKeysError = GetKeysErrors[keyof GetKeysErrors];
+export type ListApiKeysError = ListApiKeysErrors[keyof ListApiKeysErrors];
 
-export type GetKeysResponses = {
+export type ListApiKeysResponses = {
     /**
      * List of API keys
      */
-    200: ApiEndpointsKeysListResponse;
+    200: KeysListResponse;
 };
 
-export type GetKeysResponse = GetKeysResponses[keyof GetKeysResponses];
+export type ListApiKeysResponse = ListApiKeysResponses[keyof ListApiKeysResponses];
 
-export type PostKeysData = {
+export type CreateApiKeyData = {
     /**
      * Key name and optional restrictions
      */
-    body: ApiEndpointsCreateKeyRequest;
+    body: CreateKeyRequest;
     path?: never;
     query?: never;
     url: '/keys';
 };
 
-export type PostKeysErrors = {
+export type CreateApiKeyErrors = {
     /**
      * Invalid request body, missing name, unknown scope, or invalid brand ID
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
 };
 
-export type PostKeysError = PostKeysErrors[keyof PostKeysErrors];
+export type CreateApiKeyError = CreateApiKeyErrors[keyof CreateApiKeyErrors];
 
-export type PostKeysResponses = {
+export type CreateApiKeyResponses = {
     /**
      * Key created (raw key shown once)
      */
-    201: ApiEndpointsCreateKeyResponse;
+    201: CreateKeyResponse;
 };
 
-export type PostKeysResponse = PostKeysResponses[keyof PostKeysResponses];
+export type CreateApiKeyResponse = CreateApiKeyResponses[keyof CreateApiKeyResponses];
 
-export type GetKeysScopesData = {
+export type ListApiKeyScopesData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/keys/scopes';
 };
 
-export type GetKeysScopesErrors = {
+export type ListApiKeyScopesErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
 };
 
-export type GetKeysScopesError = GetKeysScopesErrors[keyof GetKeysScopesErrors];
+export type ListApiKeyScopesError = ListApiKeyScopesErrors[keyof ListApiKeyScopesErrors];
 
-export type GetKeysScopesResponses = {
+export type ListApiKeyScopesResponses = {
     /**
      * Scope catalog
      */
-    200: ApiEndpointsKeyScopesResponse;
+    200: KeyScopesResponse;
 };
 
-export type GetKeysScopesResponse = GetKeysScopesResponses[keyof GetKeysScopesResponses];
+export type ListApiKeyScopesResponse = ListApiKeyScopesResponses[keyof ListApiKeyScopesResponses];
 
-export type DeleteKeysByIdData = {
+export type RevokeApiKeyData = {
     body?: never;
     path: {
         /**
          * API key ID
          */
-        id: string;
+        key_id: string;
     };
     query?: never;
-    url: '/keys/{id}';
+    url: '/keys/{key_id}';
 };
 
-export type DeleteKeysByIdErrors = {
+export type RevokeApiKeyErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * API key not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type DeleteKeysByIdError = DeleteKeysByIdErrors[keyof DeleteKeysByIdErrors];
+export type RevokeApiKeyError = RevokeApiKeyErrors[keyof RevokeApiKeyErrors];
 
-export type DeleteKeysByIdResponses = {
+export type RevokeApiKeyResponses = {
     /**
      * Key revoked
      */
-    200: ApiEndpointsOkResponse;
+    200: OkResponse;
 };
 
-export type DeleteKeysByIdResponse = DeleteKeysByIdResponses[keyof DeleteKeysByIdResponses];
+export type RevokeApiKeyResponse = RevokeApiKeyResponses[keyof RevokeApiKeyResponses];
 
-export type PatchKeysByIdData = {
+export type UpdateApiKeyData = {
     /**
      * New name and restrictions
      */
-    body: ApiEndpointsUpdateKeyRequest;
+    body: UpdateKeyRequest;
     path: {
         /**
          * API key ID
          */
-        id: string;
+        key_id: string;
     };
     query?: never;
-    url: '/keys/{id}';
+    url: '/keys/{key_id}';
 };
 
-export type PatchKeysByIdErrors = {
+export type UpdateApiKeyErrors = {
     /**
      * Invalid request body, missing name, unknown scope, or invalid brand ID
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * API key not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type PatchKeysByIdError = PatchKeysByIdErrors[keyof PatchKeysByIdErrors];
+export type UpdateApiKeyError = UpdateApiKeyErrors[keyof UpdateApiKeyErrors];
 
-export type PatchKeysByIdResponses = {
+export type UpdateApiKeyResponses = {
     /**
      * Key updated
      */
-    200: ApiEndpointsUpdateKeyResponse;
+    200: UpdateKeyResponse;
 };
 
-export type PatchKeysByIdResponse = PatchKeysByIdResponses[keyof PatchKeysByIdResponses];
+export type UpdateApiKeyResponse = UpdateApiKeyResponses[keyof UpdateApiKeyResponses];
 
-export type PostKeysByIdRotateData = {
+export type RotateApiKeyData = {
     body?: never;
     path: {
         /**
          * API key ID
          */
-        id: string;
+        key_id: string;
     };
     query?: never;
-    url: '/keys/{id}/rotate';
+    url: '/keys/{key_id}/rotate';
 };
 
-export type PostKeysByIdRotateErrors = {
+export type RotateApiKeyErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * API key not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type PostKeysByIdRotateError = PostKeysByIdRotateErrors[keyof PostKeysByIdRotateErrors];
+export type RotateApiKeyError = RotateApiKeyErrors[keyof RotateApiKeyErrors];
 
-export type PostKeysByIdRotateResponses = {
+export type RotateApiKeyResponses = {
     /**
      * Key rotated (new raw key shown once)
      */
-    200: ApiEndpointsCreateKeyResponse;
+    200: CreateKeyResponse;
 };
 
-export type PostKeysByIdRotateResponse = PostKeysByIdRotateResponses[keyof PostKeysByIdRotateResponses];
+export type RotateApiKeyResponse = RotateApiKeyResponses[keyof RotateApiKeyResponses];
 
-export type GetMediaData = {
+export type ListMediaData = {
     body?: never;
     path?: never;
     query?: {
@@ -7603,27 +7578,27 @@ export type GetMediaData = {
     url: '/media';
 };
 
-export type GetMediaErrors = {
+export type ListMediaErrors = {
     /**
      * Unauthorized
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Internal Server Error
      */
-    500: ApiEndpointsErrorResponse;
+    500: ErrorResponse;
 };
 
-export type GetMediaError = GetMediaErrors[keyof GetMediaErrors];
+export type ListMediaError = ListMediaErrors[keyof ListMediaErrors];
 
-export type GetMediaResponses = {
+export type ListMediaResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsMediaListResponse;
+    200: MediaListResponse;
 };
 
-export type GetMediaResponse = GetMediaResponses[keyof GetMediaResponses];
+export type ListMediaResponse = ListMediaResponses[keyof ListMediaResponses];
 
 export type GetMediaStorageData = {
     body?: never;
@@ -7636,11 +7611,11 @@ export type GetMediaStorageErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Internal Server Error
      */
-    500: ApiEndpointsErrorResponse;
+    500: ErrorResponse;
 };
 
 export type GetMediaStorageError = GetMediaStorageErrors[keyof GetMediaStorageErrors];
@@ -7649,12 +7624,12 @@ export type GetMediaStorageResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsStorageUsageResponse;
+    200: StorageUsageResponse;
 };
 
 export type GetMediaStorageResponse = GetMediaStorageResponses[keyof GetMediaStorageResponses];
 
-export type PostMediaUploadData = {
+export type UploadMediaData = {
     body: {
         /**
          * Media file to upload (max 50 MB)
@@ -7666,31 +7641,31 @@ export type PostMediaUploadData = {
     url: '/media/upload';
 };
 
-export type PostMediaUploadErrors = {
+export type UploadMediaErrors = {
     /**
      * Missing file or exceeds 50 MB
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Storage quota exceeded
      */
-    413: ApiEndpointsErrorResponse;
+    413: ErrorResponse;
 };
 
-export type PostMediaUploadError = PostMediaUploadErrors[keyof PostMediaUploadErrors];
+export type UploadMediaError = UploadMediaErrors[keyof UploadMediaErrors];
 
-export type PostMediaUploadResponses = {
+export type UploadMediaResponses = {
     /**
      * Created
      */
-    201: ApiEndpointsMediaUploadResponse;
+    201: MediaUploadResponse;
 };
 
-export type PostMediaUploadResponse = PostMediaUploadResponses[keyof PostMediaUploadResponses];
+export type UploadMediaResponse = UploadMediaResponses[keyof UploadMediaResponses];
 
 export type GetMediaUploadUrlData = {
     body?: never;
@@ -7712,15 +7687,15 @@ export type GetMediaUploadUrlErrors = {
     /**
      * Missing media_type or filename
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Storage quota exceeded
      */
-    413: ApiEndpointsErrorResponse;
+    413: ErrorResponse;
 };
 
 export type GetMediaUploadUrlError = GetMediaUploadUrlErrors[keyof GetMediaUploadUrlErrors];
@@ -7729,128 +7704,128 @@ export type GetMediaUploadUrlResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsMediaUploadInfoResponse;
+    200: MediaUploadInfoResponse;
 };
 
 export type GetMediaUploadUrlResponse = GetMediaUploadUrlResponses[keyof GetMediaUploadUrlResponses];
 
-export type DeleteMediaByIdData = {
+export type DeleteMediaData = {
     body?: never;
     path: {
         /**
          * Media ID
          */
-        id: string;
+        media_id: string;
     };
     query?: never;
-    url: '/media/{id}';
+    url: '/media/{media_id}';
 };
 
-export type DeleteMediaByIdErrors = {
+export type DeleteMediaErrors = {
     /**
      * Unauthorized
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Not Found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Internal Server Error
      */
-    500: ApiEndpointsErrorResponse;
+    500: ErrorResponse;
 };
 
-export type DeleteMediaByIdError = DeleteMediaByIdErrors[keyof DeleteMediaByIdErrors];
+export type DeleteMediaError = DeleteMediaErrors[keyof DeleteMediaErrors];
 
-export type DeleteMediaByIdResponses = {
+export type DeleteMediaResponses = {
     /**
      * No Content
      */
     204: void;
 };
 
-export type DeleteMediaByIdResponse = DeleteMediaByIdResponses[keyof DeleteMediaByIdResponses];
+export type DeleteMediaResponse = DeleteMediaResponses[keyof DeleteMediaResponses];
 
-export type PostMediaByIdVerifyData = {
+export type VerifyMediaUploadData = {
     body?: never;
     path: {
         /**
          * Media ID
          */
-        id: string;
+        media_id: string;
     };
     query?: never;
-    url: '/media/{id}/verify';
+    url: '/media/{media_id}/verify';
 };
 
-export type PostMediaByIdVerifyErrors = {
+export type VerifyMediaUploadErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Media not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type PostMediaByIdVerifyError = PostMediaByIdVerifyErrors[keyof PostMediaByIdVerifyErrors];
+export type VerifyMediaUploadError = VerifyMediaUploadErrors[keyof VerifyMediaUploadErrors];
 
-export type PostMediaByIdVerifyResponses = {
+export type VerifyMediaUploadResponses = {
     /**
      * Upload verified
      */
-    200: ApiEndpointsSuccessResponse;
+    200: SuccessResponse;
 };
 
-export type PostMediaByIdVerifyResponse = PostMediaByIdVerifyResponses[keyof PostMediaByIdVerifyResponses];
+export type VerifyMediaUploadResponse = VerifyMediaUploadResponses[keyof VerifyMediaUploadResponses];
 
-export type PostMigrationsData = {
+export type StartMigrationData = {
     /**
      * Provider, key and accepted authorisation version
      */
-    body: ApiEndpointsStartMigrationRequest;
+    body: StartMigrationRequest;
     path?: never;
     query?: never;
     url: '/migrations';
 };
 
-export type PostMigrationsErrors = {
+export type StartMigrationErrors = {
     /**
      * Invalid body, unknown provider, or authorisation not accepted (`migration.authorisation_required`)
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Dashboard session required, the feature is not available on your account yet (`auth.beta_only`), or your role cannot manage migrations; ask an Admin or the Owner (`auth.insufficient_role`)
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Another SocialAPI account is already migrating this provider account (`migration.already_claimed`)
      */
-    409: ApiEndpointsErrorResponse;
+    409: ErrorResponse;
     /**
      * The provider rejected the key (`migration.key_invalid`), or it lacks read access to profiles or accounts (`migration.key_restricted`, `meta.required_group` names what is missing)
      */
-    422: ApiEndpointsErrorResponse;
+    422: ErrorResponse;
     /**
      * The provider did not answer; retry (`migration.source_unavailable`)
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type PostMigrationsError = PostMigrationsErrors[keyof PostMigrationsErrors];
+export type StartMigrationError = StartMigrationErrors[keyof StartMigrationErrors];
 
-export type PostMigrationsResponses = {
+export type StartMigrationResponses = {
     /**
      * Created
      */
-    201: ApiEndpointsMigrationResponse;
+    201: MigrationResponse;
 };
 
-export type PostMigrationsResponse = PostMigrationsResponses[keyof PostMigrationsResponses];
+export type StartMigrationResponse = StartMigrationResponses[keyof StartMigrationResponses];
 
-export type DeleteMigrationsByProviderData = {
+export type StopMigrationData = {
     body?: never;
     path: {
         /**
@@ -7862,33 +7837,33 @@ export type DeleteMigrationsByProviderData = {
     url: '/migrations/{provider}';
 };
 
-export type DeleteMigrationsByProviderErrors = {
+export type StopMigrationErrors = {
     /**
      * Unknown provider
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Dashboard session required, the feature is not available on your account yet (`auth.beta_only`), or your role cannot manage migrations; ask an Admin or the Owner (`auth.insufficient_role`)
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * No migration from this provider
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type DeleteMigrationsByProviderError = DeleteMigrationsByProviderErrors[keyof DeleteMigrationsByProviderErrors];
+export type StopMigrationError = StopMigrationErrors[keyof StopMigrationErrors];
 
-export type DeleteMigrationsByProviderResponses = {
+export type StopMigrationResponses = {
     /**
      * No Content
      */
     204: void;
 };
 
-export type DeleteMigrationsByProviderResponse = DeleteMigrationsByProviderResponses[keyof DeleteMigrationsByProviderResponses];
+export type StopMigrationResponse = StopMigrationResponses[keyof StopMigrationResponses];
 
-export type GetMigrationsByProviderData = {
+export type GetMigrationData = {
     body?: never;
     path: {
         /**
@@ -7905,79 +7880,79 @@ export type GetMigrationsByProviderData = {
     url: '/migrations/{provider}';
 };
 
-export type GetMigrationsByProviderErrors = {
+export type GetMigrationErrors = {
     /**
      * Unknown provider
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Dashboard session required, or the feature is not available on your account yet (`auth.beta_only`)
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
 };
 
-export type GetMigrationsByProviderError = GetMigrationsByProviderErrors[keyof GetMigrationsByProviderErrors];
+export type GetMigrationError = GetMigrationErrors[keyof GetMigrationErrors];
 
-export type GetMigrationsByProviderResponses = {
+export type GetMigrationResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsMigrationResponse;
+    200: MigrationResponse;
 };
 
-export type GetMigrationsByProviderResponse = GetMigrationsByProviderResponses[keyof GetMigrationsByProviderResponses];
+export type GetMigrationResponse = GetMigrationResponses[keyof GetMigrationResponses];
 
-export type PostOauthExchangeData = {
+export type ExchangeOauthCodeData = {
     /**
      * Platform, code, and metadata (redirect_uri + state required)
      */
-    body: ApiEndpointsExchangeRequest;
+    body: ExchangeRequest;
     path?: never;
     query?: never;
     url: '/oauth/exchange';
 };
 
-export type PostOauthExchangeErrors = {
+export type ExchangeOauthCodeErrors = {
     /**
      * Missing or invalid fields
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Plan limit reached (billing.platform_not_available or billing.brands_limit)
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
 };
 
-export type PostOauthExchangeError = PostOauthExchangeErrors[keyof PostOauthExchangeErrors];
+export type ExchangeOauthCodeError = ExchangeOauthCodeErrors[keyof ExchangeOauthCodeErrors];
 
-export type PostOauthExchangeResponses = {
+export type ExchangeOauthCodeResponses = {
     /**
      * Google login manages multiple Business Profiles; select one
      */
-    200: ApiEndpointsPendingConnectionResponse;
+    200: PendingConnectionResponse;
     /**
      * Single account connected
      */
-    201: ApiEndpointsConnectAccountResponse;
+    201: ConnectAccountResponse;
 };
 
-export type PostOauthExchangeResponse = PostOauthExchangeResponses[keyof PostOauthExchangeResponses];
+export type ExchangeOauthCodeResponse = ExchangeOauthCodeResponses[keyof ExchangeOauthCodeResponses];
 
-export type GetPlatformsFacebookAccountsByIdInsightsDailyData = {
+export type GetFacebookDailyInsightsData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: {
         /**
-         * Page to report on, the id from GET /accounts/{id}/pages. Defaults to the account's default Page.
+         * Page to report on, the id from GET /accounts/{account_id}/pages. Defaults to the account's default Page.
          */
         page_id?: string;
         /**
@@ -7985,187 +7960,187 @@ export type GetPlatformsFacebookAccountsByIdInsightsDailyData = {
          */
         days?: number;
     };
-    url: '/platforms/facebook/accounts/{id}/insights/daily';
+    url: '/platforms/facebook/accounts/{account_id}/insights/daily';
 };
 
-export type GetPlatformsFacebookAccountsByIdInsightsDailyErrors = {
+export type GetFacebookDailyInsightsErrors = {
     /**
      * days is not a whole number from 1 to 365
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Page connected without the insights permission
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Account not found, or page_id is not an active Page of this account
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Upstream Facebook API error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type GetPlatformsFacebookAccountsByIdInsightsDailyError = GetPlatformsFacebookAccountsByIdInsightsDailyErrors[keyof GetPlatformsFacebookAccountsByIdInsightsDailyErrors];
+export type GetFacebookDailyInsightsError = GetFacebookDailyInsightsErrors[keyof GetFacebookDailyInsightsErrors];
 
-export type GetPlatformsFacebookAccountsByIdInsightsDailyResponses = {
+export type GetFacebookDailyInsightsResponses = {
     /**
      * Daily Page insights, oldest first
      */
-    200: ApiEndpointsFacebookDailyInsightsResponse;
+    200: FacebookDailyInsightsResponse;
 };
 
-export type GetPlatformsFacebookAccountsByIdInsightsDailyResponse = GetPlatformsFacebookAccountsByIdInsightsDailyResponses[keyof GetPlatformsFacebookAccountsByIdInsightsDailyResponses];
+export type GetFacebookDailyInsightsResponse = GetFacebookDailyInsightsResponses[keyof GetFacebookDailyInsightsResponses];
 
-export type GetPlatformsFacebookAccountsByIdSummaryData = {
+export type GetFacebookPageSummaryData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: {
         /**
-         * Page to report on, the id from GET /accounts/{id}/pages. Defaults to the account's default Page.
+         * Page to report on, the id from GET /accounts/{account_id}/pages. Defaults to the account's default Page.
          */
         page_id?: string;
     };
-    url: '/platforms/facebook/accounts/{id}/summary';
+    url: '/platforms/facebook/accounts/{account_id}/summary';
 };
 
-export type GetPlatformsFacebookAccountsByIdSummaryErrors = {
+export type GetFacebookPageSummaryErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Page connected without the insights permission
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Account not found, or page_id is not an active Page of this account
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Upstream Facebook API error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type GetPlatformsFacebookAccountsByIdSummaryError = GetPlatformsFacebookAccountsByIdSummaryErrors[keyof GetPlatformsFacebookAccountsByIdSummaryErrors];
+export type GetFacebookPageSummaryError = GetFacebookPageSummaryErrors[keyof GetFacebookPageSummaryErrors];
 
-export type GetPlatformsFacebookAccountsByIdSummaryResponses = {
+export type GetFacebookPageSummaryResponses = {
     /**
      * Page insights summary
      */
-    200: ApiEndpointsFacebookAccountSummaryResponse;
+    200: FacebookAccountSummaryResponse;
 };
 
-export type GetPlatformsFacebookAccountsByIdSummaryResponse = GetPlatformsFacebookAccountsByIdSummaryResponses[keyof GetPlatformsFacebookAccountsByIdSummaryResponses];
+export type GetFacebookPageSummaryResponse = GetFacebookPageSummaryResponses[keyof GetFacebookPageSummaryResponses];
 
-export type GetPlatformsFacebookLoginsByLoginIdPagesData = {
+export type ListFacebookLoginPagesData = {
     body?: never;
     path: {
         /**
          * Facebook login (credential) ID
          */
-        loginId: string;
+        login_id: string;
     };
     query?: never;
-    url: '/platforms/facebook/logins/{loginId}/pages';
+    url: '/platforms/facebook/logins/{login_id}/pages';
 };
 
-export type GetPlatformsFacebookLoginsByLoginIdPagesErrors = {
+export type ListFacebookLoginPagesErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The API key lacks the accounts:read scope (auth.insufficient_scope)
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Unknown login
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type GetPlatformsFacebookLoginsByLoginIdPagesError = GetPlatformsFacebookLoginsByLoginIdPagesErrors[keyof GetPlatformsFacebookLoginsByLoginIdPagesErrors];
+export type ListFacebookLoginPagesError = ListFacebookLoginPagesErrors[keyof ListFacebookLoginPagesErrors];
 
-export type GetPlatformsFacebookLoginsByLoginIdPagesResponses = {
+export type ListFacebookLoginPagesResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsFacebookLoginPagesResponse;
+    200: FacebookLoginPagesResponse;
 };
 
-export type GetPlatformsFacebookLoginsByLoginIdPagesResponse = GetPlatformsFacebookLoginsByLoginIdPagesResponses[keyof GetPlatformsFacebookLoginsByLoginIdPagesResponses];
+export type ListFacebookLoginPagesResponse = ListFacebookLoginPagesResponses[keyof ListFacebookLoginPagesResponses];
 
-export type PostPlatformsFacebookLoginsByLoginIdPagesByPageIdAssignData = {
+export type AssignFacebookPageData = {
     /**
      * Target brand
      */
-    body: ApiEndpointsAssignPageRequest;
+    body: AssignPageRequest;
     path: {
         /**
          * Facebook login (credential) ID
          */
-        loginId: string;
+        login_id: string;
         /**
          * Platform page ID
          */
-        pageId: string;
+        page_id: string;
     };
     query?: never;
-    url: '/platforms/facebook/logins/{loginId}/pages/{pageId}/assign';
+    url: '/platforms/facebook/logins/{login_id}/pages/{page_id}/assign';
 };
 
-export type PostPlatformsFacebookLoginsByLoginIdPagesByPageIdAssignErrors = {
+export type AssignFacebookPageErrors = {
     /**
      * brand_id is missing (validation.field_required), the body is not valid JSON (validation.body_invalid), or the login cannot access the Page (validation.page_not_granted)
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * The API key lacks the accounts:manage scope (auth.insufficient_scope), or the brand already holds as many Facebook Pages as the plan allows (platform.facebook.page_cap)
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Unknown login or brand
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Brand connected through a different login
      */
-    409: ApiEndpointsErrorResponse;
+    409: ErrorResponse;
 };
 
-export type PostPlatformsFacebookLoginsByLoginIdPagesByPageIdAssignError = PostPlatformsFacebookLoginsByLoginIdPagesByPageIdAssignErrors[keyof PostPlatformsFacebookLoginsByLoginIdPagesByPageIdAssignErrors];
+export type AssignFacebookPageError = AssignFacebookPageErrors[keyof AssignFacebookPageErrors];
 
-export type PostPlatformsFacebookLoginsByLoginIdPagesByPageIdAssignResponses = {
+export type AssignFacebookPageResponses = {
     /**
      * Created
      */
-    201: ApiEndpointsAssignPageResponse;
+    201: AssignPageResponse;
 };
 
-export type PostPlatformsFacebookLoginsByLoginIdPagesByPageIdAssignResponse = PostPlatformsFacebookLoginsByLoginIdPagesByPageIdAssignResponses[keyof PostPlatformsFacebookLoginsByLoginIdPagesByPageIdAssignResponses];
+export type AssignFacebookPageResponse = AssignFacebookPageResponses[keyof AssignFacebookPageResponses];
 
-export type PutPlatformsGoogleAccountsByIdData = {
+export type UpdateGoogleLocationData = {
     /**
      * Fields to change
      */
-    body: SocialApiAiCoreApiConnectorsBaseGbpLocationUpdate;
+    body: GbpLocationUpdate;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: {
         /**
@@ -8173,262 +8148,262 @@ export type PutPlatformsGoogleAccountsByIdData = {
          */
         validate_only?: boolean;
     };
-    url: '/platforms/google/accounts/{id}';
+    url: '/platforms/google/accounts/{account_id}';
 };
 
-export type PutPlatformsGoogleAccountsByIdErrors = {
+export type UpdateGoogleLocationErrors = {
     /**
      * No updatable field set
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Unknown account
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Google's 10 edits per minute per profile exceeded
      */
-    429: ApiEndpointsErrorResponse;
+    429: ErrorResponse;
     /**
      * Google rejected a value, or the Google API failed
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type PutPlatformsGoogleAccountsByIdError = PutPlatformsGoogleAccountsByIdErrors[keyof PutPlatformsGoogleAccountsByIdErrors];
+export type UpdateGoogleLocationError = UpdateGoogleLocationErrors[keyof UpdateGoogleLocationErrors];
 
-export type PutPlatformsGoogleAccountsByIdResponses = {
+export type UpdateGoogleLocationResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsUpdateGoogleLocationResponse;
+    200: UpdateGoogleLocationResponse;
 };
 
-export type PutPlatformsGoogleAccountsByIdResponse = PutPlatformsGoogleAccountsByIdResponses[keyof PutPlatformsGoogleAccountsByIdResponses];
+export type UpdateGoogleLocationResponse2 = UpdateGoogleLocationResponses[keyof UpdateGoogleLocationResponses];
 
-export type GetPlatformsGoogleAccountsByIdAttributesData = {
+export type ListGoogleAttributesData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/platforms/google/accounts/{id}/attributes';
+    url: '/platforms/google/accounts/{account_id}/attributes';
 };
 
-export type GetPlatformsGoogleAccountsByIdAttributesErrors = {
+export type ListGoogleAttributesErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Unknown account
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Upstream Google API error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type GetPlatformsGoogleAccountsByIdAttributesError = GetPlatformsGoogleAccountsByIdAttributesErrors[keyof GetPlatformsGoogleAccountsByIdAttributesErrors];
+export type ListGoogleAttributesError = ListGoogleAttributesErrors[keyof ListGoogleAttributesErrors];
 
-export type GetPlatformsGoogleAccountsByIdAttributesResponses = {
+export type ListGoogleAttributesResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsGoogleAttributesResponse;
+    200: GoogleAttributesResponse;
 };
 
-export type GetPlatformsGoogleAccountsByIdAttributesResponse = GetPlatformsGoogleAccountsByIdAttributesResponses[keyof GetPlatformsGoogleAccountsByIdAttributesResponses];
+export type ListGoogleAttributesResponse = ListGoogleAttributesResponses[keyof ListGoogleAttributesResponses];
 
-export type PutPlatformsGoogleAccountsByIdAttributesData = {
+export type UpdateGoogleAttributesData = {
     /**
      * Attributes to change
      */
-    body: ApiEndpointsUpdateGoogleAttributesRequest;
+    body: UpdateGoogleAttributesRequest;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/platforms/google/accounts/{id}/attributes';
+    url: '/platforms/google/accounts/{account_id}/attributes';
 };
 
-export type PutPlatformsGoogleAccountsByIdAttributesErrors = {
+export type UpdateGoogleAttributesErrors = {
     /**
      * Empty list, duplicate attribute, or more than one value field on an attribute
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Unknown account
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Google's 10 edits per minute per profile exceeded
      */
-    429: ApiEndpointsErrorResponse;
+    429: ErrorResponse;
     /**
      * Google rejected the attribute or value
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type PutPlatformsGoogleAccountsByIdAttributesError = PutPlatformsGoogleAccountsByIdAttributesErrors[keyof PutPlatformsGoogleAccountsByIdAttributesErrors];
+export type UpdateGoogleAttributesError = UpdateGoogleAttributesErrors[keyof UpdateGoogleAttributesErrors];
 
-export type PutPlatformsGoogleAccountsByIdAttributesResponses = {
+export type UpdateGoogleAttributesResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsGoogleAttributesResponse;
+    200: GoogleAttributesResponse;
 };
 
-export type PutPlatformsGoogleAccountsByIdAttributesResponse = PutPlatformsGoogleAccountsByIdAttributesResponses[keyof PutPlatformsGoogleAccountsByIdAttributesResponses];
+export type UpdateGoogleAttributesResponse = UpdateGoogleAttributesResponses[keyof UpdateGoogleAttributesResponses];
 
-export type GetPlatformsGoogleAccountsByIdAttributesAvailableData = {
+export type ListGoogleAvailableAttributesData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/platforms/google/accounts/{id}/attributes/available';
+    url: '/platforms/google/accounts/{account_id}/attributes/available';
 };
 
-export type GetPlatformsGoogleAccountsByIdAttributesAvailableErrors = {
+export type ListGoogleAvailableAttributesErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Unknown account
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Upstream Google API error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type GetPlatformsGoogleAccountsByIdAttributesAvailableError = GetPlatformsGoogleAccountsByIdAttributesAvailableErrors[keyof GetPlatformsGoogleAccountsByIdAttributesAvailableErrors];
+export type ListGoogleAvailableAttributesError = ListGoogleAvailableAttributesErrors[keyof ListGoogleAvailableAttributesErrors];
 
-export type GetPlatformsGoogleAccountsByIdAttributesAvailableResponses = {
+export type ListGoogleAvailableAttributesResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsGoogleAvailableAttributesResponse;
+    200: GoogleAvailableAttributesResponse;
 };
 
-export type GetPlatformsGoogleAccountsByIdAttributesAvailableResponse = GetPlatformsGoogleAccountsByIdAttributesAvailableResponses[keyof GetPlatformsGoogleAccountsByIdAttributesAvailableResponses];
+export type ListGoogleAvailableAttributesResponse = ListGoogleAvailableAttributesResponses[keyof ListGoogleAvailableAttributesResponses];
 
-export type GetPlatformsGoogleAccountsByIdFoodMenusData = {
+export type GetGoogleFoodMenusData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/platforms/google/accounts/{id}/food-menus';
+    url: '/platforms/google/accounts/{account_id}/food-menus';
 };
 
-export type GetPlatformsGoogleAccountsByIdFoodMenusErrors = {
+export type GetGoogleFoodMenusErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Unknown account
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Upstream Google API error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type GetPlatformsGoogleAccountsByIdFoodMenusError = GetPlatformsGoogleAccountsByIdFoodMenusErrors[keyof GetPlatformsGoogleAccountsByIdFoodMenusErrors];
+export type GetGoogleFoodMenusError = GetGoogleFoodMenusErrors[keyof GetGoogleFoodMenusErrors];
 
-export type GetPlatformsGoogleAccountsByIdFoodMenusResponses = {
+export type GetGoogleFoodMenusResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsGoogleFoodMenusResponse;
+    200: GoogleFoodMenusResponse;
 };
 
-export type GetPlatformsGoogleAccountsByIdFoodMenusResponse = GetPlatformsGoogleAccountsByIdFoodMenusResponses[keyof GetPlatformsGoogleAccountsByIdFoodMenusResponses];
+export type GetGoogleFoodMenusResponse = GetGoogleFoodMenusResponses[keyof GetGoogleFoodMenusResponses];
 
-export type PutPlatformsGoogleAccountsByIdFoodMenusData = {
+export type UpdateGoogleFoodMenusData = {
     /**
      * The complete set of menus
      */
-    body: SocialApiAiCoreApiConnectorsBaseGbpFoodMenus;
+    body: GbpFoodMenus;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/platforms/google/accounts/{id}/food-menus';
+    url: '/platforms/google/accounts/{account_id}/food-menus';
 };
 
-export type PutPlatformsGoogleAccountsByIdFoodMenusErrors = {
+export type UpdateGoogleFoodMenusErrors = {
     /**
      * A menu, section, dish or label breaks the rules above
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Unknown account
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Google's 10 edits per minute per profile exceeded
      */
-    429: ApiEndpointsErrorResponse;
+    429: ErrorResponse;
     /**
      * Google rejected a value
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type PutPlatformsGoogleAccountsByIdFoodMenusError = PutPlatformsGoogleAccountsByIdFoodMenusErrors[keyof PutPlatformsGoogleAccountsByIdFoodMenusErrors];
+export type UpdateGoogleFoodMenusError = UpdateGoogleFoodMenusErrors[keyof UpdateGoogleFoodMenusErrors];
 
-export type PutPlatformsGoogleAccountsByIdFoodMenusResponses = {
+export type UpdateGoogleFoodMenusResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsGoogleFoodMenusResponse;
+    200: GoogleFoodMenusResponse;
 };
 
-export type PutPlatformsGoogleAccountsByIdFoodMenusResponse = PutPlatformsGoogleAccountsByIdFoodMenusResponses[keyof PutPlatformsGoogleAccountsByIdFoodMenusResponses];
+export type UpdateGoogleFoodMenusResponse = UpdateGoogleFoodMenusResponses[keyof UpdateGoogleFoodMenusResponses];
 
-export type GetPlatformsGoogleAccountsByIdInsightsData = {
+export type GetGoogleInsightsData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query: {
         /**
@@ -8444,46 +8419,46 @@ export type GetPlatformsGoogleAccountsByIdInsightsData = {
          */
         metric?: string;
     };
-    url: '/platforms/google/accounts/{id}/insights';
+    url: '/platforms/google/accounts/{account_id}/insights';
 };
 
-export type GetPlatformsGoogleAccountsByIdInsightsErrors = {
+export type GetGoogleInsightsErrors = {
     /**
      * Missing or invalid parameter
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Unknown account
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Upstream Google API error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type GetPlatformsGoogleAccountsByIdInsightsError = GetPlatformsGoogleAccountsByIdInsightsErrors[keyof GetPlatformsGoogleAccountsByIdInsightsErrors];
+export type GetGoogleInsightsError = GetGoogleInsightsErrors[keyof GetGoogleInsightsErrors];
 
-export type GetPlatformsGoogleAccountsByIdInsightsResponses = {
+export type GetGoogleInsightsResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsGoogleInsightsResponse;
+    200: GoogleInsightsResponse;
 };
 
-export type GetPlatformsGoogleAccountsByIdInsightsResponse = GetPlatformsGoogleAccountsByIdInsightsResponses[keyof GetPlatformsGoogleAccountsByIdInsightsResponses];
+export type GetGoogleInsightsResponse = GetGoogleInsightsResponses[keyof GetGoogleInsightsResponses];
 
-export type GetPlatformsGoogleAccountsByIdMediaData = {
+export type ListGoogleMediaData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: {
         /**
@@ -8499,337 +8474,337 @@ export type GetPlatformsGoogleAccountsByIdMediaData = {
          */
         cursor?: string;
     };
-    url: '/platforms/google/accounts/{id}/media';
+    url: '/platforms/google/accounts/{account_id}/media';
 };
 
-export type GetPlatformsGoogleAccountsByIdMediaErrors = {
+export type ListGoogleMediaErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Unknown account
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type GetPlatformsGoogleAccountsByIdMediaError = GetPlatformsGoogleAccountsByIdMediaErrors[keyof GetPlatformsGoogleAccountsByIdMediaErrors];
+export type ListGoogleMediaError = ListGoogleMediaErrors[keyof ListGoogleMediaErrors];
 
-export type GetPlatformsGoogleAccountsByIdMediaResponses = {
+export type ListGoogleMediaResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsGoogleMediaListResponse;
+    200: GoogleMediaListResponse;
 };
 
-export type GetPlatformsGoogleAccountsByIdMediaResponse = GetPlatformsGoogleAccountsByIdMediaResponses[keyof GetPlatformsGoogleAccountsByIdMediaResponses];
+export type ListGoogleMediaResponse = ListGoogleMediaResponses[keyof ListGoogleMediaResponses];
 
-export type PostPlatformsGoogleAccountsByIdMediaData = {
+export type CreateGoogleMediaData = {
     /**
      * Media item and category
      */
-    body: ApiEndpointsCreateGoogleMediaRequest;
+    body: CreateGoogleMediaRequest;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/platforms/google/accounts/{id}/media';
+    url: '/platforms/google/accounts/{account_id}/media';
 };
 
-export type PostPlatformsGoogleAccountsByIdMediaErrors = {
+export type CreateGoogleMediaErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Unknown account
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Invalid media source or category
      */
-    422: ApiEndpointsErrorResponse;
+    422: ErrorResponse;
 };
 
-export type PostPlatformsGoogleAccountsByIdMediaError = PostPlatformsGoogleAccountsByIdMediaErrors[keyof PostPlatformsGoogleAccountsByIdMediaErrors];
+export type CreateGoogleMediaError = CreateGoogleMediaErrors[keyof CreateGoogleMediaErrors];
 
-export type PostPlatformsGoogleAccountsByIdMediaResponses = {
+export type CreateGoogleMediaResponses = {
     /**
      * Created
      */
-    201: ApiEndpointsGoogleMediaItem;
+    201: GoogleMediaItem;
 };
 
-export type PostPlatformsGoogleAccountsByIdMediaResponse = PostPlatformsGoogleAccountsByIdMediaResponses[keyof PostPlatformsGoogleAccountsByIdMediaResponses];
+export type CreateGoogleMediaResponse = CreateGoogleMediaResponses[keyof CreateGoogleMediaResponses];
 
-export type DeletePlatformsGoogleAccountsByIdMediaByMediaIdData = {
+export type DeleteGoogleMediaData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
         /**
          * Media item ID
          */
-        mediaId: string;
+        media_id: string;
     };
     query?: never;
-    url: '/platforms/google/accounts/{id}/media/{mediaId}';
+    url: '/platforms/google/accounts/{account_id}/media/{media_id}';
 };
 
-export type DeletePlatformsGoogleAccountsByIdMediaByMediaIdErrors = {
+export type DeleteGoogleMediaErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Customer-contributed media cannot be deleted
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Unknown account or media item
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type DeletePlatformsGoogleAccountsByIdMediaByMediaIdError = DeletePlatformsGoogleAccountsByIdMediaByMediaIdErrors[keyof DeletePlatformsGoogleAccountsByIdMediaByMediaIdErrors];
+export type DeleteGoogleMediaError = DeleteGoogleMediaErrors[keyof DeleteGoogleMediaErrors];
 
-export type DeletePlatformsGoogleAccountsByIdMediaByMediaIdResponses = {
+export type DeleteGoogleMediaResponses = {
     /**
      * Deleted
      */
     204: void;
 };
 
-export type DeletePlatformsGoogleAccountsByIdMediaByMediaIdResponse = DeletePlatformsGoogleAccountsByIdMediaByMediaIdResponses[keyof DeletePlatformsGoogleAccountsByIdMediaByMediaIdResponses];
+export type DeleteGoogleMediaResponse = DeleteGoogleMediaResponses[keyof DeleteGoogleMediaResponses];
 
-export type GetPlatformsGoogleAccountsByIdMediaByMediaIdData = {
+export type GetGoogleMediaData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
         /**
          * Media item ID
          */
-        mediaId: string;
+        media_id: string;
     };
     query?: never;
-    url: '/platforms/google/accounts/{id}/media/{mediaId}';
+    url: '/platforms/google/accounts/{account_id}/media/{media_id}';
 };
 
-export type GetPlatformsGoogleAccountsByIdMediaByMediaIdErrors = {
+export type GetGoogleMediaErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Unknown account or media item
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type GetPlatformsGoogleAccountsByIdMediaByMediaIdError = GetPlatformsGoogleAccountsByIdMediaByMediaIdErrors[keyof GetPlatformsGoogleAccountsByIdMediaByMediaIdErrors];
+export type GetGoogleMediaError = GetGoogleMediaErrors[keyof GetGoogleMediaErrors];
 
-export type GetPlatformsGoogleAccountsByIdMediaByMediaIdResponses = {
+export type GetGoogleMediaResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsGoogleMediaItem;
+    200: GoogleMediaItem;
 };
 
-export type GetPlatformsGoogleAccountsByIdMediaByMediaIdResponse = GetPlatformsGoogleAccountsByIdMediaByMediaIdResponses[keyof GetPlatformsGoogleAccountsByIdMediaByMediaIdResponses];
+export type GetGoogleMediaResponse = GetGoogleMediaResponses[keyof GetGoogleMediaResponses];
 
-export type GetPlatformsGoogleAccountsByIdPlaceActionLinksData = {
+export type ListGooglePlaceActionLinksData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/platforms/google/accounts/{id}/place-action-links';
+    url: '/platforms/google/accounts/{account_id}/place-action-links';
 };
 
-export type GetPlatformsGoogleAccountsByIdPlaceActionLinksErrors = {
+export type ListGooglePlaceActionLinksErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Unknown account
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Upstream Google API error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type GetPlatformsGoogleAccountsByIdPlaceActionLinksError = GetPlatformsGoogleAccountsByIdPlaceActionLinksErrors[keyof GetPlatformsGoogleAccountsByIdPlaceActionLinksErrors];
+export type ListGooglePlaceActionLinksError = ListGooglePlaceActionLinksErrors[keyof ListGooglePlaceActionLinksErrors];
 
-export type GetPlatformsGoogleAccountsByIdPlaceActionLinksResponses = {
+export type ListGooglePlaceActionLinksResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsGooglePlaceActionLinksResponse;
+    200: GooglePlaceActionLinksResponse;
 };
 
-export type GetPlatformsGoogleAccountsByIdPlaceActionLinksResponse = GetPlatformsGoogleAccountsByIdPlaceActionLinksResponses[keyof GetPlatformsGoogleAccountsByIdPlaceActionLinksResponses];
+export type ListGooglePlaceActionLinksResponse = ListGooglePlaceActionLinksResponses[keyof ListGooglePlaceActionLinksResponses];
 
-export type PostPlatformsGoogleAccountsByIdPlaceActionLinksData = {
+export type CreateGooglePlaceActionLinkData = {
     /**
      * The link to add
      */
-    body: SocialApiAiCoreApiConnectorsBaseGbpPlaceActionLinkInput;
+    body: GbpPlaceActionLinkInput;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/platforms/google/accounts/{id}/place-action-links';
+    url: '/platforms/google/accounts/{account_id}/place-action-links';
 };
 
-export type PostPlatformsGoogleAccountsByIdPlaceActionLinksErrors = {
+export type CreateGooglePlaceActionLinkErrors = {
     /**
      * Missing uri or place_action_type, or an invalid value
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Unknown account
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * A link with this uri and type already exists
      */
-    409: ApiEndpointsErrorResponse;
+    409: ErrorResponse;
     /**
      * Upstream Google API error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type PostPlatformsGoogleAccountsByIdPlaceActionLinksError = PostPlatformsGoogleAccountsByIdPlaceActionLinksErrors[keyof PostPlatformsGoogleAccountsByIdPlaceActionLinksErrors];
+export type CreateGooglePlaceActionLinkError = CreateGooglePlaceActionLinkErrors[keyof CreateGooglePlaceActionLinkErrors];
 
-export type PostPlatformsGoogleAccountsByIdPlaceActionLinksResponses = {
+export type CreateGooglePlaceActionLinkResponses = {
     /**
      * Created
      */
-    201: ApiEndpointsGooglePlaceActionLinkResponse;
+    201: GooglePlaceActionLinkResponse;
 };
 
-export type PostPlatformsGoogleAccountsByIdPlaceActionLinksResponse = PostPlatformsGoogleAccountsByIdPlaceActionLinksResponses[keyof PostPlatformsGoogleAccountsByIdPlaceActionLinksResponses];
+export type CreateGooglePlaceActionLinkResponse = CreateGooglePlaceActionLinkResponses[keyof CreateGooglePlaceActionLinkResponses];
 
-export type DeletePlatformsGoogleAccountsByIdPlaceActionLinksByLinkIdData = {
+export type DeleteGooglePlaceActionLinkData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
         /**
          * Link ID from the list endpoint
          */
-        linkId: string;
+        link_id: string;
     };
     query?: never;
-    url: '/platforms/google/accounts/{id}/place-action-links/{linkId}';
+    url: '/platforms/google/accounts/{account_id}/place-action-links/{link_id}';
 };
 
-export type DeletePlatformsGoogleAccountsByIdPlaceActionLinksByLinkIdErrors = {
+export type DeleteGooglePlaceActionLinkErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Unknown account or link
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type DeletePlatformsGoogleAccountsByIdPlaceActionLinksByLinkIdError = DeletePlatformsGoogleAccountsByIdPlaceActionLinksByLinkIdErrors[keyof DeletePlatformsGoogleAccountsByIdPlaceActionLinksByLinkIdErrors];
+export type DeleteGooglePlaceActionLinkError = DeleteGooglePlaceActionLinkErrors[keyof DeleteGooglePlaceActionLinkErrors];
 
-export type DeletePlatformsGoogleAccountsByIdPlaceActionLinksByLinkIdResponses = {
+export type DeleteGooglePlaceActionLinkResponses = {
     /**
      * Deleted
      */
     204: void;
 };
 
-export type DeletePlatformsGoogleAccountsByIdPlaceActionLinksByLinkIdResponse = DeletePlatformsGoogleAccountsByIdPlaceActionLinksByLinkIdResponses[keyof DeletePlatformsGoogleAccountsByIdPlaceActionLinksByLinkIdResponses];
+export type DeleteGooglePlaceActionLinkResponse = DeleteGooglePlaceActionLinkResponses[keyof DeleteGooglePlaceActionLinkResponses];
 
-export type PatchPlatformsGoogleAccountsByIdPlaceActionLinksByLinkIdData = {
+export type UpdateGooglePlaceActionLinkData = {
     /**
      * Fields to change
      */
-    body: SocialApiAiCoreApiConnectorsBaseGbpPlaceActionLinkInput;
+    body: GbpPlaceActionLinkInput;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
         /**
          * Link ID from the list endpoint
          */
-        linkId: string;
+        link_id: string;
     };
     query?: never;
-    url: '/platforms/google/accounts/{id}/place-action-links/{linkId}';
+    url: '/platforms/google/accounts/{account_id}/place-action-links/{link_id}';
 };
 
-export type PatchPlatformsGoogleAccountsByIdPlaceActionLinksByLinkIdErrors = {
+export type UpdateGooglePlaceActionLinkErrors = {
     /**
      * No field sent, or an invalid value
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Unknown account or link
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * A link with this uri and type already exists
      */
-    409: ApiEndpointsErrorResponse;
+    409: ErrorResponse;
     /**
      * Upstream Google API error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type PatchPlatformsGoogleAccountsByIdPlaceActionLinksByLinkIdError = PatchPlatformsGoogleAccountsByIdPlaceActionLinksByLinkIdErrors[keyof PatchPlatformsGoogleAccountsByIdPlaceActionLinksByLinkIdErrors];
+export type UpdateGooglePlaceActionLinkError = UpdateGooglePlaceActionLinkErrors[keyof UpdateGooglePlaceActionLinkErrors];
 
-export type PatchPlatformsGoogleAccountsByIdPlaceActionLinksByLinkIdResponses = {
+export type UpdateGooglePlaceActionLinkResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsGooglePlaceActionLinkResponse;
+    200: GooglePlaceActionLinkResponse;
 };
 
-export type PatchPlatformsGoogleAccountsByIdPlaceActionLinksByLinkIdResponse = PatchPlatformsGoogleAccountsByIdPlaceActionLinksByLinkIdResponses[keyof PatchPlatformsGoogleAccountsByIdPlaceActionLinksByLinkIdResponses];
+export type UpdateGooglePlaceActionLinkResponse = UpdateGooglePlaceActionLinkResponses[keyof UpdateGooglePlaceActionLinkResponses];
 
-export type GetPlatformsGoogleAccountsByIdPlaceActionTypesData = {
+export type ListGooglePlaceActionTypesData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: {
         /**
@@ -8837,42 +8812,42 @@ export type GetPlatformsGoogleAccountsByIdPlaceActionTypesData = {
          */
         language_code?: string;
     };
-    url: '/platforms/google/accounts/{id}/place-action-types';
+    url: '/platforms/google/accounts/{account_id}/place-action-types';
 };
 
-export type GetPlatformsGoogleAccountsByIdPlaceActionTypesErrors = {
+export type ListGooglePlaceActionTypesErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Unknown account
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Upstream Google API error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type GetPlatformsGoogleAccountsByIdPlaceActionTypesError = GetPlatformsGoogleAccountsByIdPlaceActionTypesErrors[keyof GetPlatformsGoogleAccountsByIdPlaceActionTypesErrors];
+export type ListGooglePlaceActionTypesError = ListGooglePlaceActionTypesErrors[keyof ListGooglePlaceActionTypesErrors];
 
-export type GetPlatformsGoogleAccountsByIdPlaceActionTypesResponses = {
+export type ListGooglePlaceActionTypesResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsGooglePlaceActionTypesResponse;
+    200: GooglePlaceActionTypesResponse;
 };
 
-export type GetPlatformsGoogleAccountsByIdPlaceActionTypesResponse = GetPlatformsGoogleAccountsByIdPlaceActionTypesResponses[keyof GetPlatformsGoogleAccountsByIdPlaceActionTypesResponses];
+export type ListGooglePlaceActionTypesResponse = ListGooglePlaceActionTypesResponses[keyof ListGooglePlaceActionTypesResponses];
 
-export type GetPlatformsGoogleAccountsByIdSearchKeywordsData = {
+export type ListGoogleSearchKeywordsData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query: {
         /**
@@ -8892,325 +8867,325 @@ export type GetPlatformsGoogleAccountsByIdSearchKeywordsData = {
          */
         cursor?: string;
     };
-    url: '/platforms/google/accounts/{id}/search-keywords';
+    url: '/platforms/google/accounts/{account_id}/search-keywords';
 };
 
-export type GetPlatformsGoogleAccountsByIdSearchKeywordsErrors = {
+export type ListGoogleSearchKeywordsErrors = {
     /**
      * Missing or invalid parameter
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Unknown account
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Upstream Google API error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type GetPlatformsGoogleAccountsByIdSearchKeywordsError = GetPlatformsGoogleAccountsByIdSearchKeywordsErrors[keyof GetPlatformsGoogleAccountsByIdSearchKeywordsErrors];
+export type ListGoogleSearchKeywordsError = ListGoogleSearchKeywordsErrors[keyof ListGoogleSearchKeywordsErrors];
 
-export type GetPlatformsGoogleAccountsByIdSearchKeywordsResponses = {
+export type ListGoogleSearchKeywordsResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsGoogleSearchKeywordsResponse;
+    200: GoogleSearchKeywordsResponse;
 };
 
-export type GetPlatformsGoogleAccountsByIdSearchKeywordsResponse = GetPlatformsGoogleAccountsByIdSearchKeywordsResponses[keyof GetPlatformsGoogleAccountsByIdSearchKeywordsResponses];
+export type ListGoogleSearchKeywordsResponse = ListGoogleSearchKeywordsResponses[keyof ListGoogleSearchKeywordsResponses];
 
-export type GetPlatformsGoogleLoginsByLoginIdLocationsData = {
+export type ListGoogleLoginLocationsData = {
     body?: never;
     path: {
         /**
          * Google login (credential) ID
          */
-        loginId: string;
+        login_id: string;
     };
     query?: never;
-    url: '/platforms/google/logins/{loginId}/locations';
+    url: '/platforms/google/logins/{login_id}/locations';
 };
 
-export type GetPlatformsGoogleLoginsByLoginIdLocationsErrors = {
+export type ListGoogleLoginLocationsErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Unknown login
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type GetPlatformsGoogleLoginsByLoginIdLocationsError = GetPlatformsGoogleLoginsByLoginIdLocationsErrors[keyof GetPlatformsGoogleLoginsByLoginIdLocationsErrors];
+export type ListGoogleLoginLocationsError = ListGoogleLoginLocationsErrors[keyof ListGoogleLoginLocationsErrors];
 
-export type GetPlatformsGoogleLoginsByLoginIdLocationsResponses = {
+export type ListGoogleLoginLocationsResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsGoogleLoginLocationsResponse;
+    200: GoogleLoginLocationsResponse;
 };
 
-export type GetPlatformsGoogleLoginsByLoginIdLocationsResponse = GetPlatformsGoogleLoginsByLoginIdLocationsResponses[keyof GetPlatformsGoogleLoginsByLoginIdLocationsResponses];
+export type ListGoogleLoginLocationsResponse = ListGoogleLoginLocationsResponses[keyof ListGoogleLoginLocationsResponses];
 
-export type PostPlatformsGoogleLoginsByLoginIdLocationsByLocationIdAssignData = {
+export type AssignGoogleLocationData = {
     /**
      * Target brand
      */
-    body: ApiEndpointsAssignLocationRequest;
+    body: AssignLocationRequest;
     path: {
         /**
          * Google login (credential) ID
          */
-        loginId: string;
+        login_id: string;
         /**
          * Location resource name (URL-encoded), e.g. accounts%2F123%2Flocations%2F456
          */
-        locationId: string;
+        location_id: string;
     };
     query?: never;
-    url: '/platforms/google/logins/{loginId}/locations/{locationId}/assign';
+    url: '/platforms/google/logins/{login_id}/locations/{location_id}/assign';
 };
 
-export type PostPlatformsGoogleLoginsByLoginIdLocationsByLocationIdAssignErrors = {
+export type AssignGoogleLocationErrors = {
     /**
      * Location is not accessible through this login, or already belongs to another brand
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Unknown login or brand
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Brand already has a Google Business Profile
      */
-    409: ApiEndpointsErrorResponse;
+    409: ErrorResponse;
 };
 
-export type PostPlatformsGoogleLoginsByLoginIdLocationsByLocationIdAssignError = PostPlatformsGoogleLoginsByLoginIdLocationsByLocationIdAssignErrors[keyof PostPlatformsGoogleLoginsByLoginIdLocationsByLocationIdAssignErrors];
+export type AssignGoogleLocationError = AssignGoogleLocationErrors[keyof AssignGoogleLocationErrors];
 
-export type PostPlatformsGoogleLoginsByLoginIdLocationsByLocationIdAssignResponses = {
+export type AssignGoogleLocationResponses = {
     /**
      * Created
      */
-    201: ApiEndpointsAssignLocationResponse;
+    201: AssignLocationResponse;
 };
 
-export type PostPlatformsGoogleLoginsByLoginIdLocationsByLocationIdAssignResponse = PostPlatformsGoogleLoginsByLoginIdLocationsByLocationIdAssignResponses[keyof PostPlatformsGoogleLoginsByLoginIdLocationsByLocationIdAssignResponses];
+export type AssignGoogleLocationResponse = AssignGoogleLocationResponses[keyof AssignGoogleLocationResponses];
 
-export type PostPlatformsInstagramAccountsByIdMediaByMediaIdCollabAcceptData = {
+export type AcceptInstagramCollabData = {
     body?: never;
     path: {
         /**
          * Connected account ID (the invited account)
          */
-        id: string;
+        account_id: string;
         /**
          * Instagram media ID carrying the invite
          */
-        mediaId: string;
+        media_id: string;
     };
     query?: never;
-    url: '/platforms/instagram/accounts/{id}/media/{mediaId}/collab/accept';
+    url: '/platforms/instagram/accounts/{account_id}/media/{media_id}/collab/accept';
 };
 
-export type PostPlatformsInstagramAccountsByIdMediaByMediaIdCollabAcceptErrors = {
+export type AcceptInstagramCollabErrors = {
     /**
      * No pending invite for this account on this media
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account or media not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Platform does not support collaborators
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
     /**
      * Upstream Instagram API error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type PostPlatformsInstagramAccountsByIdMediaByMediaIdCollabAcceptError = PostPlatformsInstagramAccountsByIdMediaByMediaIdCollabAcceptErrors[keyof PostPlatformsInstagramAccountsByIdMediaByMediaIdCollabAcceptErrors];
+export type AcceptInstagramCollabError = AcceptInstagramCollabErrors[keyof AcceptInstagramCollabErrors];
 
-export type PostPlatformsInstagramAccountsByIdMediaByMediaIdCollabAcceptResponses = {
+export type AcceptInstagramCollabResponses = {
     /**
      * Invite accepted
      */
-    200: ApiEndpointsSuccessResponse;
+    200: SuccessResponse;
 };
 
-export type PostPlatformsInstagramAccountsByIdMediaByMediaIdCollabAcceptResponse = PostPlatformsInstagramAccountsByIdMediaByMediaIdCollabAcceptResponses[keyof PostPlatformsInstagramAccountsByIdMediaByMediaIdCollabAcceptResponses];
+export type AcceptInstagramCollabResponse = AcceptInstagramCollabResponses[keyof AcceptInstagramCollabResponses];
 
-export type PostPlatformsInstagramAccountsByIdMediaByMediaIdCollabDeclineData = {
+export type DeclineInstagramCollabData = {
     body?: never;
     path: {
         /**
          * Connected account ID (the invited account)
          */
-        id: string;
+        account_id: string;
         /**
          * Instagram media ID carrying the invite
          */
-        mediaId: string;
+        media_id: string;
     };
     query?: never;
-    url: '/platforms/instagram/accounts/{id}/media/{mediaId}/collab/decline';
+    url: '/platforms/instagram/accounts/{account_id}/media/{media_id}/collab/decline';
 };
 
-export type PostPlatformsInstagramAccountsByIdMediaByMediaIdCollabDeclineErrors = {
+export type DeclineInstagramCollabErrors = {
     /**
      * No pending invite for this account on this media
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account or media not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Platform does not support collaborators
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
     /**
      * Upstream Instagram API error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type PostPlatformsInstagramAccountsByIdMediaByMediaIdCollabDeclineError = PostPlatformsInstagramAccountsByIdMediaByMediaIdCollabDeclineErrors[keyof PostPlatformsInstagramAccountsByIdMediaByMediaIdCollabDeclineErrors];
+export type DeclineInstagramCollabError = DeclineInstagramCollabErrors[keyof DeclineInstagramCollabErrors];
 
-export type PostPlatformsInstagramAccountsByIdMediaByMediaIdCollabDeclineResponses = {
+export type DeclineInstagramCollabResponses = {
     /**
      * Invite declined
      */
-    200: ApiEndpointsSuccessResponse;
+    200: SuccessResponse;
 };
 
-export type PostPlatformsInstagramAccountsByIdMediaByMediaIdCollabDeclineResponse = PostPlatformsInstagramAccountsByIdMediaByMediaIdCollabDeclineResponses[keyof PostPlatformsInstagramAccountsByIdMediaByMediaIdCollabDeclineResponses];
+export type DeclineInstagramCollabResponse = DeclineInstagramCollabResponses[keyof DeclineInstagramCollabResponses];
 
-export type GetPlatformsInstagramAccountsByIdMediaByMediaIdCollaboratorsData = {
+export type ListInstagramCollaboratorsData = {
     body?: never;
     path: {
         /**
          * Connected account ID (must be the publishing account)
          */
-        id: string;
+        account_id: string;
         /**
          * Instagram media ID
          */
-        mediaId: string;
+        media_id: string;
     };
     query?: never;
-    url: '/platforms/instagram/accounts/{id}/media/{mediaId}/collaborators';
+    url: '/platforms/instagram/accounts/{account_id}/media/{media_id}/collaborators';
 };
 
-export type GetPlatformsInstagramAccountsByIdMediaByMediaIdCollaboratorsErrors = {
+export type ListInstagramCollaboratorsErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account or media not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Platform does not support collaborators
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
     /**
      * Upstream Instagram API error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type GetPlatformsInstagramAccountsByIdMediaByMediaIdCollaboratorsError = GetPlatformsInstagramAccountsByIdMediaByMediaIdCollaboratorsErrors[keyof GetPlatformsInstagramAccountsByIdMediaByMediaIdCollaboratorsErrors];
+export type ListInstagramCollaboratorsError = ListInstagramCollaboratorsErrors[keyof ListInstagramCollaboratorsErrors];
 
-export type GetPlatformsInstagramAccountsByIdMediaByMediaIdCollaboratorsResponses = {
+export type ListInstagramCollaboratorsResponses = {
     /**
      * Collaborators and invite status
      */
-    200: ApiEndpointsInstagramCollaboratorsResponse;
+    200: InstagramCollaboratorsResponse;
 };
 
-export type GetPlatformsInstagramAccountsByIdMediaByMediaIdCollaboratorsResponse = GetPlatformsInstagramAccountsByIdMediaByMediaIdCollaboratorsResponses[keyof GetPlatformsInstagramAccountsByIdMediaByMediaIdCollaboratorsResponses];
+export type ListInstagramCollaboratorsResponse = ListInstagramCollaboratorsResponses[keyof ListInstagramCollaboratorsResponses];
 
-export type GetPlatformsInstagramAccountsByIdParticipantsByParticipantIdProfileData = {
+export type GetInstagramParticipantProfileData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
         /**
          * Instagram-scoped user ID (IGSID) of the participant, as returned in conversation payloads
          */
-        participantId: string;
+        participant_id: string;
     };
     query?: never;
-    url: '/platforms/instagram/accounts/{id}/participants/{participantId}/profile';
+    url: '/platforms/instagram/accounts/{account_id}/participants/{participant_id}/profile';
 };
 
-export type GetPlatformsInstagramAccountsByIdParticipantsByParticipantIdProfileErrors = {
+export type GetInstagramParticipantProfileErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * User consent required (platform.instagram.230), or platform access not permitted for your plan
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Account or participant not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Rate limit exceeded
      */
-    429: ApiEndpointsErrorResponse;
+    429: ErrorResponse;
     /**
      * Platform does not support participant profiles
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
     /**
      * Upstream Instagram API error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type GetPlatformsInstagramAccountsByIdParticipantsByParticipantIdProfileError = GetPlatformsInstagramAccountsByIdParticipantsByParticipantIdProfileErrors[keyof GetPlatformsInstagramAccountsByIdParticipantsByParticipantIdProfileErrors];
+export type GetInstagramParticipantProfileError = GetInstagramParticipantProfileErrors[keyof GetInstagramParticipantProfileErrors];
 
-export type GetPlatformsInstagramAccountsByIdParticipantsByParticipantIdProfileResponses = {
+export type GetInstagramParticipantProfileResponses = {
     /**
      * Participant profile
      */
-    200: ApiEndpointsInstagramParticipantProfileResponse;
+    200: InstagramParticipantProfileResponse;
 };
 
-export type GetPlatformsInstagramAccountsByIdParticipantsByParticipantIdProfileResponse = GetPlatformsInstagramAccountsByIdParticipantsByParticipantIdProfileResponses[keyof GetPlatformsInstagramAccountsByIdParticipantsByParticipantIdProfileResponses];
+export type GetInstagramParticipantProfileResponse = GetInstagramParticipantProfileResponses[keyof GetInstagramParticipantProfileResponses];
 
-export type GetPlatformsInstagramAccountsByIdStoriesData = {
+export type ListInstagramStoriesData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: {
         /**
@@ -9222,90 +9197,90 @@ export type GetPlatformsInstagramAccountsByIdStoriesData = {
          */
         cursor?: string;
     };
-    url: '/platforms/instagram/accounts/{id}/stories';
+    url: '/platforms/instagram/accounts/{account_id}/stories';
 };
 
-export type GetPlatformsInstagramAccountsByIdStoriesErrors = {
+export type ListInstagramStoriesErrors = {
     /**
      * Invalid query parameters
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Platform access not permitted for your plan
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Rate limit exceeded
      */
-    429: ApiEndpointsErrorResponse;
+    429: ErrorResponse;
     /**
      * Platform does not support stories
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
 };
 
-export type GetPlatformsInstagramAccountsByIdStoriesError = GetPlatformsInstagramAccountsByIdStoriesErrors[keyof GetPlatformsInstagramAccountsByIdStoriesErrors];
+export type ListInstagramStoriesError = ListInstagramStoriesErrors[keyof ListInstagramStoriesErrors];
 
-export type GetPlatformsInstagramAccountsByIdStoriesResponses = {
+export type ListInstagramStoriesResponses = {
     /**
      * List of active stories
      */
-    200: ApiEndpointsInstagramStoriesResponse;
+    200: InstagramStoriesResponse;
 };
 
-export type GetPlatformsInstagramAccountsByIdStoriesResponse = GetPlatformsInstagramAccountsByIdStoriesResponses[keyof GetPlatformsInstagramAccountsByIdStoriesResponses];
+export type ListInstagramStoriesResponse = ListInstagramStoriesResponses[keyof ListInstagramStoriesResponses];
 
-export type GetPlatformsInstagramAccountsByIdSummaryData = {
+export type GetInstagramAccountSummaryData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/platforms/instagram/accounts/{id}/summary';
+    url: '/platforms/instagram/accounts/{account_id}/summary';
 };
 
-export type GetPlatformsInstagramAccountsByIdSummaryErrors = {
+export type GetInstagramAccountSummaryErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account does not have the analytics.read permission (account.permission_missing), or Instagram withdrew the insights access (platform.instagram.insights_scope_missing); add the permission or reconnect the account
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Upstream Instagram API error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type GetPlatformsInstagramAccountsByIdSummaryError = GetPlatformsInstagramAccountsByIdSummaryErrors[keyof GetPlatformsInstagramAccountsByIdSummaryErrors];
+export type GetInstagramAccountSummaryError = GetInstagramAccountSummaryErrors[keyof GetInstagramAccountSummaryErrors];
 
-export type GetPlatformsInstagramAccountsByIdSummaryResponses = {
+export type GetInstagramAccountSummaryResponses = {
     /**
      * Account insights summary
      */
-    200: ApiEndpointsInstagramAccountSummaryResponse;
+    200: InstagramAccountSummaryResponse;
 };
 
-export type GetPlatformsInstagramAccountsByIdSummaryResponse = GetPlatformsInstagramAccountsByIdSummaryResponses[keyof GetPlatformsInstagramAccountsByIdSummaryResponses];
+export type GetInstagramAccountSummaryResponse = GetInstagramAccountSummaryResponses[keyof GetInstagramAccountSummaryResponses];
 
-export type GetPlatformsLinkedinInsightsData = {
+export type GetLinkedinInsightsData = {
     body?: never;
     path?: never;
     query: {
@@ -9317,118 +9292,118 @@ export type GetPlatformsLinkedinInsightsData = {
     url: '/platforms/linkedin/insights';
 };
 
-export type GetPlatformsLinkedinInsightsErrors = {
+export type GetLinkedinInsightsErrors = {
     /**
      * Missing account_id
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Upstream LinkedIn API error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type GetPlatformsLinkedinInsightsError = GetPlatformsLinkedinInsightsErrors[keyof GetPlatformsLinkedinInsightsErrors];
+export type GetLinkedinInsightsError = GetLinkedinInsightsErrors[keyof GetLinkedinInsightsErrors];
 
-export type GetPlatformsLinkedinInsightsResponses = {
+export type GetLinkedinInsightsResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsLinkedInInsightsResponse;
+    200: LinkedInInsightsResponse;
 };
 
-export type GetPlatformsLinkedinInsightsResponse = GetPlatformsLinkedinInsightsResponses[keyof GetPlatformsLinkedinInsightsResponses];
+export type GetLinkedinInsightsResponse = GetLinkedinInsightsResponses[keyof GetLinkedinInsightsResponses];
 
-export type GetPlatformsLinkedinLoginsByLoginIdProfilesData = {
+export type ListLinkedinLoginProfilesData = {
     body?: never;
     path: {
         /**
          * LinkedIn login ID
          */
-        loginId: string;
+        login_id: string;
     };
     query?: never;
-    url: '/platforms/linkedin/logins/{loginId}/profiles';
+    url: '/platforms/linkedin/logins/{login_id}/profiles';
 };
 
-export type GetPlatformsLinkedinLoginsByLoginIdProfilesErrors = {
+export type ListLinkedinLoginProfilesErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Unknown login
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type GetPlatformsLinkedinLoginsByLoginIdProfilesError = GetPlatformsLinkedinLoginsByLoginIdProfilesErrors[keyof GetPlatformsLinkedinLoginsByLoginIdProfilesErrors];
+export type ListLinkedinLoginProfilesError = ListLinkedinLoginProfilesErrors[keyof ListLinkedinLoginProfilesErrors];
 
-export type GetPlatformsLinkedinLoginsByLoginIdProfilesResponses = {
+export type ListLinkedinLoginProfilesResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsLinkedInLoginProfilesResponse;
+    200: LinkedInLoginProfilesResponse;
 };
 
-export type GetPlatformsLinkedinLoginsByLoginIdProfilesResponse = GetPlatformsLinkedinLoginsByLoginIdProfilesResponses[keyof GetPlatformsLinkedinLoginsByLoginIdProfilesResponses];
+export type ListLinkedinLoginProfilesResponse = ListLinkedinLoginProfilesResponses[keyof ListLinkedinLoginProfilesResponses];
 
-export type PostPlatformsLinkedinLoginsByLoginIdProfilesByProfileIdAssignData = {
+export type AssignLinkedinProfileData = {
     /**
      * Target brand
      */
-    body: ApiEndpointsAssignLinkedInProfileRequest;
+    body: AssignLinkedInProfileRequest;
     path: {
         /**
          * LinkedIn login ID
          */
-        loginId: string;
+        login_id: string;
         /**
          * platform_account_id from the profiles list, URL-encoded (urn%3Ali%3Aorganization%3A123456)
          */
-        profileId: string;
+        profile_id: string;
     };
     query?: never;
-    url: '/platforms/linkedin/logins/{loginId}/profiles/{profileId}/assign';
+    url: '/platforms/linkedin/logins/{login_id}/profiles/{profile_id}/assign';
 };
 
-export type PostPlatformsLinkedinLoginsByLoginIdProfilesByProfileIdAssignErrors = {
+export type AssignLinkedinProfileErrors = {
     /**
      * Account is not accessible through this login, or already belongs to another brand
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Unknown login or brand
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type PostPlatformsLinkedinLoginsByLoginIdProfilesByProfileIdAssignError = PostPlatformsLinkedinLoginsByLoginIdProfilesByProfileIdAssignErrors[keyof PostPlatformsLinkedinLoginsByLoginIdProfilesByProfileIdAssignErrors];
+export type AssignLinkedinProfileError = AssignLinkedinProfileErrors[keyof AssignLinkedinProfileErrors];
 
-export type PostPlatformsLinkedinLoginsByLoginIdProfilesByProfileIdAssignResponses = {
+export type AssignLinkedinProfileResponses = {
     /**
      * Created
      */
-    201: ApiEndpointsAssignLocationResponse;
+    201: AssignLocationResponse;
 };
 
-export type PostPlatformsLinkedinLoginsByLoginIdProfilesByProfileIdAssignResponse = PostPlatformsLinkedinLoginsByLoginIdProfilesByProfileIdAssignResponses[keyof PostPlatformsLinkedinLoginsByLoginIdProfilesByProfileIdAssignResponses];
+export type AssignLinkedinProfileResponse = AssignLinkedinProfileResponses[keyof AssignLinkedinProfileResponses];
 
-export type GetPlatformsPinterestAccountsByIdPinsData = {
+export type ListPinterestPinsData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: {
         /**
@@ -9436,82 +9411,82 @@ export type GetPlatformsPinterestAccountsByIdPinsData = {
          */
         limit?: number;
     };
-    url: '/platforms/pinterest/accounts/{id}/pins';
+    url: '/platforms/pinterest/accounts/{account_id}/pins';
 };
 
-export type GetPlatformsPinterestAccountsByIdPinsErrors = {
+export type ListPinterestPinsErrors = {
     /**
      * Bad Request
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Forbidden
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Not Found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Service Unavailable
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type GetPlatformsPinterestAccountsByIdPinsError = GetPlatformsPinterestAccountsByIdPinsErrors[keyof GetPlatformsPinterestAccountsByIdPinsErrors];
+export type ListPinterestPinsError = ListPinterestPinsErrors[keyof ListPinterestPinsErrors];
 
-export type GetPlatformsPinterestAccountsByIdPinsResponses = {
+export type ListPinterestPinsResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsPinterestPinsResponse;
+    200: PinterestPinsResponse;
 };
 
-export type GetPlatformsPinterestAccountsByIdPinsResponse = GetPlatformsPinterestAccountsByIdPinsResponses[keyof GetPlatformsPinterestAccountsByIdPinsResponses];
+export type ListPinterestPinsResponse = ListPinterestPinsResponses[keyof ListPinterestPinsResponses];
 
-export type GetPlatformsPinterestAccountsByIdSummaryData = {
+export type GetPinterestAccountSummaryData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/platforms/pinterest/accounts/{id}/summary';
+    url: '/platforms/pinterest/accounts/{account_id}/summary';
 };
 
-export type GetPlatformsPinterestAccountsByIdSummaryErrors = {
+export type GetPinterestAccountSummaryErrors = {
     /**
      * Bad Request
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Forbidden
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Not Found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Service Unavailable
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type GetPlatformsPinterestAccountsByIdSummaryError = GetPlatformsPinterestAccountsByIdSummaryErrors[keyof GetPlatformsPinterestAccountsByIdSummaryErrors];
+export type GetPinterestAccountSummaryError = GetPinterestAccountSummaryErrors[keyof GetPinterestAccountSummaryErrors];
 
-export type GetPlatformsPinterestAccountsByIdSummaryResponses = {
+export type GetPinterestAccountSummaryResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsPinterestSummaryResponse;
+    200: PinterestSummaryResponse;
 };
 
-export type GetPlatformsPinterestAccountsByIdSummaryResponse = GetPlatformsPinterestAccountsByIdSummaryResponses[keyof GetPlatformsPinterestAccountsByIdSummaryResponses];
+export type GetPinterestAccountSummaryResponse = GetPinterestAccountSummaryResponses[keyof GetPinterestAccountSummaryResponses];
 
-export type GetPlatformsThreadsInsightsData = {
+export type GetThreadsInsightsData = {
     body?: never;
     path?: never;
     query: {
@@ -9547,41 +9522,41 @@ export type GetPlatformsThreadsInsightsData = {
     url: '/platforms/threads/insights';
 };
 
-export type GetPlatformsThreadsInsightsErrors = {
+export type GetThreadsInsightsErrors = {
     /**
      * Missing or invalid parameter
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The account was connected without the insights permission (platform.threads.insights_scope_missing); reconnect the account
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Upstream Threads API error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type GetPlatformsThreadsInsightsError = GetPlatformsThreadsInsightsErrors[keyof GetPlatformsThreadsInsightsErrors];
+export type GetThreadsInsightsError = GetThreadsInsightsErrors[keyof GetThreadsInsightsErrors];
 
-export type GetPlatformsThreadsInsightsResponses = {
+export type GetThreadsInsightsResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsThreadsInsightsResponse;
+    200: ThreadsInsightsResponse;
 };
 
-export type GetPlatformsThreadsInsightsResponse = GetPlatformsThreadsInsightsResponses[keyof GetPlatformsThreadsInsightsResponses];
+export type GetThreadsInsightsResponse = GetThreadsInsightsResponses[keyof GetThreadsInsightsResponses];
 
-export type GetPlatformsThreadsProfileLookupData = {
+export type LookupThreadsProfileData = {
     body?: never;
     path?: never;
     query: {
@@ -9597,120 +9572,120 @@ export type GetPlatformsThreadsProfileLookupData = {
     url: '/platforms/threads/profile-lookup';
 };
 
-export type GetPlatformsThreadsProfileLookupErrors = {
+export type LookupThreadsProfileErrors = {
     /**
      * Missing account_id or username
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Profile not discoverable
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Lookup budget exhausted for this user
      */
-    429: ApiEndpointsErrorResponse;
+    429: ErrorResponse;
     /**
      * Upstream Threads API error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type GetPlatformsThreadsProfileLookupError = GetPlatformsThreadsProfileLookupErrors[keyof GetPlatformsThreadsProfileLookupErrors];
+export type LookupThreadsProfileError = LookupThreadsProfileErrors[keyof LookupThreadsProfileErrors];
 
-export type GetPlatformsThreadsProfileLookupResponses = {
+export type LookupThreadsProfileResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsThreadsProfileResponse;
+    200: ThreadsProfileResponse;
 };
 
-export type GetPlatformsThreadsProfileLookupResponse = GetPlatformsThreadsProfileLookupResponses[keyof GetPlatformsThreadsProfileLookupResponses];
+export type LookupThreadsProfileResponse = LookupThreadsProfileResponses[keyof LookupThreadsProfileResponses];
 
-export type GetPlatformsTiktokAccountsByIdSummaryData = {
+export type GetTiktokAccountSummaryData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/platforms/tiktok/accounts/{id}/summary';
+    url: '/platforms/tiktok/accounts/{account_id}/summary';
 };
 
-export type GetPlatformsTiktokAccountsByIdSummaryErrors = {
+export type GetTiktokAccountSummaryErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Upstream TikTok API error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type GetPlatformsTiktokAccountsByIdSummaryError = GetPlatformsTiktokAccountsByIdSummaryErrors[keyof GetPlatformsTiktokAccountsByIdSummaryErrors];
+export type GetTiktokAccountSummaryError = GetTiktokAccountSummaryErrors[keyof GetTiktokAccountSummaryErrors];
 
-export type GetPlatformsTiktokAccountsByIdSummaryResponses = {
+export type GetTiktokAccountSummaryResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsTikTokAccountSummaryResponse;
+    200: TikTokAccountSummaryResponse;
 };
 
-export type GetPlatformsTiktokAccountsByIdSummaryResponse = GetPlatformsTiktokAccountsByIdSummaryResponses[keyof GetPlatformsTiktokAccountsByIdSummaryResponses];
+export type GetTiktokAccountSummaryResponse = GetTiktokAccountSummaryResponses[keyof GetTiktokAccountSummaryResponses];
 
-export type PostPlatformsTiktokAccountsByIdSyncData = {
+export type SyncTiktokVideosData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/platforms/tiktok/accounts/{id}/sync';
+    url: '/platforms/tiktok/accounts/{account_id}/sync';
 };
 
-export type PostPlatformsTiktokAccountsByIdSyncErrors = {
+export type SyncTiktokVideosErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The account was not granted the posts.read permission
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * accounts.sync_rate_limited: this account was synced too recently. accounts.sync_daily_limit: the plan's daily sync limit is reached. The Retry-After header carries the seconds to wait.
      */
-    429: ApiEndpointsErrorResponse;
+    429: ErrorResponse;
     /**
      * Account is not a TikTok account or connector does not support post sync
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
     /**
      * The sync could not be started. Retry later.
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type PostPlatformsTiktokAccountsByIdSyncError = PostPlatformsTiktokAccountsByIdSyncErrors[keyof PostPlatformsTiktokAccountsByIdSyncErrors];
+export type SyncTiktokVideosError = SyncTiktokVideosErrors[keyof SyncTiktokVideosErrors];
 
-export type PostPlatformsTiktokAccountsByIdSyncResponses = {
+export type SyncTiktokVideosResponses = {
     /**
      * OK
      */
@@ -9719,68 +9694,68 @@ export type PostPlatformsTiktokAccountsByIdSyncResponses = {
     };
 };
 
-export type PostPlatformsTiktokAccountsByIdSyncResponse = PostPlatformsTiktokAccountsByIdSyncResponses[keyof PostPlatformsTiktokAccountsByIdSyncResponses];
+export type SyncTiktokVideosResponse = SyncTiktokVideosResponses[keyof SyncTiktokVideosResponses];
 
-export type PostPlatformsWhatsappAccountsByIdSendTemplateData = {
+export type SendWhatsappTemplateData = {
     /**
      * Recipient, template name, language, and components
      */
-    body: ApiEndpointsWhatsAppSendTemplateRequest;
+    body: WhatsAppSendTemplateRequest;
     path: {
         /**
          * Connected account ID (sapi_acc_...)
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/platforms/whatsapp/accounts/{id}/send-template';
+    url: '/platforms/whatsapp/accounts/{account_id}/send-template';
 };
 
-export type PostPlatformsWhatsappAccountsByIdSendTemplateErrors = {
+export type SendWhatsappTemplateErrors = {
     /**
      * Missing required field (to, template_name, language)
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * whatsapp.paid_plan_required: template sends need a paid plan
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Account not found or not owned by caller
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Monthly interaction limit exceeded or platform rate limit
      */
-    429: ApiEndpointsErrorResponse;
+    429: ErrorResponse;
     /**
      * WhatsApp/Meta upstream error (template not approved, invalid parameters)
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type PostPlatformsWhatsappAccountsByIdSendTemplateError = PostPlatformsWhatsappAccountsByIdSendTemplateErrors[keyof PostPlatformsWhatsappAccountsByIdSendTemplateErrors];
+export type SendWhatsappTemplateError = SendWhatsappTemplateErrors[keyof SendWhatsappTemplateErrors];
 
-export type PostPlatformsWhatsappAccountsByIdSendTemplateResponses = {
+export type SendWhatsappTemplateResponses = {
     /**
      * Message accepted by WhatsApp
      */
-    200: ApiEndpointsWhatsAppSendTemplateResponse;
+    200: WhatsAppSendTemplateResponse;
 };
 
-export type PostPlatformsWhatsappAccountsByIdSendTemplateResponse = PostPlatformsWhatsappAccountsByIdSendTemplateResponses[keyof PostPlatformsWhatsappAccountsByIdSendTemplateResponses];
+export type SendWhatsappTemplateResponse = SendWhatsappTemplateResponses[keyof SendWhatsappTemplateResponses];
 
-export type DeletePlatformsWhatsappAccountsByIdTemplatesData = {
+export type DeleteWhatsappTemplateData = {
     body?: never;
     path: {
         /**
          * Connected account ID (sapi_acc_...)
          */
-        id: string;
+        account_id: string;
     };
     query: {
         /**
@@ -9788,46 +9763,46 @@ export type DeletePlatformsWhatsappAccountsByIdTemplatesData = {
          */
         name: string;
     };
-    url: '/platforms/whatsapp/accounts/{id}/templates';
+    url: '/platforms/whatsapp/accounts/{account_id}/templates';
 };
 
-export type DeletePlatformsWhatsappAccountsByIdTemplatesErrors = {
+export type DeleteWhatsappTemplateErrors = {
     /**
      * Missing name query parameter
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account not found or template does not exist
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * WhatsApp/Meta upstream error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type DeletePlatformsWhatsappAccountsByIdTemplatesError = DeletePlatformsWhatsappAccountsByIdTemplatesErrors[keyof DeletePlatformsWhatsappAccountsByIdTemplatesErrors];
+export type DeleteWhatsappTemplateError = DeleteWhatsappTemplateErrors[keyof DeleteWhatsappTemplateErrors];
 
-export type DeletePlatformsWhatsappAccountsByIdTemplatesResponses = {
+export type DeleteWhatsappTemplateResponses = {
     /**
      * Template deleted
      */
     204: void;
 };
 
-export type DeletePlatformsWhatsappAccountsByIdTemplatesResponse = DeletePlatformsWhatsappAccountsByIdTemplatesResponses[keyof DeletePlatformsWhatsappAccountsByIdTemplatesResponses];
+export type DeleteWhatsappTemplateResponse = DeleteWhatsappTemplateResponses[keyof DeleteWhatsappTemplateResponses];
 
-export type GetPlatformsWhatsappAccountsByIdTemplatesData = {
+export type ListWhatsappTemplatesData = {
     body?: never;
     path: {
         /**
          * Connected account ID (sapi_acc_...)
          */
-        id: string;
+        account_id: string;
     };
     query?: {
         /**
@@ -9839,585 +9814,585 @@ export type GetPlatformsWhatsappAccountsByIdTemplatesData = {
          */
         cursor?: string;
     };
-    url: '/platforms/whatsapp/accounts/{id}/templates';
+    url: '/platforms/whatsapp/accounts/{account_id}/templates';
 };
 
-export type GetPlatformsWhatsappAccountsByIdTemplatesErrors = {
+export type ListWhatsappTemplatesErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account not found or not owned by caller
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * WhatsApp/Meta upstream error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type GetPlatformsWhatsappAccountsByIdTemplatesError = GetPlatformsWhatsappAccountsByIdTemplatesErrors[keyof GetPlatformsWhatsappAccountsByIdTemplatesErrors];
+export type ListWhatsappTemplatesError = ListWhatsappTemplatesErrors[keyof ListWhatsappTemplatesErrors];
 
-export type GetPlatformsWhatsappAccountsByIdTemplatesResponses = {
+export type ListWhatsappTemplatesResponses = {
     /**
      * Templates with pagination cursors
      */
-    200: ApiEndpointsWhatsAppTemplateListResponse;
+    200: WhatsAppTemplateListResponse;
 };
 
-export type GetPlatformsWhatsappAccountsByIdTemplatesResponse = GetPlatformsWhatsappAccountsByIdTemplatesResponses[keyof GetPlatformsWhatsappAccountsByIdTemplatesResponses];
+export type ListWhatsappTemplatesResponse = ListWhatsappTemplatesResponses[keyof ListWhatsappTemplatesResponses];
 
-export type PostPlatformsWhatsappAccountsByIdTemplatesData = {
+export type CreateWhatsappTemplateData = {
     /**
      * Template definition
      */
-    body: ApiEndpointsWhatsAppCreateTemplateRequest;
+    body: WhatsAppCreateTemplateRequest;
     path: {
         /**
          * Connected account ID (sapi_acc_...)
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/platforms/whatsapp/accounts/{id}/templates';
+    url: '/platforms/whatsapp/accounts/{account_id}/templates';
 };
 
-export type PostPlatformsWhatsappAccountsByIdTemplatesErrors = {
+export type CreateWhatsappTemplateErrors = {
     /**
      * Missing or invalid field
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account not found or not owned by caller
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Template name already exists
      */
-    409: ApiEndpointsErrorResponse;
+    409: ErrorResponse;
     /**
      * WhatsApp/Meta upstream error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type PostPlatformsWhatsappAccountsByIdTemplatesError = PostPlatformsWhatsappAccountsByIdTemplatesErrors[keyof PostPlatformsWhatsappAccountsByIdTemplatesErrors];
+export type CreateWhatsappTemplateError = CreateWhatsappTemplateErrors[keyof CreateWhatsappTemplateErrors];
 
-export type PostPlatformsWhatsappAccountsByIdTemplatesResponses = {
+export type CreateWhatsappTemplateResponses = {
     /**
      * Created template (initial status)
      */
-    201: ApiEndpointsWhatsAppTemplateCreateResponse;
+    201: WhatsAppTemplateCreateResponse;
 };
 
-export type PostPlatformsWhatsappAccountsByIdTemplatesResponse = PostPlatformsWhatsappAccountsByIdTemplatesResponses[keyof PostPlatformsWhatsappAccountsByIdTemplatesResponses];
+export type CreateWhatsappTemplateResponse = CreateWhatsappTemplateResponses[keyof CreateWhatsappTemplateResponses];
 
-export type GetPlatformsWhatsappPhoneNumbersByIdBusinessProfileData = {
-    body?: never;
-    path: {
-        /**
-         * WhatsApp phone number platform ID (numeric ID, not the E.164 number)
-         */
-        id: string;
-    };
-    query?: never;
-    url: '/platforms/whatsapp/phone-numbers/{id}/business-profile';
-};
-
-export type GetPlatformsWhatsappPhoneNumbersByIdBusinessProfileErrors = {
-    /**
-     * Invalid or missing API key
-     */
-    401: ApiEndpointsErrorResponse;
-    /**
-     * Phone number not owned by caller or not connected
-     */
-    404: ApiEndpointsErrorResponse;
-    /**
-     * WhatsApp/Meta upstream error
-     */
-    503: ApiEndpointsErrorResponse;
-};
-
-export type GetPlatformsWhatsappPhoneNumbersByIdBusinessProfileError = GetPlatformsWhatsappPhoneNumbersByIdBusinessProfileErrors[keyof GetPlatformsWhatsappPhoneNumbersByIdBusinessProfileErrors];
-
-export type GetPlatformsWhatsappPhoneNumbersByIdBusinessProfileResponses = {
-    /**
-     * Business profile
-     */
-    200: ApiEndpointsWhatsAppBusinessProfile;
-};
-
-export type GetPlatformsWhatsappPhoneNumbersByIdBusinessProfileResponse = GetPlatformsWhatsappPhoneNumbersByIdBusinessProfileResponses[keyof GetPlatformsWhatsappPhoneNumbersByIdBusinessProfileResponses];
-
-export type PutPlatformsWhatsappPhoneNumbersByIdBusinessProfileData = {
-    /**
-     * Profile fields to update
-     */
-    body: ApiEndpointsWhatsAppUpdateBusinessProfileRequest;
-    path: {
-        /**
-         * WhatsApp phone number platform ID (numeric ID, not the E.164 number)
-         */
-        id: string;
-    };
-    query?: never;
-    url: '/platforms/whatsapp/phone-numbers/{id}/business-profile';
-};
-
-export type PutPlatformsWhatsappPhoneNumbersByIdBusinessProfileErrors = {
-    /**
-     * Empty or invalid payload
-     */
-    400: ApiEndpointsErrorResponse;
-    /**
-     * Invalid or missing API key
-     */
-    401: ApiEndpointsErrorResponse;
-    /**
-     * Phone number not owned by caller or not connected
-     */
-    404: ApiEndpointsErrorResponse;
-    /**
-     * WhatsApp/Meta upstream error
-     */
-    503: ApiEndpointsErrorResponse;
-};
-
-export type PutPlatformsWhatsappPhoneNumbersByIdBusinessProfileError = PutPlatformsWhatsappPhoneNumbersByIdBusinessProfileErrors[keyof PutPlatformsWhatsappPhoneNumbersByIdBusinessProfileErrors];
-
-export type PutPlatformsWhatsappPhoneNumbersByIdBusinessProfileResponses = {
-    /**
-     * Profile updated
-     */
-    204: void;
-};
-
-export type PutPlatformsWhatsappPhoneNumbersByIdBusinessProfileResponse = PutPlatformsWhatsappPhoneNumbersByIdBusinessProfileResponses[keyof PutPlatformsWhatsappPhoneNumbersByIdBusinessProfileResponses];
-
-export type PostPlatformsWhatsappPhoneNumbersByIdDeregisterData = {
+export type DeregisterWhatsappPhoneNumberData = {
     body?: never;
     path: {
         /**
          * Connected account ID (sapi_acc_...)
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/platforms/whatsapp/phone-numbers/{id}/deregister';
+    url: '/platforms/whatsapp/phone-numbers/{account_id}/deregister';
 };
 
-export type PostPlatformsWhatsappPhoneNumbersByIdDeregisterErrors = {
+export type DeregisterWhatsappPhoneNumberErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account not found or not owned by caller
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * WhatsApp/Meta upstream error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type PostPlatformsWhatsappPhoneNumbersByIdDeregisterError = PostPlatformsWhatsappPhoneNumbersByIdDeregisterErrors[keyof PostPlatformsWhatsappPhoneNumbersByIdDeregisterErrors];
+export type DeregisterWhatsappPhoneNumberError = DeregisterWhatsappPhoneNumberErrors[keyof DeregisterWhatsappPhoneNumberErrors];
 
-export type PostPlatformsWhatsappPhoneNumbersByIdDeregisterResponses = {
+export type DeregisterWhatsappPhoneNumberResponses = {
     /**
      * Phone number deregistered
      */
     204: void;
 };
 
-export type PostPlatformsWhatsappPhoneNumbersByIdDeregisterResponse = PostPlatformsWhatsappPhoneNumbersByIdDeregisterResponses[keyof PostPlatformsWhatsappPhoneNumbersByIdDeregisterResponses];
+export type DeregisterWhatsappPhoneNumberResponse = DeregisterWhatsappPhoneNumberResponses[keyof DeregisterWhatsappPhoneNumberResponses];
 
-export type PostPlatformsWhatsappPhoneNumbersByIdRegisterData = {
+export type RegisterWhatsappPhoneNumberData = {
     /**
      * 6-digit two-step verification PIN
      */
-    body: ApiEndpointsWhatsAppRegisterRequest;
+    body: WhatsAppRegisterRequest;
     path: {
         /**
          * Connected account ID (sapi_acc_...)
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/platforms/whatsapp/phone-numbers/{id}/register';
+    url: '/platforms/whatsapp/phone-numbers/{account_id}/register';
 };
 
-export type PostPlatformsWhatsappPhoneNumbersByIdRegisterErrors = {
+export type RegisterWhatsappPhoneNumberErrors = {
     /**
      * Missing or invalid PIN
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account not found or not owned by caller
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Phone number not verified, already registered with another BSP, or in use in the WhatsApp Business app
      */
-    409: ApiEndpointsErrorResponse;
+    409: ErrorResponse;
     /**
      * WhatsApp/Meta upstream error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type PostPlatformsWhatsappPhoneNumbersByIdRegisterError = PostPlatformsWhatsappPhoneNumbersByIdRegisterErrors[keyof PostPlatformsWhatsappPhoneNumbersByIdRegisterErrors];
+export type RegisterWhatsappPhoneNumberError = RegisterWhatsappPhoneNumberErrors[keyof RegisterWhatsappPhoneNumberErrors];
 
-export type PostPlatformsWhatsappPhoneNumbersByIdRegisterResponses = {
+export type RegisterWhatsappPhoneNumberResponses = {
     /**
      * Phone number registered
      */
     204: void;
 };
 
-export type PostPlatformsWhatsappPhoneNumbersByIdRegisterResponse = PostPlatformsWhatsappPhoneNumbersByIdRegisterResponses[keyof PostPlatformsWhatsappPhoneNumbersByIdRegisterResponses];
+export type RegisterWhatsappPhoneNumberResponse = RegisterWhatsappPhoneNumberResponses[keyof RegisterWhatsappPhoneNumberResponses];
 
-export type PostPlatformsWhatsappPhoneNumbersByIdRequestCodeData = {
+export type RequestWhatsappVerificationCodeData = {
     /**
      * Verification channel and locale
      */
-    body: ApiEndpointsWhatsAppRequestCodeRequest;
+    body: WhatsAppRequestCodeRequest;
     path: {
         /**
          * Connected account ID (sapi_acc_...)
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/platforms/whatsapp/phone-numbers/{id}/request-code';
+    url: '/platforms/whatsapp/phone-numbers/{account_id}/request-code';
 };
 
-export type PostPlatformsWhatsappPhoneNumbersByIdRequestCodeErrors = {
+export type RequestWhatsappVerificationCodeErrors = {
     /**
      * Missing or invalid method/language
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account not found or not owned by caller
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Number is in use in the WhatsApp Business app and needs no verification
      */
-    409: ApiEndpointsErrorResponse;
+    409: ErrorResponse;
     /**
      * WhatsApp/Meta upstream error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type PostPlatformsWhatsappPhoneNumbersByIdRequestCodeError = PostPlatformsWhatsappPhoneNumbersByIdRequestCodeErrors[keyof PostPlatformsWhatsappPhoneNumbersByIdRequestCodeErrors];
+export type RequestWhatsappVerificationCodeError = RequestWhatsappVerificationCodeErrors[keyof RequestWhatsappVerificationCodeErrors];
 
-export type PostPlatformsWhatsappPhoneNumbersByIdRequestCodeResponses = {
+export type RequestWhatsappVerificationCodeResponses = {
     /**
      * Code dispatched
      */
     204: void;
 };
 
-export type PostPlatformsWhatsappPhoneNumbersByIdRequestCodeResponse = PostPlatformsWhatsappPhoneNumbersByIdRequestCodeResponses[keyof PostPlatformsWhatsappPhoneNumbersByIdRequestCodeResponses];
+export type RequestWhatsappVerificationCodeResponse = RequestWhatsappVerificationCodeResponses[keyof RequestWhatsappVerificationCodeResponses];
 
-export type GetPlatformsWhatsappPhoneNumbersByIdStatusData = {
+export type GetWhatsappPhoneNumberStatusData = {
     body?: never;
     path: {
         /**
          * Connected account ID (sapi_acc_...)
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/platforms/whatsapp/phone-numbers/{id}/status';
+    url: '/platforms/whatsapp/phone-numbers/{account_id}/status';
 };
 
-export type GetPlatformsWhatsappPhoneNumbersByIdStatusErrors = {
+export type GetWhatsappPhoneNumberStatusErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account not found or not owned by caller
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * WhatsApp/Meta upstream error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type GetPlatformsWhatsappPhoneNumbersByIdStatusError = GetPlatformsWhatsappPhoneNumbersByIdStatusErrors[keyof GetPlatformsWhatsappPhoneNumbersByIdStatusErrors];
+export type GetWhatsappPhoneNumberStatusError = GetWhatsappPhoneNumberStatusErrors[keyof GetWhatsappPhoneNumberStatusErrors];
 
-export type GetPlatformsWhatsappPhoneNumbersByIdStatusResponses = {
+export type GetWhatsappPhoneNumberStatusResponses = {
     /**
      * Verification + registration flags
      */
-    200: SocialApiAiCoreApiConnectorsWhatsappPhoneNumberStatusResponse;
+    200: PhoneNumberStatusResponse;
 };
 
-export type GetPlatformsWhatsappPhoneNumbersByIdStatusResponse = GetPlatformsWhatsappPhoneNumbersByIdStatusResponses[keyof GetPlatformsWhatsappPhoneNumbersByIdStatusResponses];
+export type GetWhatsappPhoneNumberStatusResponse = GetWhatsappPhoneNumberStatusResponses[keyof GetWhatsappPhoneNumberStatusResponses];
 
-export type PostPlatformsWhatsappPhoneNumbersByIdVerifyCodeData = {
+export type VerifyWhatsappPhoneNumberData = {
     /**
      * Verification code
      */
-    body: ApiEndpointsWhatsAppVerifyCodeRequest;
+    body: WhatsAppVerifyCodeRequest;
     path: {
         /**
          * Connected account ID (sapi_acc_...)
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/platforms/whatsapp/phone-numbers/{id}/verify-code';
+    url: '/platforms/whatsapp/phone-numbers/{account_id}/verify-code';
 };
 
-export type PostPlatformsWhatsappPhoneNumbersByIdVerifyCodeErrors = {
+export type VerifyWhatsappPhoneNumberErrors = {
     /**
      * Missing or invalid code
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account not found or not owned by caller
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Number is in use in the WhatsApp Business app and needs no verification
      */
-    409: ApiEndpointsErrorResponse;
+    409: ErrorResponse;
     /**
      * WhatsApp/Meta upstream error (code mismatch or expired)
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type PostPlatformsWhatsappPhoneNumbersByIdVerifyCodeError = PostPlatformsWhatsappPhoneNumbersByIdVerifyCodeErrors[keyof PostPlatformsWhatsappPhoneNumbersByIdVerifyCodeErrors];
+export type VerifyWhatsappPhoneNumberError = VerifyWhatsappPhoneNumberErrors[keyof VerifyWhatsappPhoneNumberErrors];
 
-export type PostPlatformsWhatsappPhoneNumbersByIdVerifyCodeResponses = {
+export type VerifyWhatsappPhoneNumberResponses = {
     /**
      * Phone number verified
      */
     204: void;
 };
 
-export type PostPlatformsWhatsappPhoneNumbersByIdVerifyCodeResponse = PostPlatformsWhatsappPhoneNumbersByIdVerifyCodeResponses[keyof PostPlatformsWhatsappPhoneNumbersByIdVerifyCodeResponses];
+export type VerifyWhatsappPhoneNumberResponse = VerifyWhatsappPhoneNumberResponses[keyof VerifyWhatsappPhoneNumberResponses];
 
-export type PostPlatformsWhatsappTemplatesValidateData = {
+export type GetWhatsappBusinessProfileData = {
+    body?: never;
+    path: {
+        /**
+         * WhatsApp phone number platform ID (numeric ID, not the E.164 number)
+         */
+        phone_number_id: string;
+    };
+    query?: never;
+    url: '/platforms/whatsapp/phone-numbers/{phone_number_id}/business-profile';
+};
+
+export type GetWhatsappBusinessProfileErrors = {
+    /**
+     * Invalid or missing API key
+     */
+    401: ErrorResponse;
+    /**
+     * Phone number not owned by caller or not connected
+     */
+    404: ErrorResponse;
+    /**
+     * WhatsApp/Meta upstream error
+     */
+    503: ErrorResponse;
+};
+
+export type GetWhatsappBusinessProfileError = GetWhatsappBusinessProfileErrors[keyof GetWhatsappBusinessProfileErrors];
+
+export type GetWhatsappBusinessProfileResponses = {
+    /**
+     * Business profile
+     */
+    200: WhatsAppBusinessProfile;
+};
+
+export type GetWhatsappBusinessProfileResponse = GetWhatsappBusinessProfileResponses[keyof GetWhatsappBusinessProfileResponses];
+
+export type UpdateWhatsappBusinessProfileData = {
+    /**
+     * Profile fields to update
+     */
+    body: WhatsAppUpdateBusinessProfileRequest;
+    path: {
+        /**
+         * WhatsApp phone number platform ID (numeric ID, not the E.164 number)
+         */
+        phone_number_id: string;
+    };
+    query?: never;
+    url: '/platforms/whatsapp/phone-numbers/{phone_number_id}/business-profile';
+};
+
+export type UpdateWhatsappBusinessProfileErrors = {
+    /**
+     * Empty or invalid payload
+     */
+    400: ErrorResponse;
+    /**
+     * Invalid or missing API key
+     */
+    401: ErrorResponse;
+    /**
+     * Phone number not owned by caller or not connected
+     */
+    404: ErrorResponse;
+    /**
+     * WhatsApp/Meta upstream error
+     */
+    503: ErrorResponse;
+};
+
+export type UpdateWhatsappBusinessProfileError = UpdateWhatsappBusinessProfileErrors[keyof UpdateWhatsappBusinessProfileErrors];
+
+export type UpdateWhatsappBusinessProfileResponses = {
+    /**
+     * Profile updated
+     */
+    204: void;
+};
+
+export type UpdateWhatsappBusinessProfileResponse = UpdateWhatsappBusinessProfileResponses[keyof UpdateWhatsappBusinessProfileResponses];
+
+export type ValidateWhatsappTemplateData = {
     /**
      * Template definition to validate
      */
-    body: ApiEndpointsWhatsAppCreateTemplateRequest;
+    body: WhatsAppCreateTemplateRequest;
     path?: never;
     query?: never;
     url: '/platforms/whatsapp/templates/validate';
 };
 
-export type PostPlatformsWhatsappTemplatesValidateErrors = {
+export type ValidateWhatsappTemplateErrors = {
     /**
      * Invalid request body
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
 };
 
-export type PostPlatformsWhatsappTemplatesValidateError = PostPlatformsWhatsappTemplatesValidateErrors[keyof PostPlatformsWhatsappTemplatesValidateErrors];
+export type ValidateWhatsappTemplateError = ValidateWhatsappTemplateErrors[keyof ValidateWhatsappTemplateErrors];
 
-export type PostPlatformsWhatsappTemplatesValidateResponses = {
+export type ValidateWhatsappTemplateResponses = {
     /**
      * Validation result
      */
-    200: ApiEndpointsWhatsAppValidateTemplateResponse;
+    200: WhatsAppValidateTemplateResponse;
 };
 
-export type PostPlatformsWhatsappTemplatesValidateResponse = PostPlatformsWhatsappTemplatesValidateResponses[keyof PostPlatformsWhatsappTemplatesValidateResponses];
+export type ValidateWhatsappTemplateResponse = ValidateWhatsappTemplateResponses[keyof ValidateWhatsappTemplateResponses];
 
-export type GetPlatformsWhatsappTemplatesByIdData = {
+export type GetWhatsappTemplateData = {
     body?: never;
     path: {
         /**
          * WhatsApp template platform ID
          */
-        id: string;
+        template_id: string;
     };
     query?: never;
-    url: '/platforms/whatsapp/templates/{id}';
+    url: '/platforms/whatsapp/templates/{template_id}';
 };
 
-export type GetPlatformsWhatsappTemplatesByIdErrors = {
+export type GetWhatsappTemplateErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Template not found or no WhatsApp account connected
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * WhatsApp/Meta upstream error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type GetPlatformsWhatsappTemplatesByIdError = GetPlatformsWhatsappTemplatesByIdErrors[keyof GetPlatformsWhatsappTemplatesByIdErrors];
+export type GetWhatsappTemplateError = GetWhatsappTemplateErrors[keyof GetWhatsappTemplateErrors];
 
-export type GetPlatformsWhatsappTemplatesByIdResponses = {
+export type GetWhatsappTemplateResponses = {
     /**
      * Template details
      */
-    200: ApiEndpointsWhatsAppTemplateInfo;
+    200: WhatsAppTemplateInfo;
 };
 
-export type GetPlatformsWhatsappTemplatesByIdResponse = GetPlatformsWhatsappTemplatesByIdResponses[keyof GetPlatformsWhatsappTemplatesByIdResponses];
+export type GetWhatsappTemplateResponse = GetWhatsappTemplateResponses[keyof GetWhatsappTemplateResponses];
 
-export type PutPlatformsWhatsappTemplatesByIdData = {
+export type UpdateWhatsappTemplateData = {
     /**
      * Replacement components
      */
-    body: ApiEndpointsWhatsAppEditTemplateRequest;
+    body: WhatsAppEditTemplateRequest;
     path: {
         /**
          * WhatsApp template platform ID
          */
-        id: string;
+        template_id: string;
     };
     query?: never;
-    url: '/platforms/whatsapp/templates/{id}';
+    url: '/platforms/whatsapp/templates/{template_id}';
 };
 
-export type PutPlatformsWhatsappTemplatesByIdErrors = {
+export type UpdateWhatsappTemplateErrors = {
     /**
      * Missing or invalid components
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Template not found or no WhatsApp account connected
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * WhatsApp/Meta upstream error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type PutPlatformsWhatsappTemplatesByIdError = PutPlatformsWhatsappTemplatesByIdErrors[keyof PutPlatformsWhatsappTemplatesByIdErrors];
+export type UpdateWhatsappTemplateError = UpdateWhatsappTemplateErrors[keyof UpdateWhatsappTemplateErrors];
 
-export type PutPlatformsWhatsappTemplatesByIdResponses = {
+export type UpdateWhatsappTemplateResponses = {
     /**
      * Template updated
      */
     204: void;
 };
 
-export type PutPlatformsWhatsappTemplatesByIdResponse = PutPlatformsWhatsappTemplatesByIdResponses[keyof PutPlatformsWhatsappTemplatesByIdResponses];
+export type UpdateWhatsappTemplateResponse = UpdateWhatsappTemplateResponses[keyof UpdateWhatsappTemplateResponses];
 
-export type GetPlatformsYoutubeAccountsByIdSummaryData = {
+export type GetYoutubeChannelSummaryData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/platforms/youtube/accounts/{id}/summary';
+    url: '/platforms/youtube/accounts/{account_id}/summary';
 };
 
-export type GetPlatformsYoutubeAccountsByIdSummaryErrors = {
+export type GetYoutubeChannelSummaryErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Upstream YouTube API error
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type GetPlatformsYoutubeAccountsByIdSummaryError = GetPlatformsYoutubeAccountsByIdSummaryErrors[keyof GetPlatformsYoutubeAccountsByIdSummaryErrors];
+export type GetYoutubeChannelSummaryError = GetYoutubeChannelSummaryErrors[keyof GetYoutubeChannelSummaryErrors];
 
-export type GetPlatformsYoutubeAccountsByIdSummaryResponses = {
+export type GetYoutubeChannelSummaryResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsYouTubeChannelSummaryResponse;
+    200: YouTubeChannelSummaryResponse;
 };
 
-export type GetPlatformsYoutubeAccountsByIdSummaryResponse = GetPlatformsYoutubeAccountsByIdSummaryResponses[keyof GetPlatformsYoutubeAccountsByIdSummaryResponses];
+export type GetYoutubeChannelSummaryResponse = GetYoutubeChannelSummaryResponses[keyof GetYoutubeChannelSummaryResponses];
 
-export type PostPlatformsYoutubeAccountsByIdSyncData = {
+export type SyncYoutubeVideosData = {
     body?: never;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
     };
     query?: never;
-    url: '/platforms/youtube/accounts/{id}/sync';
+    url: '/platforms/youtube/accounts/{account_id}/sync';
 };
 
-export type PostPlatformsYoutubeAccountsByIdSyncErrors = {
+export type SyncYoutubeVideosErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The account was not granted the posts.read permission
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * accounts.sync_rate_limited: this account was synced too recently. accounts.sync_daily_limit: the plan's daily sync limit is reached. The Retry-After header carries the seconds to wait.
      */
-    429: ApiEndpointsErrorResponse;
+    429: ErrorResponse;
     /**
      * Account is not a YouTube account or connector does not support post sync
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
     /**
      * The sync could not be started. Retry later.
      */
-    503: ApiEndpointsErrorResponse;
+    503: ErrorResponse;
 };
 
-export type PostPlatformsYoutubeAccountsByIdSyncError = PostPlatformsYoutubeAccountsByIdSyncErrors[keyof PostPlatformsYoutubeAccountsByIdSyncErrors];
+export type SyncYoutubeVideosError = SyncYoutubeVideosErrors[keyof SyncYoutubeVideosErrors];
 
-export type PostPlatformsYoutubeAccountsByIdSyncResponses = {
+export type SyncYoutubeVideosResponses = {
     /**
      * OK
      */
@@ -10426,28 +10401,28 @@ export type PostPlatformsYoutubeAccountsByIdSyncResponses = {
     };
 };
 
-export type PostPlatformsYoutubeAccountsByIdSyncResponse = PostPlatformsYoutubeAccountsByIdSyncResponses[keyof PostPlatformsYoutubeAccountsByIdSyncResponses];
+export type SyncYoutubeVideosResponse = SyncYoutubeVideosResponses[keyof SyncYoutubeVideosResponses];
 
-export type PatchPlatformsYoutubeAccountsByIdVideosByVideoIdData = {
+export type UpdateYoutubeVideoData = {
     /**
      * Editable fields (all fields optional; omit any to leave unchanged)
      */
-    body?: ApiEndpointsUpdateYouTubeVideoRequest;
+    body?: UpdateYouTubeVideoRequest;
     path: {
         /**
          * Connected account ID
          */
-        id: string;
+        account_id: string;
         /**
          * YouTube video ID
          */
-        videoId: string;
+        video_id: string;
     };
     query?: never;
-    url: '/platforms/youtube/accounts/{id}/videos/{videoId}';
+    url: '/platforms/youtube/accounts/{account_id}/videos/{video_id}';
 };
 
-export type PatchPlatformsYoutubeAccountsByIdVideosByVideoIdResponses = {
+export type UpdateYoutubeVideoResponses = {
     /**
      * OK
      */
@@ -10456,107 +10431,107 @@ export type PatchPlatformsYoutubeAccountsByIdVideosByVideoIdResponses = {
     };
 };
 
-export type PatchPlatformsYoutubeAccountsByIdVideosByVideoIdResponse = PatchPlatformsYoutubeAccountsByIdVideosByVideoIdResponses[keyof PatchPlatformsYoutubeAccountsByIdVideosByVideoIdResponses];
+export type UpdateYoutubeVideoResponse = UpdateYoutubeVideoResponses[keyof UpdateYoutubeVideoResponses];
 
-export type PatchPlatformsYoutubeCommentsByCommentIdData = {
+export type UpdateYoutubeCommentData = {
     /**
      * New comment text (account_id, post_id, and text are all required to resolve the channel and edit the comment)
      */
-    body: ApiEndpointsEditYouTubeCommentRequest;
+    body: EditYouTubeCommentRequest;
     path: {
         /**
          * YouTube comment ID
          */
-        commentId: string;
+        comment_id: string;
     };
     query?: never;
-    url: '/platforms/youtube/comments/{commentId}';
+    url: '/platforms/youtube/comments/{comment_id}';
 };
 
-export type PatchPlatformsYoutubeCommentsByCommentIdErrors = {
+export type UpdateYoutubeCommentErrors = {
     /**
      * Invalid parameters
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The key's scopes do not include inbox:write
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Account is not a YouTube account, or the connector does not support editing comments
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
 };
 
-export type PatchPlatformsYoutubeCommentsByCommentIdError = PatchPlatformsYoutubeCommentsByCommentIdErrors[keyof PatchPlatformsYoutubeCommentsByCommentIdErrors];
+export type UpdateYoutubeCommentError = UpdateYoutubeCommentErrors[keyof UpdateYoutubeCommentErrors];
 
-export type PatchPlatformsYoutubeCommentsByCommentIdResponses = {
+export type UpdateYoutubeCommentResponses = {
     /**
      * Comment edited
      */
-    200: ApiEndpointsSuccessResponse;
+    200: SuccessResponse;
 };
 
-export type PatchPlatformsYoutubeCommentsByCommentIdResponse = PatchPlatformsYoutubeCommentsByCommentIdResponses[keyof PatchPlatformsYoutubeCommentsByCommentIdResponses];
+export type UpdateYoutubeCommentResponse = UpdateYoutubeCommentResponses[keyof UpdateYoutubeCommentResponses];
 
-export type PostPlatformsYoutubeCommentsByCommentIdModerateData = {
+export type ModerateYoutubeCommentData = {
     /**
      * Moderation action (account_id and post_id are both required to resolve the channel that owns the comment)
      */
-    body: ApiEndpointsModerateYouTubeCommentRequest;
+    body: ModerateYouTubeCommentRequest;
     path: {
         /**
          * YouTube comment ID
          */
-        commentId: string;
+        comment_id: string;
     };
     query?: never;
-    url: '/platforms/youtube/comments/{commentId}/moderate';
+    url: '/platforms/youtube/comments/{comment_id}/moderate';
 };
 
-export type PostPlatformsYoutubeCommentsByCommentIdModerateErrors = {
+export type ModerateYoutubeCommentErrors = {
     /**
      * Invalid parameters
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The key's scopes do not include inbox:write
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Account not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Account is not a YouTube account, or the connector does not support comment moderation
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
 };
 
-export type PostPlatformsYoutubeCommentsByCommentIdModerateError = PostPlatformsYoutubeCommentsByCommentIdModerateErrors[keyof PostPlatformsYoutubeCommentsByCommentIdModerateErrors];
+export type ModerateYoutubeCommentError = ModerateYoutubeCommentErrors[keyof ModerateYoutubeCommentErrors];
 
-export type PostPlatformsYoutubeCommentsByCommentIdModerateResponses = {
+export type ModerateYoutubeCommentResponses = {
     /**
      * Comment moderated
      */
-    200: ApiEndpointsSuccessResponse;
+    200: SuccessResponse;
 };
 
-export type PostPlatformsYoutubeCommentsByCommentIdModerateResponse = PostPlatformsYoutubeCommentsByCommentIdModerateResponses[keyof PostPlatformsYoutubeCommentsByCommentIdModerateResponses];
+export type ModerateYoutubeCommentResponse = ModerateYoutubeCommentResponses[keyof ModerateYoutubeCommentResponses];
 
-export type GetPostsData = {
+export type ListPostsData = {
     body?: never;
     path?: never;
     query?: {
@@ -10612,85 +10587,85 @@ export type GetPostsData = {
     url: '/posts';
 };
 
-export type GetPostsErrors = {
+export type ListPostsErrors = {
     /**
      * Invalid query parameters
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
 };
 
-export type GetPostsError = GetPostsErrors[keyof GetPostsErrors];
+export type ListPostsError = ListPostsErrors[keyof ListPostsErrors];
 
-export type GetPostsResponses = {
+export type ListPostsResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsPostsListResponse;
+    200: PostsListResponse;
 };
 
-export type GetPostsResponse = GetPostsResponses[keyof GetPostsResponses];
+export type ListPostsResponse = ListPostsResponses[keyof ListPostsResponses];
 
-export type PostPostsData = {
+export type CreatePostData = {
     /**
      * Post content and target accounts
      */
-    body: ApiEndpointsCreatePostRequest;
+    body: CreatePostRequest;
     path?: never;
     query?: never;
     url: '/posts';
 };
 
-export type PostPostsErrors = {
+export type CreatePostErrors = {
     /**
      * Invalid body
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * A target account must be reconnected before it can publish now (account.reconnection_required; the error names the account). Scheduled posts and drafts are still accepted.
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * queue_id names a Queue that does not exist, or the Brand has no default Queue (queue.not_found)
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * The Queue is paused or has no free time within 366 days (queue.paused, queue.full)
      */
-    409: ApiEndpointsErrorResponse;
+    409: ErrorResponse;
     /**
      * A target account's platform does not support publishing posts, such as Telegram or WhatsApp (account.platform_unsupported), or publishing.delivery.all_failed (fast completion)
      */
-    422: ApiEndpointsPostResponse;
+    422: PostResponse;
     /**
      * Monthly post limit exceeded, or the target account is over its posting velocity cap (publishing.velocity_limit; see the Retry-After header)
      */
-    429: ApiEndpointsErrorResponse;
+    429: ErrorResponse;
 };
 
-export type PostPostsError = PostPostsErrors[keyof PostPostsErrors];
+export type CreatePostError = CreatePostErrors[keyof CreatePostErrors];
 
-export type PostPostsResponses = {
+export type CreatePostResponses = {
     /**
      * Post accepted (publishing in background), scheduled, or drafted
      */
-    201: ApiEndpointsPostResponse;
+    201: PostResponse;
     /**
      * Some accounts published, some failed (fast completion)
      */
-    207: ApiEndpointsPostResponse;
+    207: PostResponse;
 };
 
-export type PostPostsResponse = PostPostsResponses[keyof PostPostsResponses];
+export type CreatePostResponse = CreatePostResponses[keyof CreatePostResponses];
 
-export type PostPostsImportData = {
+export type ImportPostsData = {
     body: {
         /**
          * CSV file (max 5 MB)
@@ -10707,29 +10682,29 @@ export type PostPostsImportData = {
     url: '/posts/import';
 };
 
-export type PostPostsImportErrors = {
+export type ImportPostsErrors = {
     /**
      * Bad Request
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Too Many Requests
      */
-    429: ApiEndpointsErrorResponse;
+    429: ErrorResponse;
 };
 
-export type PostPostsImportError = PostPostsImportErrors[keyof PostPostsImportErrors];
+export type ImportPostsError = ImportPostsErrors[keyof ImportPostsErrors];
 
-export type PostPostsImportResponses = {
+export type ImportPostsResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsImportPostsResponse;
+    200: ImportPostsResponse;
 };
 
-export type PostPostsImportResponse = PostPostsImportResponses[keyof PostPostsImportResponses];
+export type ImportPostsResponse2 = ImportPostsResponses[keyof ImportPostsResponses];
 
-export type GetPostsMetricsData = {
+export type GetBatchPostMetricsData = {
     body?: never;
     path?: never;
     query: {
@@ -10741,29 +10716,29 @@ export type GetPostsMetricsData = {
     url: '/posts/metrics';
 };
 
-export type GetPostsMetricsErrors = {
+export type GetBatchPostMetricsErrors = {
     /**
      * post_ids missing, more than 20 IDs, or an ID longer than 100 characters
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
 };
 
-export type GetPostsMetricsError = GetPostsMetricsErrors[keyof GetPostsMetricsErrors];
+export type GetBatchPostMetricsError = GetBatchPostMetricsErrors[keyof GetBatchPostMetricsErrors];
 
-export type GetPostsMetricsResponses = {
+export type GetBatchPostMetricsResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsPostsMetricsResponse;
+    200: PostsMetricsResponse;
 };
 
-export type GetPostsMetricsResponse = GetPostsMetricsResponses[keyof GetPostsMetricsResponses];
+export type GetBatchPostMetricsResponse = GetBatchPostMetricsResponses[keyof GetBatchPostMetricsResponses];
 
-export type GetPostsValidateData = {
+export type GetPlatformConstraintsData = {
     body?: never;
     path?: never;
     query?: {
@@ -10775,188 +10750,188 @@ export type GetPostsValidateData = {
     url: '/posts/validate';
 };
 
-export type GetPostsValidateErrors = {
+export type GetPlatformConstraintsErrors = {
     /**
      * Unknown platform
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
 };
 
-export type GetPostsValidateError = GetPostsValidateErrors[keyof GetPostsValidateErrors];
+export type GetPlatformConstraintsError = GetPlatformConstraintsErrors[keyof GetPlatformConstraintsErrors];
 
-export type GetPostsValidateResponses = {
+export type GetPlatformConstraintsResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsPlatformConstraintsResponse;
+    200: PlatformConstraintsResponse;
 };
 
-export type GetPostsValidateResponse = GetPostsValidateResponses[keyof GetPostsValidateResponses];
+export type GetPlatformConstraintsResponse = GetPlatformConstraintsResponses[keyof GetPlatformConstraintsResponses];
 
-export type PostPostsValidateData = {
+export type ValidatePostData = {
     /**
      * Content to validate
      */
-    body: ApiEndpointsValidatePostRequest;
+    body: ValidatePostRequest;
     path?: never;
     query?: never;
     url: '/posts/validate';
 };
 
-export type PostPostsValidateErrors = {
+export type ValidatePostErrors = {
     /**
      * Bad Request
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
 };
 
-export type PostPostsValidateError = PostPostsValidateErrors[keyof PostPostsValidateErrors];
+export type ValidatePostError = ValidatePostErrors[keyof ValidatePostErrors];
 
-export type PostPostsValidateResponses = {
+export type ValidatePostResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsValidatePostResponse;
+    200: ValidatePostResponse;
 };
 
-export type PostPostsValidateResponse = PostPostsValidateResponses[keyof PostPostsValidateResponses];
+export type ValidatePostResponse2 = ValidatePostResponses[keyof ValidatePostResponses];
 
-export type DeletePostsByPidData = {
+export type DeletePostData = {
     body?: never;
     path: {
         /**
          * Post ID
          */
-        pid: string;
+        post_id: string;
     };
     query?: never;
-    url: '/posts/{pid}';
+    url: '/posts/{post_id}';
 };
 
-export type DeletePostsByPidErrors = {
+export type DeletePostErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Post not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type DeletePostsByPidError = DeletePostsByPidErrors[keyof DeletePostsByPidErrors];
+export type DeletePostError = DeletePostErrors[keyof DeletePostErrors];
 
-export type DeletePostsByPidResponses = {
+export type DeletePostResponses = {
     /**
      * Delete result
      */
-    200: ApiEndpointsDeletePostResponse;
+    200: DeletePostResponse;
 };
 
-export type DeletePostsByPidResponse = DeletePostsByPidResponses[keyof DeletePostsByPidResponses];
+export type DeletePostResponse2 = DeletePostResponses[keyof DeletePostResponses];
 
-export type GetPostsByPidData = {
+export type GetPostData = {
     body?: never;
     path: {
         /**
          * SocialAPI post ID (UUID) or platform post ID
          */
-        pid: string;
+        post_id: string;
     };
     query?: never;
-    url: '/posts/{pid}';
+    url: '/posts/{post_id}';
 };
 
-export type GetPostsByPidErrors = {
+export type GetPostErrors = {
     /**
      * Unauthorized
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Not Found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Platform post ID matches multiple posts
      */
-    409: ApiEndpointsErrorResponse;
+    409: ErrorResponse;
 };
 
-export type GetPostsByPidError = GetPostsByPidErrors[keyof GetPostsByPidErrors];
+export type GetPostError = GetPostErrors[keyof GetPostErrors];
 
-export type GetPostsByPidResponses = {
+export type GetPostResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsPostResponse;
+    200: PostResponse;
 };
 
-export type GetPostsByPidResponse = GetPostsByPidResponses[keyof GetPostsByPidResponses];
+export type GetPostResponse = GetPostResponses[keyof GetPostResponses];
 
-export type PatchPostsByPidData = {
+export type UpdatePostData = {
     /**
      * Updated content
      */
-    body: ApiEndpointsUpdatePostRequest;
+    body: UpdatePostRequest;
     path: {
         /**
          * Post ID
          */
-        pid: string;
+        post_id: string;
     };
     query?: never;
-    url: '/posts/{pid}';
+    url: '/posts/{post_id}';
 };
 
-export type PatchPostsByPidErrors = {
+export type UpdatePostErrors = {
     /**
      * Invalid body, or a field a published post cannot change (validation.field_not_editable)
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Post not found, or queue_id names a Queue that does not exist (queue.not_found)
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Post is not in an editable state, a published post is live on a platform other than Google Business Profile, or the Queue is paused, has no free time, or already holds a post at the requested time (queue.paused, queue.full, queue.slot_conflict)
      */
-    409: ApiEndpointsErrorResponse;
+    409: ErrorResponse;
     /**
      * A target account's platform does not support publishing posts, such as Telegram or WhatsApp (account.platform_unsupported)
      */
-    422: ApiEndpointsErrorResponse;
+    422: ErrorResponse;
 };
 
-export type PatchPostsByPidError = PatchPostsByPidErrors[keyof PatchPostsByPidErrors];
+export type UpdatePostError = UpdatePostErrors[keyof UpdatePostErrors];
 
-export type PatchPostsByPidResponses = {
+export type UpdatePostResponses = {
     /**
      * Post updated
      */
-    200: ApiEndpointsPostResponse;
+    200: PostResponse;
 };
 
-export type PatchPostsByPidResponse = PatchPostsByPidResponses[keyof PatchPostsByPidResponses];
+export type UpdatePostResponse = UpdatePostResponses[keyof UpdatePostResponses];
 
-export type GetPostsByPidAnalyticsData = {
+export type GetPostAnalyticsData = {
     body?: never;
     path: {
         /**
          * SocialAPI post ID (UUID)
          */
-        pid: string;
+        post_id: string;
     };
     query?: {
         /**
@@ -10972,219 +10947,219 @@ export type GetPostsByPidAnalyticsData = {
          */
         metrics?: string;
     };
-    url: '/posts/{pid}/analytics';
+    url: '/posts/{post_id}/analytics';
 };
 
-export type GetPostsByPidAnalyticsErrors = {
+export type GetPostAnalyticsErrors = {
     /**
      * Malformed or inverted range, or a range wider than 400 days
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Post not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type GetPostsByPidAnalyticsError = GetPostsByPidAnalyticsErrors[keyof GetPostsByPidAnalyticsErrors];
+export type GetPostAnalyticsError = GetPostAnalyticsErrors[keyof GetPostAnalyticsErrors];
 
-export type GetPostsByPidAnalyticsResponses = {
+export type GetPostAnalyticsResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsAnalyticsResponseWrapper;
+    200: AnalyticsResponseWrapper;
 };
 
-export type GetPostsByPidAnalyticsResponse = GetPostsByPidAnalyticsResponses[keyof GetPostsByPidAnalyticsResponses];
+export type GetPostAnalyticsResponse = GetPostAnalyticsResponses[keyof GetPostAnalyticsResponses];
 
-export type GetPostsByPidMetricsData = {
+export type GetPostMetricsData = {
     body?: never;
     path: {
         /**
          * SocialAPI post ID (UUID) or platform post ID
          */
-        pid: string;
+        post_id: string;
     };
     query?: never;
-    url: '/posts/{pid}/metrics';
+    url: '/posts/{post_id}/metrics';
 };
 
-export type GetPostsByPidMetricsErrors = {
+export type GetPostMetricsErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Post not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Platform post ID matches multiple posts
      */
-    409: ApiEndpointsErrorResponse;
+    409: ErrorResponse;
 };
 
-export type GetPostsByPidMetricsError = GetPostsByPidMetricsErrors[keyof GetPostsByPidMetricsErrors];
+export type GetPostMetricsError = GetPostMetricsErrors[keyof GetPostMetricsErrors];
 
-export type GetPostsByPidMetricsResponses = {
+export type GetPostMetricsResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsMetricsResponseWrapper;
+    200: MetricsResponseWrapper;
 };
 
-export type GetPostsByPidMetricsResponse = GetPostsByPidMetricsResponses[keyof GetPostsByPidMetricsResponses];
+export type GetPostMetricsResponse = GetPostMetricsResponses[keyof GetPostMetricsResponses];
 
-export type PostPostsByPidPublishData = {
+export type PublishPostData = {
     body?: never;
     path: {
         /**
          * Post ID
          */
-        pid: string;
+        post_id: string;
     };
     query?: never;
-    url: '/posts/{pid}/publish';
+    url: '/posts/{post_id}/publish';
 };
 
-export type PostPostsByPidPublishErrors = {
+export type PublishPostErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * A target account must be reconnected before it can publish (account.reconnection_required)
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Post not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Post is not in a publishable state
      */
-    409: ApiEndpointsErrorResponse;
+    409: ErrorResponse;
     /**
      * publishing.delivery.all_failed (fast completion)
      */
-    422: ApiEndpointsPostResponse;
+    422: PostResponse;
     /**
      * Monthly post limit exceeded, or the target account is over its posting velocity cap (publishing.velocity_limit; see the Retry-After header)
      */
-    429: ApiEndpointsErrorResponse;
+    429: ErrorResponse;
 };
 
-export type PostPostsByPidPublishError = PostPostsByPidPublishErrors[keyof PostPostsByPidPublishErrors];
+export type PublishPostError = PublishPostErrors[keyof PublishPostErrors];
 
-export type PostPostsByPidPublishResponses = {
+export type PublishPostResponses = {
     /**
      * Post accepted, publishing in the background
      */
-    201: ApiEndpointsPostResponse;
+    201: PostResponse;
     /**
      * Some accounts published, some failed (fast completion)
      */
-    207: ApiEndpointsPostResponse;
+    207: PostResponse;
 };
 
-export type PostPostsByPidPublishResponse = PostPostsByPidPublishResponses[keyof PostPostsByPidPublishResponses];
+export type PublishPostResponse = PublishPostResponses[keyof PublishPostResponses];
 
-export type PostPostsByPidRetryData = {
+export type RetryPostData = {
     body?: never;
     path: {
         /**
          * Post ID
          */
-        pid: string;
+        post_id: string;
     };
     query?: never;
-    url: '/posts/{pid}/retry';
+    url: '/posts/{post_id}/retry';
 };
 
-export type PostPostsByPidRetryErrors = {
+export type RetryPostErrors = {
     /**
      * Post is not retryable
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * A target account must be reconnected before it can publish (account.reconnection_required)
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Post not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * Post is not in a retryable state
      */
-    409: ApiEndpointsErrorResponse;
+    409: ErrorResponse;
     /**
      * Monthly post limit exceeded, or the target account is over its posting velocity cap (publishing.velocity_limit; see the Retry-After header)
      */
-    429: ApiEndpointsErrorResponse;
+    429: ErrorResponse;
 };
 
-export type PostPostsByPidRetryError = PostPostsByPidRetryErrors[keyof PostPostsByPidRetryErrors];
+export type RetryPostError = RetryPostErrors[keyof RetryPostErrors];
 
-export type PostPostsByPidRetryResponses = {
+export type RetryPostResponses = {
     /**
      * Post re-enqueued
      */
-    200: ApiEndpointsSuccessResponse;
+    200: SuccessResponse;
 };
 
-export type PostPostsByPidRetryResponse = PostPostsByPidRetryResponses[keyof PostPostsByPidRetryResponses];
+export type RetryPostResponse = RetryPostResponses[keyof RetryPostResponses];
 
-export type PostPostsByPidUnpublishData = {
+export type UnpublishPostData = {
     /**
      * Optional account_id to unpublish from
      */
-    body?: ApiEndpointsUnpublishRequest;
+    body?: UnpublishRequest;
     path: {
         /**
          * Post ID
          */
-        pid: string;
+        post_id: string;
     };
     query?: never;
-    url: '/posts/{pid}/unpublish';
+    url: '/posts/{post_id}/unpublish';
 };
 
-export type PostPostsByPidUnpublishErrors = {
+export type UnpublishPostErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Post not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * resource.not_supported: a target platform cannot unpublish (content stays live)
      */
-    501: ApiEndpointsErrorResponse;
+    501: ErrorResponse;
 };
 
-export type PostPostsByPidUnpublishError = PostPostsByPidUnpublishErrors[keyof PostPostsByPidUnpublishErrors];
+export type UnpublishPostError = UnpublishPostErrors[keyof UnpublishPostErrors];
 
-export type PostPostsByPidUnpublishResponses = {
+export type UnpublishPostResponses = {
     /**
      * Post unpublished
      */
-    200: ApiEndpointsSuccessResponse;
+    200: SuccessResponse;
 };
 
-export type PostPostsByPidUnpublishResponse = PostPostsByPidUnpublishResponses[keyof PostPostsByPidUnpublishResponses];
+export type UnpublishPostResponse = UnpublishPostResponses[keyof UnpublishPostResponses];
 
-export type GetQueuesData = {
+export type ListQueuesData = {
     body?: never;
     path?: never;
     query?: {
@@ -11196,204 +11171,204 @@ export type GetQueuesData = {
     url: '/queues';
 };
 
-export type GetQueuesErrors = {
+export type ListQueuesErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The key's scopes do not include posts:read
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
 };
 
-export type GetQueuesError = GetQueuesErrors[keyof GetQueuesErrors];
+export type ListQueuesError = ListQueuesErrors[keyof ListQueuesErrors];
 
-export type GetQueuesResponses = {
+export type ListQueuesResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsQueueListResponse;
+    200: QueueListResponse;
 };
 
-export type GetQueuesResponse = GetQueuesResponses[keyof GetQueuesResponses];
+export type ListQueuesResponse = ListQueuesResponses[keyof ListQueuesResponses];
 
-export type PostQueuesData = {
+export type CreateQueueData = {
     /**
      * Queue definition
      */
-    body: SocialApiAiCoreApiServiceCreateQueueParams;
+    body: CreateQueueParams;
     path?: never;
     query?: never;
     url: '/queues';
 };
 
-export type PostQueuesErrors = {
+export type CreateQueueErrors = {
     /**
      * Missing brand_id, invalid timezone, slots or name (validation.field_required, validation.field_invalid)
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The key's scopes do not include posts:write
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Brand not found (brand.not_found)
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * The Brand already has 20 Queues (queue.limit_reached)
      */
-    409: ApiEndpointsErrorResponse;
+    409: ErrorResponse;
 };
 
-export type PostQueuesError = PostQueuesErrors[keyof PostQueuesErrors];
+export type CreateQueueError = CreateQueueErrors[keyof CreateQueueErrors];
 
-export type PostQueuesResponses = {
+export type CreateQueueResponses = {
     /**
      * Created
      */
-    201: SocialApiAiCoreApiServiceQueue;
+    201: Queue;
 };
 
-export type PostQueuesResponse = PostQueuesResponses[keyof PostQueuesResponses];
+export type CreateQueueResponse = CreateQueueResponses[keyof CreateQueueResponses];
 
-export type DeleteQueuesByQidData = {
+export type DeleteQueueData = {
     body?: never;
     path: {
         /**
          * Queue ID
          */
-        qid: string;
+        queue_id: string;
     };
     query?: never;
-    url: '/queues/{qid}';
+    url: '/queues/{queue_id}';
 };
 
-export type DeleteQueuesByQidErrors = {
+export type DeleteQueueErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The key's scopes do not include posts:write
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Queue not found (queue.not_found)
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type DeleteQueuesByQidError = DeleteQueuesByQidErrors[keyof DeleteQueuesByQidErrors];
+export type DeleteQueueError = DeleteQueueErrors[keyof DeleteQueueErrors];
 
-export type DeleteQueuesByQidResponses = {
+export type DeleteQueueResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsDeleteQueueResponse;
+    200: DeleteQueueResponse;
 };
 
-export type DeleteQueuesByQidResponse = DeleteQueuesByQidResponses[keyof DeleteQueuesByQidResponses];
+export type DeleteQueueResponse2 = DeleteQueueResponses[keyof DeleteQueueResponses];
 
-export type GetQueuesByQidData = {
+export type GetQueueData = {
     body?: never;
     path: {
         /**
          * Queue ID
          */
-        qid: string;
+        queue_id: string;
     };
     query?: never;
-    url: '/queues/{qid}';
+    url: '/queues/{queue_id}';
 };
 
-export type GetQueuesByQidErrors = {
+export type GetQueueErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The key's scopes do not include posts:read
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Queue not found (queue.not_found)
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type GetQueuesByQidError = GetQueuesByQidErrors[keyof GetQueuesByQidErrors];
+export type GetQueueError = GetQueueErrors[keyof GetQueueErrors];
 
-export type GetQueuesByQidResponses = {
+export type GetQueueResponses = {
     /**
      * OK
      */
-    200: SocialApiAiCoreApiServiceQueue;
+    200: Queue;
 };
 
-export type GetQueuesByQidResponse = GetQueuesByQidResponses[keyof GetQueuesByQidResponses];
+export type GetQueueResponse = GetQueueResponses[keyof GetQueueResponses];
 
-export type PatchQueuesByQidData = {
+export type UpdateQueueData = {
     /**
      * Fields to change
      */
-    body: SocialApiAiCoreApiServiceUpdateQueueParams;
+    body: UpdateQueueParams;
     path: {
         /**
          * Queue ID
          */
-        qid: string;
+        queue_id: string;
     };
     query?: never;
-    url: '/queues/{qid}';
+    url: '/queues/{queue_id}';
 };
 
-export type PatchQueuesByQidErrors = {
+export type UpdateQueueErrors = {
     /**
      * Invalid timezone, slots, name or is_default (validation.field_invalid)
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The key's scopes do not include posts:write
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Queue not found (queue.not_found)
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
     /**
      * reshuffle_existing found no free time for a post within 366 days (queue.full)
      */
-    409: ApiEndpointsErrorResponse;
+    409: ErrorResponse;
 };
 
-export type PatchQueuesByQidError = PatchQueuesByQidErrors[keyof PatchQueuesByQidErrors];
+export type UpdateQueueError = UpdateQueueErrors[keyof UpdateQueueErrors];
 
-export type PatchQueuesByQidResponses = {
+export type UpdateQueueResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsUpdateQueueResponse;
+    200: UpdateQueueResponse;
 };
 
-export type PatchQueuesByQidResponse = PatchQueuesByQidResponses[keyof PatchQueuesByQidResponses];
+export type UpdateQueueResponse2 = UpdateQueueResponses[keyof UpdateQueueResponses];
 
-export type GetQueuesByQidPreviewData = {
+export type PreviewQueueData = {
     body?: never;
     path: {
         /**
          * Queue ID
          */
-        qid: string;
+        queue_id: string;
     };
     query?: {
         /**
@@ -11401,38 +11376,38 @@ export type GetQueuesByQidPreviewData = {
          */
         count?: number;
     };
-    url: '/queues/{qid}/preview';
+    url: '/queues/{queue_id}/preview';
 };
 
-export type GetQueuesByQidPreviewErrors = {
+export type PreviewQueueErrors = {
     /**
      * count is not an integer from 1 to 100 (validation.field_invalid)
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * The key's scopes do not include posts:read
      */
-    403: ApiEndpointsErrorResponse;
+    403: ErrorResponse;
     /**
      * Queue not found (queue.not_found)
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type GetQueuesByQidPreviewError = GetQueuesByQidPreviewErrors[keyof GetQueuesByQidPreviewErrors];
+export type PreviewQueueError = PreviewQueueErrors[keyof PreviewQueueErrors];
 
-export type GetQueuesByQidPreviewResponses = {
+export type PreviewQueueResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsQueuePreviewResponse;
+    200: QueuePreviewResponse;
 };
 
-export type GetQueuesByQidPreviewResponse = GetQueuesByQidPreviewResponses[keyof GetQueuesByQidPreviewResponses];
+export type PreviewQueueResponse = PreviewQueueResponses[keyof PreviewQueueResponses];
 
 export type GetUsageData = {
     body?: never;
@@ -11445,7 +11420,7 @@ export type GetUsageErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
 };
 
 export type GetUsageError = GetUsageErrors[keyof GetUsageErrors];
@@ -11454,303 +11429,274 @@ export type GetUsageResponses = {
     /**
      * Resource usage for the current billing period
      */
-    200: ApiEndpointsUsageResponse;
+    200: UsageResponse;
 };
 
 export type GetUsageResponse = GetUsageResponses[keyof GetUsageResponses];
 
-export type DeleteUsersMeData = {
+export type GetCurrentUserData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/users/me';
 };
 
-export type DeleteUsersMeErrors = {
+export type GetCurrentUserErrors = {
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * User not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type DeleteUsersMeError = DeleteUsersMeErrors[keyof DeleteUsersMeErrors];
+export type GetCurrentUserError = GetCurrentUserErrors[keyof GetCurrentUserErrors];
 
-export type DeleteUsersMeResponses = {
-    /**
-     * User deleted
-     */
-    200: ApiEndpointsOkResponse;
-};
-
-export type DeleteUsersMeResponse = DeleteUsersMeResponses[keyof DeleteUsersMeResponses];
-
-export type GetUsersMeData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/users/me';
-};
-
-export type GetUsersMeErrors = {
-    /**
-     * Invalid or missing API key
-     */
-    401: ApiEndpointsErrorResponse;
-    /**
-     * User not found
-     */
-    404: ApiEndpointsErrorResponse;
-};
-
-export type GetUsersMeError = GetUsersMeErrors[keyof GetUsersMeErrors];
-
-export type GetUsersMeResponses = {
+export type GetCurrentUserResponses = {
     /**
      * User profile
      */
-    200: ApiEndpointsUserMeResponse;
+    200: UserMeResponse;
 };
 
-export type GetUsersMeResponse = GetUsersMeResponses[keyof GetUsersMeResponses];
+export type GetCurrentUserResponse = GetCurrentUserResponses[keyof GetCurrentUserResponses];
 
-export type PatchUsersMeData = {
+export type UpdateCurrentUserData = {
     /**
      * Fields to update
      */
-    body: ApiEndpointsPatchMeRequest;
+    body: PatchMeRequest;
     path?: never;
     query?: never;
     url: '/users/me';
 };
 
-export type PatchUsersMeErrors = {
+export type UpdateCurrentUserErrors = {
     /**
      * Invalid request body or onboarding value
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Invalid or missing API key
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * User not found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type PatchUsersMeError = PatchUsersMeErrors[keyof PatchUsersMeErrors];
+export type UpdateCurrentUserError = UpdateCurrentUserErrors[keyof UpdateCurrentUserErrors];
 
-export type PatchUsersMeResponses = {
+export type UpdateCurrentUserResponses = {
     /**
      * Updated user profile
      */
-    200: ApiEndpointsUserMeResponse;
+    200: UserMeResponse;
 };
 
-export type PatchUsersMeResponse = PatchUsersMeResponses[keyof PatchUsersMeResponses];
+export type UpdateCurrentUserResponse = UpdateCurrentUserResponses[keyof UpdateCurrentUserResponses];
 
-export type GetWebhooksData = {
+export type ListWebhooksData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/webhooks';
 };
 
-export type GetWebhooksErrors = {
+export type ListWebhooksErrors = {
     /**
      * Unauthorized
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
 };
 
-export type GetWebhooksError = GetWebhooksErrors[keyof GetWebhooksErrors];
+export type ListWebhooksError = ListWebhooksErrors[keyof ListWebhooksErrors];
 
-export type GetWebhooksResponses = {
+export type ListWebhooksResponses = {
     /**
      * List of webhook endpoints
      */
-    200: ApiEndpointsWebhooksListResponse;
+    200: WebhooksListResponse;
 };
 
-export type GetWebhooksResponse = GetWebhooksResponses[keyof GetWebhooksResponses];
+export type ListWebhooksResponse = ListWebhooksResponses[keyof ListWebhooksResponses];
 
-export type PostWebhooksData = {
+export type CreateWebhookData = {
     /**
      * Endpoint config
      */
-    body: ApiEndpointsCreateWebhookRequest;
+    body: CreateWebhookRequest;
     path?: never;
     query?: never;
     url: '/webhooks';
 };
 
-export type PostWebhooksErrors = {
+export type CreateWebhookErrors = {
     /**
      * Bad Request
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Unauthorized
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
 };
 
-export type PostWebhooksError = PostWebhooksErrors[keyof PostWebhooksErrors];
+export type CreateWebhookError = CreateWebhookErrors[keyof CreateWebhookErrors];
 
-export type PostWebhooksResponses = {
+export type CreateWebhookResponses = {
     /**
      * Endpoint created
      */
-    201: ApiEndpointsCreateWebhookResponse;
+    201: CreateWebhookResponse;
 };
 
-export type PostWebhooksResponse = PostWebhooksResponses[keyof PostWebhooksResponses];
+export type CreateWebhookResponse2 = CreateWebhookResponses[keyof CreateWebhookResponses];
 
-export type GetWebhooksEventsData = {
+export type ListWebhookEventTypesData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/webhooks/events';
 };
 
-export type GetWebhooksEventsErrors = {
+export type ListWebhookEventTypesErrors = {
     /**
      * Unauthorized
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
 };
 
-export type GetWebhooksEventsError = GetWebhooksEventsErrors[keyof GetWebhooksEventsErrors];
+export type ListWebhookEventTypesError = ListWebhookEventTypesErrors[keyof ListWebhookEventTypesErrors];
 
-export type GetWebhooksEventsResponses = {
+export type ListWebhookEventTypesResponses = {
     /**
      * Catalog of webhook event types
      */
-    200: ApiEndpointsListWebhookEventsResponse;
+    200: ListWebhookEventsResponse;
 };
 
-export type GetWebhooksEventsResponse = GetWebhooksEventsResponses[keyof GetWebhooksEventsResponses];
+export type ListWebhookEventTypesResponse = ListWebhookEventTypesResponses[keyof ListWebhookEventTypesResponses];
 
-export type DeleteWebhooksByIdData = {
+export type DeleteWebhookData = {
     body?: never;
     path: {
         /**
          * Webhook endpoint ID
          */
-        id: string;
+        webhook_id: string;
     };
     query?: never;
-    url: '/webhooks/{id}';
+    url: '/webhooks/{webhook_id}';
 };
 
-export type DeleteWebhooksByIdErrors = {
+export type DeleteWebhookErrors = {
     /**
      * Unauthorized
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Not Found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type DeleteWebhooksByIdError = DeleteWebhooksByIdErrors[keyof DeleteWebhooksByIdErrors];
+export type DeleteWebhookError = DeleteWebhookErrors[keyof DeleteWebhookErrors];
 
-export type DeleteWebhooksByIdResponses = {
+export type DeleteWebhookResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsOkResponse;
+    200: OkResponse;
 };
 
-export type DeleteWebhooksByIdResponse = DeleteWebhooksByIdResponses[keyof DeleteWebhooksByIdResponses];
+export type DeleteWebhookResponse = DeleteWebhookResponses[keyof DeleteWebhookResponses];
 
-export type GetWebhooksByIdData = {
+export type GetWebhookData = {
     body?: never;
     path: {
         /**
          * Webhook endpoint ID
          */
-        id: string;
+        webhook_id: string;
     };
     query?: never;
-    url: '/webhooks/{id}';
+    url: '/webhooks/{webhook_id}';
 };
 
-export type GetWebhooksByIdErrors = {
+export type GetWebhookErrors = {
     /**
      * Unauthorized
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Not Found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type GetWebhooksByIdError = GetWebhooksByIdErrors[keyof GetWebhooksByIdErrors];
+export type GetWebhookError = GetWebhookErrors[keyof GetWebhookErrors];
 
-export type GetWebhooksByIdResponses = {
+export type GetWebhookResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsWebhookDetailResponse;
+    200: WebhookDetailResponse;
 };
 
-export type GetWebhooksByIdResponse = GetWebhooksByIdResponses[keyof GetWebhooksByIdResponses];
+export type GetWebhookResponse = GetWebhookResponses[keyof GetWebhookResponses];
 
-export type PatchWebhooksByIdData = {
+export type UpdateWebhookData = {
     /**
      * Fields to update
      */
-    body: ApiEndpointsUpdateWebhookRequest;
+    body: UpdateWebhookRequest;
     path: {
         /**
          * Webhook endpoint ID
          */
-        id: string;
+        webhook_id: string;
     };
     query?: never;
-    url: '/webhooks/{id}';
+    url: '/webhooks/{webhook_id}';
 };
 
-export type PatchWebhooksByIdErrors = {
+export type UpdateWebhookErrors = {
     /**
      * Bad Request
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Unauthorized
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Not Found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type PatchWebhooksByIdError = PatchWebhooksByIdErrors[keyof PatchWebhooksByIdErrors];
+export type UpdateWebhookError = UpdateWebhookErrors[keyof UpdateWebhookErrors];
 
-export type PatchWebhooksByIdResponses = {
+export type UpdateWebhookResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsWebhookEndpointItem;
+    200: WebhookEndpointItem;
 };
 
-export type PatchWebhooksByIdResponse = PatchWebhooksByIdResponses[keyof PatchWebhooksByIdResponses];
+export type UpdateWebhookResponse = UpdateWebhookResponses[keyof UpdateWebhookResponses];
 
-export type GetWebhooksByIdDeliveriesData = {
+export type ListWebhookDeliveriesData = {
     body?: never;
     path: {
         /**
          * Webhook endpoint ID
          */
-        id: string;
+        webhook_id: string;
     };
     query?: {
         /**
@@ -11770,144 +11716,144 @@ export type GetWebhooksByIdDeliveriesData = {
          */
         limit?: number;
     };
-    url: '/webhooks/{id}/deliveries';
+    url: '/webhooks/{webhook_id}/deliveries';
 };
 
-export type GetWebhooksByIdDeliveriesErrors = {
+export type ListWebhookDeliveriesErrors = {
     /**
      * Unauthorized
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Not Found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type GetWebhooksByIdDeliveriesError = GetWebhooksByIdDeliveriesErrors[keyof GetWebhooksByIdDeliveriesErrors];
+export type ListWebhookDeliveriesError = ListWebhookDeliveriesErrors[keyof ListWebhookDeliveriesErrors];
 
-export type GetWebhooksByIdDeliveriesResponses = {
+export type ListWebhookDeliveriesResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsDeliveryListResponse;
+    200: DeliveryListResponse;
 };
 
-export type GetWebhooksByIdDeliveriesResponse = GetWebhooksByIdDeliveriesResponses[keyof GetWebhooksByIdDeliveriesResponses];
+export type ListWebhookDeliveriesResponse = ListWebhookDeliveriesResponses[keyof ListWebhookDeliveriesResponses];
 
-export type GetWebhooksByIdDeliveriesByDidData = {
+export type GetWebhookDeliveryData = {
     body?: never;
     path: {
         /**
          * Webhook endpoint ID
          */
-        id: string;
+        webhook_id: string;
         /**
          * Delivery ID
          */
-        did: string;
+        delivery_id: string;
     };
     query?: never;
-    url: '/webhooks/{id}/deliveries/{did}';
+    url: '/webhooks/{webhook_id}/deliveries/{delivery_id}';
 };
 
-export type GetWebhooksByIdDeliveriesByDidErrors = {
+export type GetWebhookDeliveryErrors = {
     /**
      * Unauthorized
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Not Found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type GetWebhooksByIdDeliveriesByDidError = GetWebhooksByIdDeliveriesByDidErrors[keyof GetWebhooksByIdDeliveriesByDidErrors];
+export type GetWebhookDeliveryError = GetWebhookDeliveryErrors[keyof GetWebhookDeliveryErrors];
 
-export type GetWebhooksByIdDeliveriesByDidResponses = {
+export type GetWebhookDeliveryResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsDeliveryDetailResponse;
+    200: DeliveryDetailResponse;
 };
 
-export type GetWebhooksByIdDeliveriesByDidResponse = GetWebhooksByIdDeliveriesByDidResponses[keyof GetWebhooksByIdDeliveriesByDidResponses];
+export type GetWebhookDeliveryResponse = GetWebhookDeliveryResponses[keyof GetWebhookDeliveryResponses];
 
-export type PostWebhooksByIdDeliveriesByDidRetryData = {
+export type RetryWebhookDeliveryData = {
     body?: never;
     path: {
         /**
          * Webhook endpoint ID
          */
-        id: string;
+        webhook_id: string;
         /**
          * Delivery ID
          */
-        did: string;
+        delivery_id: string;
     };
     query?: never;
-    url: '/webhooks/{id}/deliveries/{did}/retry';
+    url: '/webhooks/{webhook_id}/deliveries/{delivery_id}/retry';
 };
 
-export type PostWebhooksByIdDeliveriesByDidRetryErrors = {
+export type RetryWebhookDeliveryErrors = {
     /**
      * Unauthorized
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Not Found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type PostWebhooksByIdDeliveriesByDidRetryError = PostWebhooksByIdDeliveriesByDidRetryErrors[keyof PostWebhooksByIdDeliveriesByDidRetryErrors];
+export type RetryWebhookDeliveryError = RetryWebhookDeliveryErrors[keyof RetryWebhookDeliveryErrors];
 
-export type PostWebhooksByIdDeliveriesByDidRetryResponses = {
+export type RetryWebhookDeliveryResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsDeliveryDetailResponse;
+    200: DeliveryDetailResponse;
 };
 
-export type PostWebhooksByIdDeliveriesByDidRetryResponse = PostWebhooksByIdDeliveriesByDidRetryResponses[keyof PostWebhooksByIdDeliveriesByDidRetryResponses];
+export type RetryWebhookDeliveryResponse = RetryWebhookDeliveryResponses[keyof RetryWebhookDeliveryResponses];
 
-export type PostWebhooksByIdTestData = {
+export type TestWebhookData = {
     /**
      * Event type and payload to send
      */
-    body: ApiEndpointsTestWebhookRequest;
+    body: TestWebhookRequest;
     path: {
         /**
          * Webhook endpoint ID
          */
-        id: string;
+        webhook_id: string;
     };
     query?: never;
-    url: '/webhooks/{id}/test';
+    url: '/webhooks/{webhook_id}/test';
 };
 
-export type PostWebhooksByIdTestErrors = {
+export type TestWebhookErrors = {
     /**
      * Bad Request
      */
-    400: ApiEndpointsErrorResponse;
+    400: ErrorResponse;
     /**
      * Unauthorized
      */
-    401: ApiEndpointsErrorResponse;
+    401: ErrorResponse;
     /**
      * Not Found
      */
-    404: ApiEndpointsErrorResponse;
+    404: ErrorResponse;
 };
 
-export type PostWebhooksByIdTestError = PostWebhooksByIdTestErrors[keyof PostWebhooksByIdTestErrors];
+export type TestWebhookError = TestWebhookErrors[keyof TestWebhookErrors];
 
-export type PostWebhooksByIdTestResponses = {
+export type TestWebhookResponses = {
     /**
      * OK
      */
-    200: ApiEndpointsTestDeliveryResponse;
+    200: TestDeliveryResponse;
 };
 
-export type PostWebhooksByIdTestResponse = PostWebhooksByIdTestResponses[keyof PostWebhooksByIdTestResponses];
+export type TestWebhookResponse = TestWebhookResponses[keyof TestWebhookResponses];

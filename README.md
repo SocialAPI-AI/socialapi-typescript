@@ -7,10 +7,10 @@ npm install socialapi
 ```
 
 ```ts
-import { client, getBrands } from 'socialapi';
+import { client, listBrands } from 'socialapi';
 
 client.setConfig({ auth: 'sapi_key_...' });
-const { data, error } = await getBrands();
+const { data, error } = await listBrands();
 ```
 
 Every endpoint is an exported function with typed request and response. The API reference is at [docs.social-api.ai](https://docs.social-api.ai).
