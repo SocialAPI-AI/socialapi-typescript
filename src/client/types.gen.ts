@@ -1486,6 +1486,28 @@ export type ApiEndpointsPostsListResponse = {
     pagination?: ApiEndpointsPaginationInfo;
 };
 
+export type ApiEndpointsPostsMetricsItem = {
+    /**
+     * Set when this post could not be read: not found, or a platform post ID that matches several posts.
+     */
+    error?: ApiEndpointsPostTargetErrorResponse;
+    /**
+     * The post ID as given in post_ids.
+     */
+    post_id?: string;
+    /**
+     * Same targets as GET /v1/posts/{pid}/metrics. Empty when error is set.
+     */
+    targets?: Array<ApiEndpointsPostTargetResponse>;
+};
+
+export type ApiEndpointsPostsMetricsResponse = {
+    /**
+     * One item per distinct post ID, in request order.
+     */
+    data?: Array<ApiEndpointsPostsMetricsItem>;
+};
+
 export type ApiEndpointsPrivateReplyAttachmentInput = {
     /**
      * Source is the attachment reference; its meaning is given by source_type.
@@ -7193,7 +7215,7 @@ export type PostInboxSyncData = {
 
 export type PostInboxSyncErrors = {
     /**
-     * Missing or invalid account_id
+     * Missing or invalid account_id, or account.page_inactive: the conversation's Facebook Page is no longer connected, so its thread cannot be refreshed. Reconnect the Page to sync it again.
      */
     400: ApiEndpointsErrorResponse;
     /**
@@ -10658,6 +10680,40 @@ export type PostPostsImportResponses = {
 };
 
 export type PostPostsImportResponse = PostPostsImportResponses[keyof PostPostsImportResponses];
+
+export type GetPostsMetricsData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Comma-separated post IDs (SocialAPI or platform), at most 20
+         */
+        post_ids: string;
+    };
+    url: '/posts/metrics';
+};
+
+export type GetPostsMetricsErrors = {
+    /**
+     * post_ids missing, more than 20 IDs, or an ID longer than 100 characters
+     */
+    400: ApiEndpointsErrorResponse;
+    /**
+     * Invalid or missing API key
+     */
+    401: ApiEndpointsErrorResponse;
+};
+
+export type GetPostsMetricsError = GetPostsMetricsErrors[keyof GetPostsMetricsErrors];
+
+export type GetPostsMetricsResponses = {
+    /**
+     * OK
+     */
+    200: ApiEndpointsPostsMetricsResponse;
+};
+
+export type GetPostsMetricsResponse = GetPostsMetricsResponses[keyof GetPostsMetricsResponses];
 
 export type GetPostsValidateData = {
     body?: never;
