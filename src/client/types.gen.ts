@@ -239,23 +239,6 @@ export type AnalyticsResponseWrapper = {
     data: AnalyticsResponse;
 };
 
-export type AnnouncementItem = {
-    body: string;
-    id: string;
-    kind: string;
-    link_label?: string;
-    link_url?: string;
-    seen: boolean;
-    title: string;
-    window_end?: string;
-    window_start?: string;
-};
-
-export type AnnouncementsListResponse = {
-    count: number;
-    data: Array<AnnouncementItem>;
-};
-
 export type AssignLinkedInProfileRequest = {
     brand_id: string;
 };
@@ -332,31 +315,6 @@ export type AutomationListResponse = {
 export type AutomationStatus = 'active' | 'paused';
 
 export type AutomationTrigger = 'comment' | 'dm';
-
-export type BillingPlan = {
-    annual_price_eur: number;
-    annual_price_usd: number;
-    limits: BillingPlanLimits;
-    monthly_price_eur: number;
-    monthly_price_usd: number;
-    name: string;
-    popular: boolean;
-    tagline: string;
-    tier: string;
-};
-
-export type BillingPlanLimits = {
-    event_retention_days: number;
-    exports_per_month: number;
-    interactions_per_month: number;
-    posts_per_month: number;
-    profiles: number;
-    storage_bytes: number;
-};
-
-export type BillingPlansResponse = {
-    plans: Array<BillingPlan>;
-};
 
 export type BrandListItem = {
     accounts_count: number;
@@ -712,17 +670,6 @@ export type CreateQueueParams = {
      * IANA timezone the slots are expressed in. Required.
      */
     timezone: string;
-};
-
-export type CreateRedirectUriRequest = {
-    /**
-     * Label is an optional human-readable label for this URI.
-     */
-    label?: string;
-    /**
-     * URI is the redirect URI to whitelist (must be https, or http for localhost).
-     */
-    uri: string;
 };
 
 export type CreateWebhookRequest = {
@@ -2381,7 +2328,7 @@ export type OverviewPlatform = {
     comments: number;
     engagements: number;
     likes: number;
-    platform: string;
+    platform: Platform;
     posts: number;
     saves: number;
     shares: number;
@@ -2402,7 +2349,7 @@ export type OverviewTopPost = {
     media_type: string;
     metrics: OverviewPostMetrics;
     permalink?: string;
-    platform: string;
+    platform: Platform;
     post_id: string;
     published_at: string;
     text?: string;
@@ -2698,7 +2645,7 @@ export type PostChildAttachment = {
 export type PostInsight = {
     clicks: number;
     comments: number;
-    created_at: string;
+    created_at?: string;
     engagement_rate: number;
     impressions: number;
     likes: number;
@@ -3082,18 +3029,6 @@ export type ReactToMessageRequest = {
     reaction: string;
 };
 
-export type RedirectUriListResponse = {
-    count: number;
-    data: Array<RedirectUriResponse>;
-};
-
-export type RedirectUriResponse = {
-    created_at: string;
-    id: string;
-    label?: string;
-    uri: string;
-};
-
 export type ReplyReviewRequest = {
     account_id: string;
     text: string;
@@ -3224,17 +3159,6 @@ export type SelectProfileRequest = {
      * pending connections only).
      */
     platform_account_id?: string;
-};
-
-export type SendFeedbackRequest = {
-    /**
-     * Message is the feedback content.
-     */
-    message: string;
-    /**
-     * Type is one of: bug, feature_request, general.
-     */
-    type: string;
 };
 
 export type SendMessageRequest = {
@@ -3597,31 +3521,6 @@ export type TikTokAccountSummaryResponse = {
     profile_deep_link: string;
     username: string;
     video_count: number;
-};
-
-export type TwitterByokRequest = {
-    client_id: string;
-    client_secret: string;
-};
-
-export type TwitterByokItem = {
-    /**
-     * Brand these credentials apply to. null for the default credentials, which apply to every brand without its own entry.
-     */
-    brand_id: string | null;
-    client_id_hint: string;
-    created_at: string;
-    updated_at: string;
-};
-
-export type TwitterByokListResponse = {
-    count: number;
-    data: Array<TwitterByokItem>;
-};
-
-export type TwitterByokTestResponse = {
-    reason: string;
-    valid: boolean;
 };
 
 export type UnpublishRequest = {
@@ -3989,7 +3888,7 @@ export type ValidatePostRequest = {
     /**
      * Platforms lists platform names to validate against (e.g. ["instagram", "linkedin"]).
      */
-    platforms?: Array<string>;
+    platforms?: Array<Platform>;
     /**
      * ScheduledAt validates the schedule time (must be in the future, within platform limits).
      */
