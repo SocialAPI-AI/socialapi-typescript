@@ -6537,6 +6537,14 @@ export type GetInboxCommentsByPostIdByCommentIdRepliesErrors = {
      */
     401: ApiEndpointsErrorResponse;
     /**
+     * The key's scopes do not include inbox:read
+     */
+    403: ApiEndpointsErrorResponse;
+    /**
+     * Account not found
+     */
+    404: ApiEndpointsErrorResponse;
+    /**
      * Platform does not support comment replies
      */
     501: ApiEndpointsErrorResponse;
@@ -6625,6 +6633,10 @@ export type GetInboxConversationsByIdErrors = {
      */
     401: ApiEndpointsErrorResponse;
     /**
+     * The key's scopes do not include dms:read
+     */
+    403: ApiEndpointsErrorResponse;
+    /**
      * Conversation not found
      */
     404: ApiEndpointsErrorResponse;
@@ -6665,6 +6677,10 @@ export type PatchInboxConversationsByIdErrors = {
      * Invalid or missing API key
      */
     401: ApiEndpointsErrorResponse;
+    /**
+     * The key's scopes do not include dms:read
+     */
+    403: ApiEndpointsErrorResponse;
     /**
      * Conversation not found
      */
@@ -6709,6 +6725,10 @@ export type GetInboxConversationsByIdMessagesErrors = {
      */
     401: ApiEndpointsErrorResponse;
     /**
+     * The key's scopes do not include dms:read
+     */
+    403: ApiEndpointsErrorResponse;
+    /**
      * Conversation not found
      */
     404: ApiEndpointsErrorResponse;
@@ -6742,7 +6762,7 @@ export type PostInboxConversationsByIdMessagesData = {
 
 export type PostInboxConversationsByIdMessagesErrors = {
     /**
-     * Invalid request body, missing required fields, or messaging window closed (platform.instagram.window_closed / platform.facebook.window_closed: the recipient must message you first to reopen the 24-hour window). After the platform refuses a thread for a closed window, later untagged sends on it are refused here with the same code and blocked_locally in the meta, until an inbound message reopens it or 24 hours pass; no credit is charged for those. messaging.human_agent_window_closed: message_tag was sent after the human agent window closed, so the person must message you first.
+     * Invalid request body, missing required fields, or messaging window closed (platform.instagram.window_closed / platform.facebook.window_closed: the recipient must message you first to reopen the 24-hour window). After the platform refuses a thread for a closed window, later untagged sends on it fail with the same code, at no credit cost, until the recipient messages you again. messaging.human_agent_window_closed: message_tag was sent after the human agent window closed, so the person must message you first.
      */
     400: ApiEndpointsErrorResponse;
     /**
@@ -6915,6 +6935,10 @@ export type PostInboxConversationsByIdReadErrors = {
      * Invalid or missing API key
      */
     401: ApiEndpointsErrorResponse;
+    /**
+     * The key's scopes do not include dms:read
+     */
+    403: ApiEndpointsErrorResponse;
     /**
      * Conversation not found
      */
@@ -7966,7 +7990,7 @@ export type GetPlatformsFacebookAccountsByIdInsightsDailyData = {
 
 export type GetPlatformsFacebookAccountsByIdInsightsDailyErrors = {
     /**
-     * days out of range
+     * days is not a whole number from 1 to 365
      */
     400: ApiEndpointsErrorResponse;
     /**
@@ -9663,15 +9687,23 @@ export type PostPlatformsTiktokAccountsByIdSyncErrors = {
      */
     401: ApiEndpointsErrorResponse;
     /**
+     * The account was not granted the posts.read permission
+     */
+    403: ApiEndpointsErrorResponse;
+    /**
      * Account not found
      */
     404: ApiEndpointsErrorResponse;
+    /**
+     * accounts.sync_rate_limited: this account was synced too recently. accounts.sync_daily_limit: the plan's daily sync limit is reached. The Retry-After header carries the seconds to wait.
+     */
+    429: ApiEndpointsErrorResponse;
     /**
      * Account is not a TikTok account or connector does not support post sync
      */
     501: ApiEndpointsErrorResponse;
     /**
-     * Upstream TikTok API error
+     * The sync could not be started. Retry later.
      */
     503: ApiEndpointsErrorResponse;
 };
@@ -10362,15 +10394,23 @@ export type PostPlatformsYoutubeAccountsByIdSyncErrors = {
      */
     401: ApiEndpointsErrorResponse;
     /**
+     * The account was not granted the posts.read permission
+     */
+    403: ApiEndpointsErrorResponse;
+    /**
      * Account not found
      */
     404: ApiEndpointsErrorResponse;
+    /**
+     * accounts.sync_rate_limited: this account was synced too recently. accounts.sync_daily_limit: the plan's daily sync limit is reached. The Retry-After header carries the seconds to wait.
+     */
+    429: ApiEndpointsErrorResponse;
     /**
      * Account is not a YouTube account or connector does not support post sync
      */
     501: ApiEndpointsErrorResponse;
     /**
-     * Upstream YouTube API error
+     * The sync could not be started. Retry later.
      */
     503: ApiEndpointsErrorResponse;
 };

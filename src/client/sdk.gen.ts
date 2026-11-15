@@ -1117,7 +1117,7 @@ export const getPlatformsFacebookAccountsByIdSummary = <ThrowOnError extends boo
 /**
  * List a Facebook login's Pages
  *
- * Lists every Page this login can manage, with the brand that holds each. assignable reflects ownership only. When facebook_page_selection is true, assigning can still fail on the per-brand Page allowance.
+ * Lists every Page this login can manage, with the brand that holds each. assignable reflects ownership only. When facebook_page_selection is true, assigning can still fail on the per-brand Page allowance. A brand-restricted key does not see Pages held by brands outside its list.
  */
 export const getPlatformsFacebookLoginsByLoginIdPages = <ThrowOnError extends boolean = false>(options: Options<GetPlatformsFacebookLoginsByLoginIdPagesData, ThrowOnError>): RequestResult<GetPlatformsFacebookLoginsByLoginIdPagesResponses, GetPlatformsFacebookLoginsByLoginIdPagesErrors, ThrowOnError> => (options.client ?? client).get<GetPlatformsFacebookLoginsByLoginIdPagesResponses, GetPlatformsFacebookLoginsByLoginIdPagesErrors, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
@@ -1128,7 +1128,7 @@ export const getPlatformsFacebookLoginsByLoginIdPages = <ThrowOnError extends bo
 /**
  * Assign a Facebook Page to a brand
  *
- * Assigns one Page from this login to the given brand. Each Page belongs to exactly one brand, so a Page another of your brands holds moves to the target brand. When facebook_page_selection is true, assigning beyond your plan's Facebook Pages per brand returns 403 platform.facebook.page_cap.
+ * Assigns one Page from this login to the given brand. Each Page belongs to exactly one brand, so a Page another of your brands holds moves to the target brand. When facebook_page_selection is true, assigning beyond your plan's Facebook Pages per brand returns 403 platform.facebook.page_cap. A brand-restricted key can only move Pages held by brands on its list: any other Page returns 400 validation.page_not_granted.
  */
 export const postPlatformsFacebookLoginsByLoginIdPagesByPageIdAssign = <ThrowOnError extends boolean = false>(options: Options<PostPlatformsFacebookLoginsByLoginIdPagesByPageIdAssignData, ThrowOnError>): RequestResult<PostPlatformsFacebookLoginsByLoginIdPagesByPageIdAssignResponses, PostPlatformsFacebookLoginsByLoginIdPagesByPageIdAssignErrors, ThrowOnError> => (options.client ?? client).post<PostPlatformsFacebookLoginsByLoginIdPagesByPageIdAssignResponses, PostPlatformsFacebookLoginsByLoginIdPagesByPageIdAssignErrors, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
@@ -1535,6 +1535,8 @@ export const getPlatformsTiktokAccountsByIdSummary = <ThrowOnError extends boole
 
 /**
  * Re-sync a TikTok account's videos
+ *
+ * Starts a sync of the account's videos and returns once it is started. Poll GET /accounts/{id}/sync until state leaves "syncing", then read the posts. Shares the cooldown and the daily sync limit of POST /accounts/{id}/sync.
  */
 export const postPlatformsTiktokAccountsByIdSync = <ThrowOnError extends boolean = false>(options: Options<PostPlatformsTiktokAccountsByIdSyncData, ThrowOnError>): RequestResult<PostPlatformsTiktokAccountsByIdSyncResponses, PostPlatformsTiktokAccountsByIdSyncErrors, ThrowOnError> => (options.client ?? client).post<PostPlatformsTiktokAccountsByIdSyncResponses, PostPlatformsTiktokAccountsByIdSyncErrors, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
@@ -1739,6 +1741,8 @@ export const getPlatformsYoutubeAccountsByIdSummary = <ThrowOnError extends bool
 
 /**
  * Re-sync a YouTube account's videos
+ *
+ * Starts a sync of the account's videos and returns once it is started. Poll GET /accounts/{id}/sync until state leaves "syncing", then read the posts. Shares the cooldown and the daily sync limit of POST /accounts/{id}/sync.
  */
 export const postPlatformsYoutubeAccountsByIdSync = <ThrowOnError extends boolean = false>(options: Options<PostPlatformsYoutubeAccountsByIdSyncData, ThrowOnError>): RequestResult<PostPlatformsYoutubeAccountsByIdSyncResponses, PostPlatformsYoutubeAccountsByIdSyncErrors, ThrowOnError> => (options.client ?? client).post<PostPlatformsYoutubeAccountsByIdSyncResponses, PostPlatformsYoutubeAccountsByIdSyncErrors, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
