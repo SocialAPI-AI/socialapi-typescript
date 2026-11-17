@@ -2568,7 +2568,7 @@ export type Post = {
      */
     caption: string;
     /**
-     * [platform: instagram, facebook, tiktok] Zero on other platforms
+     * [platform: instagram, facebook, tiktok, linkedin] Zero on other platforms
      */
     comments_count: number;
     /**
@@ -2576,7 +2576,7 @@ export type Post = {
      */
     id: string;
     /**
-     * [platform: instagram, facebook, tiktok] Zero on other platforms
+     * [platform: instagram, facebook, tiktok, linkedin] Zero on other platforms
      */
     like_count: number;
     /**
@@ -2610,7 +2610,7 @@ export type Post = {
      */
     settings?: PostSettings;
     /**
-     * [platform: facebook] Zero on other platforms
+     * [platform: facebook, linkedin] Zero on other platforms
      */
     shares_count: number;
     /**
