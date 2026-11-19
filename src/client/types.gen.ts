@@ -636,7 +636,7 @@ export type CreatePostRequest = {
      */
     text?: string;
     /**
-     * Title is an optional post title (used by LinkedIn, Google).
+     * Title is an optional post title (used by LinkedIn, Google). On LinkedIn it is the title shown on an attached document (PDF, PPT, PPTX, DOC, DOCX); without it the document takes its file name.
      */
     title?: string;
     /**
@@ -1990,6 +1990,14 @@ export type Media = {
 
 export type MediaConstraints = {
     /**
+     * Most pages the platform accepts in one document. The platform checks it when it processes the file.
+     */
+    max_document_pages?: number;
+    /**
+     * Largest document the platform accepts, in bytes.
+     */
+    max_document_size_bytes?: number;
+    /**
      * 0 = not supported
      */
     max_image_size_bytes?: number;
@@ -2009,6 +2017,10 @@ export type MediaConstraints = {
      * 0 = no min
      */
     min_video_duration_sec?: number;
+    /**
+     * Document MIME types the platform publishes as a document post. Empty when the platform accepts no documents.
+     */
+    supported_document_types?: Array<string>;
     /**
      * MIME types, e.g. "image/jpeg"
      */
@@ -7571,7 +7583,7 @@ export type GetMediaUploadUrlData = {
     path?: never;
     query: {
         /**
-         * MIME type (e.g. image/jpeg)
+         * MIME type (e.g. image/jpeg, video/mp4, or application/pdf for a LinkedIn document post)
          */
         media_type: string;
         /**
