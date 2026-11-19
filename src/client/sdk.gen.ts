@@ -1853,8 +1853,9 @@ export const getPost = <ThrowOnError extends boolean = false>(options: Options<G
  *
  * Updates the text, media, schedule time, targets, or hidden status of a pending post.
  * Posts in `draft`, `scheduled`, or `failed` status accept every field. Updating a failed post does not republish it: call `POST /posts/{post_id}/retry` afterwards.
- * A `published` or `partial` post can be edited only when it is live on Google Business Profile alone. Send `text`, `platform_data.google.callToAction`, or both: any other field returns `400 validation.field_not_editable`. A post also live on another platform returns `409 post.state_invalid`.
- * When the post is live on several Google locations and only some accept the edit, the response is the error from the first location that refused, and `error.meta` lists `updated_account_ids` and `not_updated_account_ids`. Send the same request again to finish the edit.
+ * A `published` or `partial` post accepts `text`, plus `platform_data.google.callToAction` when it is live on Google Business Profile. Any other field returns `400 validation.field_not_editable`.
+ * The new text is applied in place on Google Business Profile and on Facebook Page text, photo and album posts, keeping their likes and comments. Instagram does not allow editing a caption after publishing, and Facebook videos, Reels and stories cannot be edited either: those targets keep their published text, and their accounts are listed in `not_updated_account_ids`. A post live only on such targets returns `409 post.state_invalid`.
+ * When only some live targets accept the edit, the response is the error from the first one that refused, and `error.meta` lists `updated_account_ids` and `not_updated_account_ids`. Send the same request again to finish the edit.
  * `queue_id` moves the post to another Queue, and `queue_id: null` takes it out of its Queue and keeps its time.
  * Omit `targets` to keep the current ones. Sending `targets` replaces them all.
  * `scheduled_at` must be in the future, and a scheduled post must keep at least one target.

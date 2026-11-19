@@ -3681,6 +3681,37 @@ export type UpdatePostRequest = {
     visibility?: PostVisibility;
 };
 
+export type UpdatePostResponse = {
+    created_at: string;
+    hidden: boolean;
+    id: string;
+    media?: Array<MediaInput>;
+    /**
+     * Deprecated: use media.
+     */
+    media_ids?: Array<string>;
+    /**
+     * Accounts whose live post kept its published text because the platform does not allow editing it, for example Instagram captions or Facebook Reels. Absent when every live target was edited.
+     */
+    not_updated_account_ids?: Array<string>;
+    published_at?: string;
+    /**
+     * ID of the Queue the post is in. null when the post is not queued.
+     */
+    queue_id: string | null;
+    retry_count: number;
+    scheduled_at?: string;
+    status: PostStatus;
+    targets?: Array<PostTargetResponse>;
+    text: string | null;
+    title?: string;
+    updated_at: string;
+    /**
+     * Who can see the post, as set when it was created or last updated: public, private, connections_only or logged_in.
+     */
+    visibility?: string;
+};
+
 export type UpdateQueueParams = {
     /**
      * False pauses the Queue, true resumes it.
@@ -10816,7 +10847,7 @@ export type UpdatePostErrors = {
      */
     404: ErrorResponse;
     /**
-     * Post is not in an editable state, a published post is live on a platform other than Google Business Profile, or the Queue is paused, has no free time, or already holds a post at the requested time (queue.paused, queue.full, queue.slot_conflict)
+     * Post is not in an editable state, a published post is live only where its text cannot be edited, or the Queue is paused, has no free time, or already holds a post at the requested time (queue.paused, queue.full, queue.slot_conflict)
      */
     409: ErrorResponse;
     /**
@@ -10831,10 +10862,10 @@ export type UpdatePostResponses = {
     /**
      * Post updated
      */
-    200: PostResponse;
+    200: UpdatePostResponse;
 };
 
-export type UpdatePostResponse = UpdatePostResponses[keyof UpdatePostResponses];
+export type UpdatePostResponse2 = UpdatePostResponses[keyof UpdatePostResponses];
 
 export type GetPostAnalyticsData = {
     body?: never;
